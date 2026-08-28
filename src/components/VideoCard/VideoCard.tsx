@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import Hls from "hls.js";
 
 export interface VideoCardData {
   title: string;
@@ -8,6 +9,7 @@ export interface VideoCardData {
   time?: string;
   loadable?: boolean;
   backlink?: string;
+  streamUrl?: string; // Support for HLS .m3u8 URLs from Mux/Cloudflare
 }
 
 function ShareIcon() {
@@ -37,8 +39,9 @@ export default function VideoCard({
   time,
   loadable = false,
   backlink,
+  streamUrl,
 }: VideoCardData) {
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [videoUrl, setVideoUrl] = useState<string | null>(streamUrl || null);
   const [playing, setPlaying] = useState(false);
   const [ended, setEnded] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -49,12 +52,29 @@ export default function VideoCard({
   const fmt = (s: number) =>
     `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
+  // HLS stream binding initialization
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !videoUrl) return;
+
+    if (videoUrl.includes(".m3u8")) {
+      if (Hls.isSupported()) {
+        const hls = new Hls({ autoStartLoad: true });
+        hls.loadSource(videoUrl);
+        hls.attachMedia(video);
+        return () => hls.destroy();
+      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = videoUrl;
+      }
+    }
+  }, [videoUrl]);
+
   const pickVideo = () => fileRef.current?.click();
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
-    if (videoUrl) URL.revokeObjectURL(videoUrl);
+    if (videoUrl && !streamUrl) URL.revokeObjectURL(videoUrl);
     setVideoUrl(URL.createObjectURL(f));
     setEnded(false);
     setProgress(0);
@@ -175,7 +195,7 @@ export default function VideoCard({
         {hasVideo && (
           <video
             ref={videoRef}
-            src={videoUrl}
+            src={videoUrl.includes(".m3u8") ? undefined : videoUrl}
             className="absolute inset-0 w-full h-full object-cover"
             onLoadedMetadata={handleMeta}
             onTimeUpdate={handleTimeUpdate}
