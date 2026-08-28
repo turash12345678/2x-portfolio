@@ -4,13 +4,13 @@ import DotGrid from "@/components/DotGrid/DotGrid";
 import VideoCard from "@/components/VideoCard/VideoCard";
 import Component from "@/imports/Component1/index";
 import Component1_1 from "@/imports/Component1-1/index";
-import Dashboard, { defaultContent, type SiteContent, type TweetEntry } from "@/pages/Dashboard";
+import Dashboard, { defaultContent, type SiteContent } from "@/pages/Dashboard";
+import { fetchGlobalContent, saveGlobalContent } from "@/services/db";
 import svgPaths from "@/imports/Desktop3/svg-kyk0s1v2sg";
 import imgAvatar from "@/imports/Desktop3/72045e7df721190a6b214bc6d3bf1f20b56300de.png";
 import imgVideoThumb from "@/imports/Desktop3/749cd5750ae3155ad330123057def42bde6aceee.png";
 import imgVideoThumb2 from "@/imports/Desktop3/9404713afb5bab1fa0aba27e8f5b6f787f9f0da9.png";
 
-const STORAGE_KEY = "ta-portfolio-content";
 const ACCESS_KEY = "200836";
 
 const VIDEO_IMAGES = [imgVideoThumb, imgVideoThumb, imgVideoThumb, imgVideoThumb2];
@@ -20,17 +20,6 @@ const VIDEO_FLAGS = [
   { hasWatchAgain: true, time: undefined },
   { hasWatchAgain: false, time: undefined },
 ];
-
-function loadContent(): SiteContent {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      return { ...defaultContent, ...parsed, videos: parsed.videos ?? defaultContent.videos, tweets: parsed.tweets ?? defaultContent.tweets };
-    }
-  } catch {}
-  return defaultContent;
-}
 
 function parseBold(text: string): React.ReactNode {
   const parts = text.split(/\*\*(.*?)\*\*/g);
@@ -88,7 +77,7 @@ function LinkedinIcon() {
 }
 
 export default function App() {
-  const [content, setContent] = useState<SiteContent>(loadContent);
+  const [content, setContent] = useState<SiteContent>(defaultContent);
   const [page, setPage] = useState<"home" | "dashboard">("home");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showPinModal, setShowPinModal] = useState(false);
@@ -99,14 +88,20 @@ export default function App() {
   const [filterTooltip, setFilterTooltip] = useState(false);
 
   useEffect(() => {
+    fetchGlobalContent().then((data) => {
+      if (data) setContent(data);
+    });
+  }, []);
+
+  useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleSaveContent = (updated: SiteContent) => {
+  const handleSaveContent = async (updated: SiteContent) => {
     setContent(updated);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(updated)); } catch {}
+    await saveGlobalContent(updated);
   };
 
   const handlePinSubmit = () => {
