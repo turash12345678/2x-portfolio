@@ -26,7 +26,7 @@ function loadContent(): SiteContent {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      return { ...defaultContent, ...parsed, tweets: parsed.tweets ?? defaultContent.tweets };
+      return { ...defaultContent, ...parsed, videos: parsed.videos ?? defaultContent.videos, tweets: parsed.tweets ?? defaultContent.tweets };
     }
   } catch {}
   return defaultContent;
@@ -243,17 +243,21 @@ export default function App() {
       <section className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-11 pb-16 md:pb-24">
         <div className="flex items-center justify-between mb-5 md:mb-7">
           <div className="bg-[rgba(132,132,132,0.08)] p-1 rounded-full flex items-center gap-0.5">
-            {(["shorts", "tweets"] as Tab[]).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-3 py-[5px] rounded-full text-[14px] font-medium tracking-[0.2px] transition-all duration-150 leading-5 capitalize ${
-                  activeTab === tab ? "bg-[#1a1a1a] text-white shadow-sm" : "text-[#707070] hover:text-black"
-                }`}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </button>
-            ))}
+            <button
+              onClick={() => setActiveTab("shorts")}
+              className={`px-3.5 py-[5px] rounded-full text-[14px] font-medium tracking-[0.2px] transition-all duration-150 leading-5 capitalize ${
+                activeTab === "shorts" ? "bg-[#1a1a1a] text-white shadow-sm" : "text-[#707070] hover:text-black"
+              }`}
+            >
+              Shorts
+            </button>
+            <button
+              disabled
+              title="Tweets UI under development"
+              className="px-3.5 py-[5px] rounded-full text-[14px] font-medium tracking-[0.2px] leading-5 text-[#b0b0b0] opacity-50 cursor-not-allowed"
+            >
+              Tweets (Soon)
+            </button>
           </div>
 
           <div
@@ -286,28 +290,19 @@ export default function App() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-          {activeTab === "shorts"
-            ? content.videos.map((v, i) => (
-                <VideoCard
-                  key={i}
-                  title={v.title}
-                  status={v.status}
-                  image={VIDEO_IMAGES[i]}
-                  hasWatchAgain={VIDEO_FLAGS[i].hasWatchAgain}
-                  time={VIDEO_FLAGS[i].time}
-                  loadable={isAuthenticated}
-                />
-              ))
-            : content.tweets.map((t: TweetEntry, i: number) => (
-                <VideoCard
-                  key={i}
-                  title={t.title}
-                  status={t.status}
-                  image={VIDEO_IMAGES[i % VIDEO_IMAGES.length]}
-                  backlink={t.backlink || undefined}
-                  loadable={isAuthenticated}
-                />
-              ))}
+          {content.videos.map((v, i) => (
+            <VideoCard
+              key={i}
+              title={v.title}
+              status={v.status}
+              image={v.thumbnail || VIDEO_IMAGES[i % VIDEO_IMAGES.length]}
+              hasWatchAgain={VIDEO_FLAGS[i % VIDEO_FLAGS.length]?.hasWatchAgain}
+              time={VIDEO_FLAGS[i % VIDEO_FLAGS.length]?.time}
+              backlink={v.backlink || undefined}
+              streamUrl={v.streamUrl || v.localVideoUrl || undefined}
+              loadable={isAuthenticated}
+            />
+          ))}
         </div>
       </section>
 
@@ -341,44 +336,42 @@ export default function App() {
                 </svg>
               </div>
 
-              <div className="text-center">
-                <h2 className="text-[17px] font-semibold text-[#1a1a1a] tracking-[-0.03em]">Enter access key</h2>
-                <p className="text-[13px] text-[#999] mt-1 tracking-[-0.02em]">
-                  {pinError ? "Wrong key. Try again." : "Admin access only."}
-                </p>
+              <div className="flex flex-col items-center gap-1.5 text-center">
+                <h3 className="font-bold text-[18px] text-[#1a1a1a] tracking-[-0.02em]">Admin Access</h3>
+                <p className="text-[13px] text-[#888] tracking-[-0.01em]">Enter key to open Content Studio</p>
               </div>
 
-              {/* PIN input */}
-              <input
-                type="password"
-                inputMode="numeric"
-                maxLength={6}
-                value={pin}
-                onChange={(e) => { setPin(e.target.value.replace(/\D/g, "")); setPinError(false); }}
-                onKeyDown={(e) => e.key === "Enter" && handlePinSubmit()}
-                autoFocus
-                placeholder="••••••"
-                className={`w-full text-center text-[22px] tracking-[0.3em] py-3 px-4 rounded-[12px] outline-none transition-all border-2 ${
-                  pinError
-                    ? "border-red-300 bg-red-50 text-red-500"
-                    : "border-[#ebebeb] bg-[#f7f7f7] text-[#1a1a1a] focus:border-[#1a1a1a]"
-                }`}
-                style={{ fontFamily: "Inter, sans-serif" }}
-              />
+              <div className="w-full flex flex-col gap-2">
+                <input
+                  type="password"
+                  value={pin}
+                  onChange={(e) => { setPin(e.target.value); setPinError(false); }}
+                  onKeyDown={(e) => { if (e.key === "Enter") handlePinSubmit(); }}
+                  placeholder="Enter access PIN"
+                  className={`w-full text-center text-[18px] font-mono tracking-[0.3em] px-4 py-3 rounded-[12px] bg-[#f5f5f5] border outline-none transition-colors ${
+                    pinError ? "border-red-400 bg-red-50/50" : "border-[#e0e0e0] focus:border-[#1a1a1a]"
+                  }`}
+                  autoFocus
+                />
+                {pinError && (
+                  <p className="text-[12px] text-red-500 text-center font-medium tracking-[-0.01em]">
+                    Incorrect PIN
+                  </p>
+                )}
+              </div>
 
-              <div className="flex gap-2 w-full">
+              <div className="flex items-center gap-2 w-full">
                 <button
-                  onClick={() => { setShowPinModal(false); setPin(""); }}
-                  className="flex-1 py-2.5 rounded-full border border-[#ebebeb] text-[14px] text-[#666] hover:bg-[#f5f5f5] transition-colors tracking-[-0.02em]"
+                  onClick={() => { setShowPinModal(false); setPin(""); setPinError(false); }}
+                  className="flex-1 py-2.5 rounded-[12px] text-[13px] text-[#666] bg-[#f0f0f0] hover:bg-[#e4e4e4] transition-colors font-medium tracking-[-0.01em]"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handlePinSubmit}
-                  disabled={pin.length < 6}
-                  className="flex-1 py-2.5 rounded-full bg-[#1a1a1a] text-white text-[14px] font-medium tracking-[-0.02em] hover:bg-[#333] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="flex-1 py-2.5 rounded-[12px] text-[13px] text-white bg-[#1a1a1a] hover:bg-[#333] transition-colors font-medium tracking-[-0.01em]"
                 >
-                  Enter
+                  Unlock
                 </button>
               </div>
             </motion.div>
