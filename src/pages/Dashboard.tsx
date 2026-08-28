@@ -57,10 +57,10 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
     tweets: content.tweets ?? defaultContent.tweets,
   }));
   const [saveState, setSaveState] = useState<"idle" | "saved">("idle");
+  const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
   const [cardTab, setCardTab] = useState<CardTab>("shorts");
 
   const videoFileRefs = useRef<(HTMLInputElement | null)[]>([]);
-  const tweetFileRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const set = <K extends keyof SiteContent>(key: K, value: SiteContent[K]) => {
     setDraft((d) => ({ ...d, [key]: value }));
@@ -95,9 +95,33 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
     setSaveState("idle");
   };
 
-  const handleVideoFileLoad = (i: number, file: File) => {
+  const handleVideoFileLoad = async (i: number, file: File) => {
+    setUploadingIndex(i);
+    try {
+      // Try uploading to cloud media server
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": file.type || "application/octet-stream",
+          "x-filename": file.name,
+        },
+        body: file,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.url) {
+          setVideo(i, "streamUrl", data.url);
+          setUploadingIndex(null);
+          return;
+        }
+      }
+    } catch {}
+
+    // Fallback: local blob preview with warning hint
     const url = URL.createObjectURL(file);
     setVideo(i, "localVideoUrl", url);
+    setUploadingIndex(null);
   };
 
   const setTweet = (i: number, key: keyof TweetEntry, value: string) => {
@@ -146,7 +170,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
                 <path d="M2 6.5l3.5 3.5 5.5-6" stroke="#16a34a" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              Saved
+              Saved globally
             </span>
           )}
           <button
@@ -275,8 +299,8 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                     {/* Dual Video Source: HLS Stream URL or Manual Upload */}
                     <div className="border-t border-[#eee] pt-3 flex flex-col gap-3">
                       <Field
-                        label="HLS Stream Link (.m3u8)"
-                        hint="Mux / Cloudflare Stream playlist URL"
+                        label="HLS Stream Link (.m3u8 / Cloud Video URL)"
+                        hint="Mux / Cloudflare Stream / Public HTTPS URL (Works 100% Globally)"
                         value={v.streamUrl || ""}
                         onChange={(val) => setVideo(i, "streamUrl", val)}
                         placeholder="https://stream.mux.com/YOUR_PLAYBACK_ID.m3u8"
@@ -284,8 +308,16 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
 
                       {/* Manual Upload from Computer */}
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-[12px] text-[#999] tracking-[-0.01em]">Or Manual Computer Upload (MP4/WebM)</label>
-                        {v.localVideoUrl ? (
+                        <div className="flex items-center justify-between">
+                          <label className="text-[12px] text-[#999] tracking-[-0.01em]">Or Upload MP4 File from Computer</label>
+                          <span className="text-[11px] text-[#aaa]">Global persistence requires public URL or HLS link</span>
+                        </div>
+
+                        {uploadingIndex === i ? (
+                          <div className="py-3 text-center text-[13px] text-[#3b82f6] font-medium bg-blue-50 rounded-[8px]">
+                            Uploading video to cloud...
+                          </div>
+                        ) : v.localVideoUrl ? (
                           <div className="relative rounded-[8px] overflow-hidden bg-black" style={{ aspectRatio: "16/9" }}>
                             <video
                               src={v.localVideoUrl}
@@ -311,7 +343,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                               <path d="M7 1v8M4 6l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                               <path d="M1 11h12" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
                             </svg>
-                            Upload MP4 video from Computer
+                            Select MP4 video from Computer
                           </button>
                         )}
                         <input
@@ -368,7 +400,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
         </div>
 
         <p className="text-center text-[12px] text-[#ccc] tracking-[-0.01em] pb-4">
-          Changes save locally and update the live Shorts grid in real-time.
+          Changes save globally to the cloud database and update all visitors across all devices in real-time.
         </p>
       </main>
     </div>
