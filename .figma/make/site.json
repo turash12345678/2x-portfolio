@@ -1,0 +1,11 @@
+{
+  "title": "2x",
+  "description": "Delivers a mobile-first, skill-focused portfolio with a modern, consistent design that highlights user expertise for professional presentation.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
