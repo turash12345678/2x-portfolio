@@ -106,7 +106,7 @@ export const DEMO_TWEETS: TweetEntry[] = [
   {
     id: "tweet-9",
     title: "Organic 3D Shapes & Spatial Design",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=1000&auto=format&fit=crop",
     aspectRatio: 0.75, // 3:4 Portrait
     placeholderColor: "#29241f",
     caption: "Prototyping spatial navigation cards for immersive web experiences.",
@@ -124,5 +124,27 @@ export const DEMO_TWEETS: TweetEntry[] = [
     likes: 1040,
     retweets: 412,
     createdAt: "2026-08-19T08:50:00Z"
+  },
+  {
+    id: "tweet-11",
+    title: "Futuristic Mobile Interface & Design System",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop",
+    aspectRatio: 0.667, // 2:3 Vertical
+    placeholderColor: "#1a1f2c",
+    caption: "High-density data visualization panels with sleek dark mode contrast.",
+    likes: 620,
+    retweets: 198,
+    createdAt: "2026-08-18T11:20:00Z"
+  },
+  {
+    id: "tweet-12",
+    title: "Creative Typography & Visual Rhythm",
+    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=1000&auto=format&fit=crop",
+    aspectRatio: 1.2, // 6:5 Landscape
+    placeholderColor: "#2d201a",
+    caption: "Experimental poster design balancing geometric grids and organic typography.",
+    likes: 884,
+    retweets: 275,
+    createdAt: "2026-08-17T17:15:00Z"
   }
 ];

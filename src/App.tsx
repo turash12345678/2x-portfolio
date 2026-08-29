@@ -160,16 +160,19 @@ export default function App() {
     return 0;
   });
 
-  // Ensure tweets array has valid images and aspect ratio metadata from DEMO_TWEETS
-  const rawTweets = content.tweets && content.tweets.length > 0 ? content.tweets : DEMO_TWEETS;
-  const displayTweets = rawTweets.map((t, i) => {
+  // Ensure we display all 12 DEMO_TWEETS when DB has initial legacy records
+  const dbTweets = content.tweets && content.tweets.length > 0 ? content.tweets : [];
+  const baseTweets = dbTweets.length >= DEMO_TWEETS.length ? dbTweets : DEMO_TWEETS;
+  const displayTweets = baseTweets.map((t, i) => {
     const demo = DEMO_TWEETS[i % DEMO_TWEETS.length];
+    const userItem = dbTweets[i];
     return {
       ...demo,
+      ...userItem,
       ...t,
-      image: t.image || demo.image,
-      aspectRatio: t.aspectRatio || demo.aspectRatio,
-      placeholderColor: t.placeholderColor || demo.placeholderColor,
+      image: (t && t.image) || (userItem && userItem.image) || demo.image,
+      aspectRatio: (t && t.aspectRatio) || (userItem && userItem.aspectRatio) || demo.aspectRatio,
+      placeholderColor: (t && t.placeholderColor) || (userItem && userItem.placeholderColor) || demo.placeholderColor,
     };
   });
 
