@@ -8,6 +8,7 @@ export interface VideoCardData {
   loadable?: boolean;
   backlink?: string;
   streamUrl?: string; // Support for HLS .m3u8 URLs or Mux links
+  onExpand?: () => void;
 }
 
 /**
@@ -39,6 +40,7 @@ export default function VideoCard({
   loadable = false,
   backlink,
   streamUrl,
+  onExpand,
 }: VideoCardData) {
   const { hlsUrl, playbackId } = resolveHlsUrl(streamUrl);
   const [videoUrl, setVideoUrl] = useState<string | null>(hlsUrl);
@@ -109,6 +111,11 @@ export default function VideoCard({
 
   const toggleFullscreen = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (onExpand) {
+      onExpand();
+      return;
+    }
+
     const container = containerRef.current;
     const video = videoRef.current;
 
@@ -214,7 +221,7 @@ export default function VideoCard({
           />
         )}
 
-        {/* Action Controls: Sound Mute & Fullscreen Buttons */}
+        {/* Action Controls: Sound Mute & Fullscreen Pop-up Buttons */}
         {hasVideo && (
           <div className="absolute bottom-3 right-3 z-20 flex items-center gap-1.5">
             {/* Sound Toggle Button */}
@@ -237,11 +244,11 @@ export default function VideoCard({
               )}
             </button>
 
-            {/* Fullscreen Button */}
+            {/* Fullscreen Lightbox Button */}
             <button
               onClick={toggleFullscreen}
               className="w-8 h-8 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md"
-              title="Full screen"
+              title="Expand Pop-up"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />

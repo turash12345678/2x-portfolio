@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DotGrid from "@/components/DotGrid/DotGrid";
 import VideoCard from "@/components/VideoCard/VideoCard";
+import VideoLightboxModal from "@/components/VideoLightbox/VideoLightboxModal";
 import Component from "@/imports/Component1/index";
 import Component1_1 from "@/imports/Component1-1/index";
 import Dashboard, { type SiteContent } from "@/pages/Dashboard";
@@ -81,6 +82,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>("shorts");
   const [scrolled, setScrolled] = useState(false);
   const [filterTooltip, setFilterTooltip] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
     fetchGlobalContent().then((data) => {
@@ -296,10 +298,20 @@ export default function App() {
               backlink={v.backlink || undefined}
               streamUrl={v.streamUrl || v.localVideoUrl || undefined}
               loadable={isAuthenticated}
+              onExpand={() => setLightboxIndex(i)}
             />
           ))}
         </div>
       </section>
+
+      {/* Pop-up Video Lightbox Modal with side navigation arrows */}
+      <VideoLightboxModal
+        isOpen={lightboxIndex !== null}
+        currentIndex={lightboxIndex ?? 0}
+        videos={displayVideos}
+        onClose={() => setLightboxIndex(null)}
+        onNavigate={(idx) => setLightboxIndex(idx)}
+      />
 
       {/* PIN Modal */}
       <AnimatePresence>
