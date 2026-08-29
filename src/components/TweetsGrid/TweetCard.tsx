@@ -12,7 +12,10 @@ export default function TweetCard({ tweet, onExpand }: TweetCardProps) {
   const [hasError, setHasError] = useState(false);
 
   const fallbackColor = tweet.placeholderColor || "#1f1f23";
-  const displayImage = tweet.image || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop";
+  const rawImage = tweet.image;
+  const displayImage = rawImage && !rawImage.startsWith("blob:")
+    ? rawImage
+    : "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop";
 
   return (
     <motion.div

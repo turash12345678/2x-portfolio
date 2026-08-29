@@ -160,19 +160,25 @@ export default function App() {
     return 0;
   });
 
-  // Ensure we display all 12 DEMO_TWEETS when DB has initial legacy records
+  // Ensure we display all 12 DEMO_TWEETS and filter out temporary local browser blob URLs
   const dbTweets = content.tweets && content.tweets.length > 0 ? content.tweets : [];
   const baseTweets = dbTweets.length >= DEMO_TWEETS.length ? dbTweets : DEMO_TWEETS;
   const displayTweets = baseTweets.map((t, i) => {
     const demo = DEMO_TWEETS[i % DEMO_TWEETS.length];
     const userItem = dbTweets[i];
+
+    // Filter out temporary blob: URLs (blob: URLs only exist in memory on the tab where uploaded)
+    const validUserImage = userItem && userItem.image && !userItem.image.startsWith("blob:") ? userItem.image : null;
+    const validItemImage = t && t.image && !t.image.startsWith("blob:") ? t.image : validUserImage;
+
     return {
       ...demo,
       ...userItem,
       ...t,
-      image: (t && t.image) || (userItem && userItem.image) || demo.image,
+      image: validItemImage || demo.image,
       aspectRatio: (t && t.aspectRatio) || (userItem && userItem.aspectRatio) || demo.aspectRatio,
       placeholderColor: (t && t.placeholderColor) || (userItem && userItem.placeholderColor) || demo.placeholderColor,
+      isPinned: false,
     };
   });
 
