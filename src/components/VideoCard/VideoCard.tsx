@@ -9,7 +9,7 @@ export interface VideoCardData {
   time?: string;
   loadable?: boolean;
   backlink?: string;
-  streamUrl?: string; // Support for HLS .m3u8 URLs from Mux/Cloudflare
+  streamUrl?: string; // Support for HLS .m3u8 URLs or Mux links
 }
 
 function ShareIcon() {
@@ -31,6 +31,28 @@ function ReplayIcon() {
   );
 }
 
+/**
+ * Auto-converts Mux player links (e.g. player.mux.com/PLAYBACK_ID)
+ * into direct HLS playlist streams (https://stream.mux.com/PLAYBACK_ID.m3u8).
+ */
+function resolveHlsUrl(url: string | null | undefined): { hlsUrl: string | null; playbackId: string | null } {
+  if (!url) return { hlsUrl: null, playbackId: null };
+  const trimmed = url.trim();
+
+  if (trimmed.includes("mux.com")) {
+    const parts = trimmed.split("/");
+    const lastPart = parts[parts.length - 1].split("?")[0].split(".")[0];
+    if (lastPart) {
+      return {
+        hlsUrl: `https://stream.mux.com/${lastPart}.m3u8`,
+        playbackId: lastPart,
+      };
+    }
+  }
+
+  return { hlsUrl: trimmed, playbackId: null };
+}
+
 export default function VideoCard({
   title,
   status,
@@ -41,13 +63,18 @@ export default function VideoCard({
   backlink,
   streamUrl,
 }: VideoCardData) {
-  const [videoUrl, setVideoUrl] = useState<string | null>(streamUrl || null);
+  const { hlsUrl, playbackId } = resolveHlsUrl(streamUrl);
+  const [videoUrl, setVideoUrl] = useState<string | null>(hlsUrl);
   const [playing, setPlaying] = useState(false);
   const [ended, setEnded] = useState(false);
   const [progress, setProgress] = useState(0);
   const [timeStr, setTimeStr] = useState("0:00 / 0:00");
   const videoRef = useRef<HTMLVideoElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setVideoUrl(hlsUrl);
+  }, [streamUrl]);
 
   const fmt = (s: number) =>
     `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
@@ -57,15 +84,17 @@ export default function VideoCard({
     const video = videoRef.current;
     if (!video || !videoUrl) return;
 
-    if (videoUrl.includes(".m3u8")) {
+    if (videoUrl.includes(".m3u8") || videoUrl.includes("stream.mux.com")) {
       if (Hls.isSupported()) {
-        const hls = new Hls({ autoStartLoad: true });
+        const hls = new Hls({ autoStartLoad: true, enableWorker: true });
         hls.loadSource(videoUrl);
         hls.attachMedia(video);
         return () => hls.destroy();
       } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
         video.src = videoUrl;
       }
+    } else {
+      video.src = videoUrl;
     }
   }, [videoUrl]);
 
@@ -132,6 +161,11 @@ export default function VideoCard({
   const hasVideo = !!videoUrl;
   const showWatchAgain = (!hasVideo && hasWatchAgain) || ended;
 
+  // Use Mux poster thumbnail if available
+  const posterImage = playbackId
+    ? `https://image.mux.com/${playbackId}/thumbnail.jpg?time=1&width=1280`
+    : image;
+
   const handleThumbnailClick = () => {
     if (hasVideo) return;
     if (loadable) { pickVideo(); return; }
@@ -187,7 +221,7 @@ export default function VideoCard({
         <div className="absolute inset-0 bg-black" />
 
         <img
-          src={image}
+          src={posterImage}
           alt={title}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${hasVideo ? "opacity-0" : "opacity-100"}`}
         />
@@ -195,12 +229,12 @@ export default function VideoCard({
         {hasVideo && (
           <video
             ref={videoRef}
-            src={videoUrl.includes(".m3u8") ? undefined : videoUrl}
             className="absolute inset-0 w-full h-full object-cover"
             onLoadedMetadata={handleMeta}
             onTimeUpdate={handleTimeUpdate}
             onEnded={handleEnded}
             playsInline
+            controls={false}
           />
         )}
 
