@@ -135,9 +135,10 @@ export default function App() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleSaveContent = async (updated: SiteContent) => {
+  const handleSaveContent = async (updated: SiteContent): Promise<boolean> => {
     setContent(updated);
-    await saveGlobalContent(updated);
+    const ok = await saveGlobalContent(updated);
+    return ok;
   };
 
   const handlePinSubmit = () => {
