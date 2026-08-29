@@ -44,6 +44,7 @@ export default function VideoCard({
   const [videoUrl, setVideoUrl] = useState<string | null>(hlsUrl);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -106,6 +107,22 @@ export default function VideoCard({
     }
   };
 
+  const toggleFullscreen = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const container = containerRef.current;
+    const video = videoRef.current;
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else if (container?.requestFullscreen) {
+      container.requestFullscreen().catch(() => {});
+    } else if ((container as any)?.webkitRequestFullscreen) {
+      (container as any).webkitRequestFullscreen();
+    } else if ((video as any)?.webkitEnterFullscreen) {
+      (video as any).webkitEnterFullscreen();
+    }
+  };
+
   const handleShare = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (backlink) {
@@ -150,7 +167,7 @@ export default function VideoCard({
           </p>
         </div>
 
-        {/* Single Clean Neutral Action Icon (No Blue Background, No Duplicate Icon) */}
+        {/* Single Clean Neutral Action Icon */}
         <div className="flex items-center gap-1 mt-0.5 shrink-0">
           <button
             onClick={handleShare}
@@ -170,8 +187,9 @@ export default function VideoCard({
         </div>
       </div>
 
-      {/* Video Frame */}
+      {/* Video Frame Container */}
       <div
+        ref={containerRef}
         className={`relative rounded-[16px] overflow-hidden group ${hasVideo || loadable ? "cursor-pointer" : "cursor-default"}`}
         style={{ aspectRatio: "16/9" }}
         onClick={hasVideo ? togglePlay : handleThumbnailClick}
@@ -196,26 +214,40 @@ export default function VideoCard({
           />
         )}
 
-        {/* Sound Toggle Control (Mute / Unmute Button) */}
+        {/* Action Controls: Sound Mute & Fullscreen Buttons */}
         {hasVideo && (
-          <button
-            onClick={toggleMute}
-            className="absolute bottom-3 right-3 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md"
-            title={muted ? "Unmute sound" : "Mute sound"}
-          >
-            {muted ? (
+          <div className="absolute bottom-3 right-3 z-20 flex items-center gap-1.5">
+            {/* Sound Toggle Button */}
+            <button
+              onClick={toggleMute}
+              className="w-8 h-8 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md"
+              title={muted ? "Unmute sound" : "Mute sound"}
+            >
+              {muted ? (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <line x1="23" y1="9" x2="17" y2="15" />
+                  <line x1="17" y1="9" x2="23" y2="15" />
+                </svg>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                </svg>
+              )}
+            </button>
+
+            {/* Fullscreen Button */}
+            <button
+              onClick={toggleFullscreen}
+              className="w-8 h-8 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md"
+              title="Full screen"
+            >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                <line x1="23" y1="9" x2="17" y2="15" />
-                <line x1="17" y1="9" x2="23" y2="15" />
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
               </svg>
-            ) : (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
-              </svg>
-            )}
-          </button>
+            </button>
+          </div>
         )}
 
         {/* Load hint — owner only */}
