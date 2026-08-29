@@ -9,6 +9,9 @@ import Component from "@/imports/Component1/index";
 import Component1_1 from "@/imports/Component1-1/index";
 import Dashboard, { type SiteContent } from "@/pages/Dashboard";
 import { getCachedContent, fetchGlobalContent, saveGlobalContent } from "@/services/db";
+import TweetsMasonryGrid from "@/components/TweetsGrid/TweetsMasonryGrid";
+import TweetLightboxModal from "@/components/TweetsGrid/TweetLightboxModal";
+import { DEMO_TWEETS } from "@/types/tweet";
 import svgPaths from "@/imports/Desktop3/svg-kyk0s1v2sg";
 import imgAvatar from "@/imports/Desktop3/72045e7df721190a6b214bc6d3bf1f20b56300de.png";
 import imgVideoThumb from "@/imports/Desktop3/749cd5750ae3155ad330123057def42bde6aceee.png";
@@ -85,6 +88,7 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [filterTooltip, setFilterTooltip] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [tweetLightboxIndex, setTweetLightboxIndex] = useState<number | null>(null);
 
   // Lenis Smooth Scroll initialization
   useEffect(() => {
@@ -347,21 +351,10 @@ export default function App() {
             ))}
           </div>
         ) : (
-          <div className="min-h-[360px] w-full rounded-[24px] border border-dashed border-[#e5e5e5] bg-[#fafafa]/50 flex items-center justify-center p-8">
-            <div className="text-center flex flex-col items-center gap-3 max-w-[320px]">
-              <div className="w-12 h-12 rounded-full bg-[#f0f0f0] flex items-center justify-center text-[#999]">
-                <svg width="22" height="22" viewBox="0 0 16.2 16.2" fill="none">
-                  <path d={svgPaths.p33ab300} stroke="#888" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="text-[15px] font-semibold text-[#1a1a1a] tracking-[-0.01em]">Tweets Area</p>
-                <p className="text-[13px] text-[#888] tracking-[-0.01em] leading-relaxed">
-                  Blank placeholder — ready for new Twitter layout & content structure.
-                </p>
-              </div>
-            </div>
-          </div>
+          <TweetsMasonryGrid
+            tweets={content.tweets && content.tweets.length > 0 ? content.tweets : DEMO_TWEETS}
+            onSelectTweet={(idx) => setTweetLightboxIndex(idx)}
+          />
         )}
       </section>
 
@@ -372,6 +365,15 @@ export default function App() {
         videos={displayVideos}
         onClose={() => setLightboxIndex(null)}
         onNavigate={(idx) => setLightboxIndex(idx)}
+      />
+
+      {/* Pop-up Tweet Pin Lightbox Modal */}
+      <TweetLightboxModal
+        isOpen={tweetLightboxIndex !== null}
+        currentIndex={tweetLightboxIndex ?? 0}
+        tweets={content.tweets && content.tweets.length > 0 ? content.tweets : DEMO_TWEETS}
+        onClose={() => setTweetLightboxIndex(null)}
+        onNavigate={(idx) => setTweetLightboxIndex(idx)}
       />
 
       {/* PIN Modal */}

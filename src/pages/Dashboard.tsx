@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { DEMO_TWEETS, type TweetEntry } from "@/types/tweet";
 
 export interface VideoEntry {
   title: string;
@@ -9,11 +10,7 @@ export interface VideoEntry {
   isPinned?: boolean;
 }
 
-export interface TweetEntry {
-  title: string;
-  status: string;
-  backlink: string;
-}
+export type { TweetEntry };
 
 export interface SiteContent {
   name: string;
@@ -35,11 +32,7 @@ export const defaultContent: SiteContent = {
     { title: "Behind-the-scenes documentary", status: "Captured?", backlink: "", streamUrl: "", isPinned: false },
     { title: "Event recap video", status: "Showcased?", backlink: "", streamUrl: "", isPinned: false },
   ],
-  tweets: [
-    { title: "Tweet post #1", status: "Viral?", backlink: "" },
-    { title: "Tweet post #2", status: "Trending?", backlink: "" },
-    { title: "Tweet post #3", status: "Shared?", backlink: "" },
-  ],
+  tweets: DEMO_TWEETS,
 };
 
 interface Props {
@@ -59,10 +52,12 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
   }));
   const [saveState, setSaveState] = useState<"idle" | "saved">("idle");
   const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
+  const [uploadingTweetIndex, setUploadingTweetIndex] = useState<number | null>(null);
   const [cardTab, setCardTab] = useState<CardTab>("shorts");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   const videoFileRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const tweetFileRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const set = <K extends keyof SiteContent>(key: K, value: SiteContent[K]) => {
     setDraft((d) => ({ ...d, [key]: value }));
@@ -117,131 +112,191 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
       ...d,
       videos: [
         { title: "New Short Video", status: "New?", backlink: "", streamUrl: "", isPinned: false },
-        ...d.videos, // Recently added short goes first at position 1
+        ...d.videos,
       ],
     }));
     setSaveState("idle");
   };
 
-  const removeVideo = (index: number) => {
+  const removeVideo = (i: number) => {
+    setDraft((d) => ({ ...d, videos: d.videos.filter((_, idx) => idx !== i) }));
+    setSaveState("idle");
+  };
+
+  const handleVideoFileUpload = async (i: number, file: File) => {
+    setUploadingIndex(i);
+    try {
+      const filename = `short-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": file.type,
+          "x-filename": filename,
+        },
+        body: file,
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Upload failed");
+      }
+
+      const data = await res.json();
+      setVideo(i, "streamUrl", data.url);
+      setVideo(i, "localVideoUrl", undefined);
+    } catch (err: any) {
+      console.warn("Cloud upload unavailable, storing blob locally:", err);
+      const localUrl = URL.createObjectURL(file);
+      setVideo(i, "localVideoUrl", localUrl);
+      setVideo(i, "streamUrl", undefined);
+    } finally {
+      setUploadingIndex(null);
+    }
+  };
+
+  // --- Tweets Studio Handlers ---
+  const setTweet = (i: number, key: keyof TweetEntry, value: any) => {
+    setDraft((d) => {
+      const tweets = [...d.tweets];
+      tweets[i] = { ...tweets[i], [key]: value };
+      return { ...d, tweets };
+    });
+    setSaveState("idle");
+  };
+
+  const autoDetectTweetAspect = (i: number, url: string) => {
+    if (!url) return;
+    const img = new Image();
+    img.onload = () => {
+      if (img.width && img.height) {
+        const ratio = Number((img.width / img.height).toFixed(3));
+        setTweet(i, "aspectRatio", ratio);
+      }
+    };
+    img.src = url;
+  };
+
+  const togglePinTweet = (i: number) => {
+    setDraft((d) => {
+      const tweets = [...d.tweets];
+      tweets[i] = { ...tweets[i], isPinned: !tweets[i].isPinned };
+      return { ...d, tweets };
+    });
+    setSaveState("idle");
+  };
+
+  const addTweet = () => {
+    const newEntry: TweetEntry = {
+      id: `tweet-${Date.now()}`,
+      title: "New Pin Showcase",
+      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop",
+      aspectRatio: 0.75,
+      placeholderColor: "#1f1f23",
+      caption: "Add custom description or insights here...",
+      backlink: "",
+      likes: 0,
+      retweets: 0,
+      isPinned: false,
+      createdAt: new Date().toISOString(),
+    };
     setDraft((d) => ({
       ...d,
-      videos: d.videos.filter((_, i) => i !== index),
+      tweets: [newEntry, ...d.tweets],
     }));
     setSaveState("idle");
   };
 
-  const handleVideoFileLoad = async (i: number, file: File) => {
-    setUploadingIndex(i);
+  const removeTweet = (i: number) => {
+    setDraft((d) => ({ ...d, tweets: d.tweets.filter((_, idx) => idx !== i) }));
+    setSaveState("idle");
+  };
+
+  const handleTweetImageUpload = async (i: number, file: File) => {
+    setUploadingTweetIndex(i);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
+      const filename = `tweet-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
       const res = await fetch("/api/upload", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": file.type,
+          "x-filename": filename,
+        },
+        body: file,
       });
 
       if (res.ok) {
         const data = await res.json();
-        if (data.url) {
-          setVideo(i, "streamUrl", data.url);
-          setUploadingIndex(null);
-          return;
-        }
+        setTweet(i, "image", data.url);
+        autoDetectTweetAspect(i, data.url);
+      } else {
+        const localUrl = URL.createObjectURL(file);
+        setTweet(i, "image", localUrl);
+        autoDetectTweetAspect(i, localUrl);
       }
-    } catch (err) {
-      console.warn("Cloud upload unavailable, reading local blob:", err);
+    } catch {
+      const localUrl = URL.createObjectURL(file);
+      setTweet(i, "image", localUrl);
+      autoDetectTweetAspect(i, localUrl);
+    } finally {
+      setUploadingTweetIndex(null);
     }
-
-    const localUrl = URL.createObjectURL(file);
-    setVideo(i, "localVideoUrl", localUrl);
-    setUploadingIndex(null);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     onSave(draft);
     setSaveState("saved");
     setTimeout(() => setSaveState("idle"), 2500);
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f4f6] text-[#1a1a1a] flex flex-col font-sans">
-      {/* Top Header */}
-      <header className="sticky top-0 z-40 bg-white border-b border-[#e5e5e7] px-6 py-3.5 flex items-center justify-between shadow-xs">
+    <div className="min-h-screen bg-[#f7f7f8] text-[#1a1a1a]" style={{ fontFamily: "Inter, sans-serif" }}>
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-[#eaeaea] px-6 py-3.5 flex items-center justify-between shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-lg bg-[#1a1a1a] text-white flex items-center justify-center font-bold text-[13px]">
-            2x
-          </div>
-          <div>
-            <h1 className="text-[14px] font-bold text-[#1a1a1a] tracking-[-0.01em]">Content Studio</h1>
-            <p className="text-[11px] text-[#888] font-medium tracking-[-0.01em]">Turso Database Edge Sync Active</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          {saveState === "saved" && (
-            <span className="text-[12px] font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              ✓ Saved & Live Globally
-            </span>
-          )}
-
-          <button
-            onClick={handleSave}
-            className="px-4 py-2 rounded-lg bg-[#1a1a1a] text-white font-semibold text-[13px] hover:bg-[#333] transition-colors shadow-xs"
-          >
-            Save changes
-          </button>
-
           <button
             onClick={onExit}
-            className="px-3.5 py-2 rounded-lg bg-[#f0f0f2] text-[#555] font-semibold text-[13px] hover:bg-[#e4e4e6] transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] text-[#666] hover:text-[#1a1a1a] hover:bg-[#f0f0f0] transition-colors font-medium"
           >
-            Exit
+            ← Exit Studio
           </button>
+          <span className="text-[#ddd]">|</span>
+          <h1 className="text-[14px] font-semibold text-[#1a1a1a] tracking-[-0.01em]">
+            Content Studio & Portfolio Settings
+          </h1>
         </div>
+
+        <button
+          onClick={handleSave}
+          className={`px-5 py-2 rounded-full text-[13px] font-semibold transition-all shadow-sm ${
+            saveState === "saved"
+              ? "bg-[#22c55e] text-white"
+              : "bg-[#1a1a1a] text-white hover:bg-[#333]"
+          }`}
+        >
+          {saveState === "saved" ? "✓ Saved & Synced!" : "Save Changes"}
+        </button>
       </header>
 
-      {/* Main Studio Body */}
-      <main className="flex-1 max-w-4xl w-full mx-auto p-6 md:p-8 flex flex-col gap-6">
-        {/* Info Banner */}
-        <div className="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-[18px] p-5 text-white shadow-md flex items-center justify-between gap-4">
-          <div className="flex items-start gap-3.5">
-            <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-              </svg>
-            </div>
-            <div>
-              <h2 className="text-[14px] font-bold tracking-tight">Turso Cloud Sync Connected</h2>
-              <p className="text-[12px] text-blue-100 leading-relaxed mt-0.5">
-                Changes saved here update instantly across all visitors, computers, and mobile browsers worldwide.
-              </p>
-            </div>
+      {/* Main Form */}
+      <main className="max-w-[860px] mx-auto px-5 py-8 flex flex-col gap-8">
+        {/* Profile Info */}
+        <Section
+          label="Profile & Bio Settings"
+          icon={
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 8a3 3 0 100-6 3 3 0 000 6zM2 14a6 6 0 0112 0H2z" fill="#1a1a1a" />
+            </svg>
+          }
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Field label="Display Name" value={draft.name} onChange={(v) => set("name", v)} />
+            <Field label="Job Title" value={draft.jobTitle} onChange={(v) => set("jobTitle", v)} />
           </div>
-        </div>
-
-        {/* Profile Details */}
-        <Section label="Profile Details" icon={
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <circle cx="7" cy="5" r="3" stroke="#888" strokeWidth="1.3" />
-            <path d="M2 12c0-2.5 2.2-4 5-4s5 1.5 5 4" stroke="#888" strokeWidth="1.3" strokeLinecap="round" />
-          </svg>
-        }>
-          <Field label="Display Name" value={draft.name} onChange={(v) => set("name", v)} />
-          <Field label="Job Title" value={draft.jobTitle} onChange={(v) => set("jobTitle", v)} />
-        </Section>
-
-        {/* Bio */}
-        <Section label="Bio" icon={
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M2 3h10M2 6h10M2 9h6" stroke="#888" strokeWidth="1.3" strokeLinecap="round" />
-          </svg>
-        }>
           <Field label="Paragraph 1" hint="Wrap words in **bold** for emphasis" value={draft.bio1} onChange={(v) => set("bio1", v)} multiline />
           <Field label="Paragraph 2" value={draft.bio2} onChange={(v) => set("bio2", v)} multiline />
         </Section>
 
-        {/* Video Cards Studio — Shorts / Tweets */}
+        {/* Video Cards & Tweets Manager */}
         <div className="bg-white rounded-[18px] border border-[#ebebeb] overflow-hidden shadow-sm">
           {/* Section header with tab switcher */}
           <div className="px-5 py-3.5 border-b border-[#f5f5f5] flex items-center justify-between">
@@ -250,7 +305,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                 <rect x="1" y="2.5" width="12" height="9" rx="1.5" stroke="#888" strokeWidth="1.3" />
                 <path d="M5.5 5l3.5 2-3.5 2V5z" fill="#888" />
               </svg>
-              <h2 className="text-[13px] font-semibold text-[#1a1a1a] tracking-[-0.02em]">Shorts & Content Manager</h2>
+              <h2 className="text-[13px] font-semibold text-[#1a1a1a] tracking-[-0.02em]">Shorts & Tweets Content Studio</h2>
             </div>
             {/* Tab pills */}
             <div className="flex gap-0.5 bg-[#f5f5f5] p-0.5 rounded-full">
@@ -258,7 +313,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                 <button
                   key={tab}
                   onClick={() => setCardTab(tab)}
-                  className={`px-3 py-1 rounded-full text-[12px] font-medium transition-all duration-150 tracking-[-0.01em] capitalize ${
+                  className={`px-3.5 py-1 rounded-full text-[12px] font-medium transition-all duration-150 tracking-[-0.01em] capitalize ${
                     cardTab === tab
                       ? "bg-white text-[#1a1a1a] shadow-sm font-semibold"
                       : "text-[#999] hover:text-[#666]"
@@ -272,7 +327,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
 
           <div className="px-5 py-4">
             {cardTab === "shorts" ? (
-              /* Shorts — Title, Status tag, HLS stream URL, Drag & Drop Reordering, Pin Option */
+              /* Shorts Studio */
               <div className="flex flex-col gap-5">
                 <div className="flex items-center justify-between pb-1">
                   <div className="flex flex-col gap-0.5">
@@ -280,7 +335,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                       Shorts Collection ({draft.videos.length} videos)
                     </p>
                     <p className="text-[11px] text-[#999]">
-                      💡 Drag cards or use ▲ ▼ arrows to reorder them as you like
+                      💡 Drag cards or use ▲ ▼ arrows to reorder them
                     </p>
                   </div>
                   <button
@@ -298,125 +353,102 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                     onDragStart={() => handleDragStart(i)}
                     onDragOver={handleDragOver}
                     onDrop={() => handleDrop(i)}
-                    className={`border rounded-[14px] p-4 flex flex-col gap-4 transition-all ${
-                      draggedIndex === i ? "opacity-40 scale-[0.99] border-blue-400 bg-blue-50/30" : ""
-                    } ${v.isPinned ? "border-amber-300 bg-amber-50/20 shadow-xs" : "border-[#ebebeb] bg-[#fafafa]"}`}
+                    className={`border rounded-[14px] p-4 flex flex-col gap-3 transition-colors ${
+                      v.isPinned ? "border-[#ff5100]/40 bg-[#fffbf9]" : "border-[#e0e0e0] bg-[#fafafa]"
+                    }`}
                   >
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2.5">
-                        {/* Drag Handle Icon */}
-                        <div
-                          className="cursor-grab active:cursor-grabbing p-1 text-[#aaa] hover:text-[#555] transition-colors"
-                          title="Drag to reorder"
-                        >
-                          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                            <circle cx="5" cy="4" r="1.5" />
-                            <circle cx="11" cy="4" r="1.5" />
-                            <circle cx="5" cy="8" r="1.5" />
-                            <circle cx="11" cy="8" r="1.5" />
-                            <circle cx="5" cy="12" r="1.5" />
-                            <circle cx="11" cy="12" r="1.5" />
-                          </svg>
-                        </div>
-
-                        {/* Quick Up/Down Move Buttons */}
-                        <div className="flex flex-col gap-0.5">
-                          <button
-                            disabled={i === 0}
-                            onClick={() => moveVideo(i, i - 1)}
-                            className="text-[#999] hover:text-black disabled:opacity-20 transition-colors p-0.5"
-                            title="Move up"
-                          >
-                            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-                              <path d="M2 8l4-4 4 4" />
-                            </svg>
-                          </button>
-                          <button
-                            disabled={i === draft.videos.length - 1}
-                            onClick={() => moveVideo(i, i + 1)}
-                            className="text-[#999] hover:text-black disabled:opacity-20 transition-colors p-0.5"
-                            title="Move down"
-                          >
-                            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-                              <path d="M2 4l4 4 4-4" />
-                            </svg>
-                          </button>
-                        </div>
-
-                        <p className="text-[11px] font-bold text-[#888] uppercase tracking-[0.07em]">
-                          Short #{i + 1}
-                        </p>
-
+                      <div className="flex items-center gap-2">
+                        <span className="cursor-grab active:cursor-grabbing text-[#bbb] hover:text-[#666] text-[16px] select-none pr-1">
+                          ⋮⋮
+                        </span>
+                        <span className="text-[12px] font-mono text-[#aaa]">#{i + 1}</span>
                         {v.isPinned && (
-                          <span className="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-200">
-                            📌 Pinned to top
+                          <span className="bg-[#ff5100]/10 text-[#ff5100] border border-[#ff5100]/20 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                            📌 Pinned Short
                           </span>
                         )}
                       </div>
 
                       <div className="flex items-center gap-2">
-                        {/* Pin Option */}
+                        <button
+                          onClick={() => moveVideo(i, i - 1)}
+                          disabled={i === 0}
+                          className="px-2 py-0.5 text-[11px] font-medium bg-[#f0f0f0] text-[#666] rounded hover:bg-[#e0e0e0] disabled:opacity-30"
+                        >
+                          ▲ Up
+                        </button>
+                        <button
+                          onClick={() => moveVideo(i, i + 1)}
+                          disabled={i === draft.videos.length - 1}
+                          className="px-2 py-0.5 text-[11px] font-medium bg-[#f0f0f0] text-[#666] rounded hover:bg-[#e0e0e0] disabled:opacity-30"
+                        >
+                          ▼ Down
+                        </button>
                         <button
                           onClick={() => togglePinVideo(i)}
-                          className={`px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all flex items-center gap-1 border ${
+                          className={`px-2.5 py-0.5 text-[11px] font-medium rounded transition-colors ${
                             v.isPinned
-                              ? "bg-amber-100 text-amber-800 border-amber-300 shadow-xs"
-                              : "bg-white text-[#666] border-[#d8d8d8] hover:bg-[#f0f0f0]"
+                              ? "bg-[#ff5100] text-white"
+                              : "bg-[#f0f0f0] text-[#666] hover:bg-[#e0e0e0]"
                           }`}
-                          title={v.isPinned ? "Unpin from top" : "Pin short to top"}
                         >
-                          📌 {v.isPinned ? "Pinned" : "Pin"}
+                          {v.isPinned ? "Unpin" : "Pin Short"}
                         </button>
                         <button
                           onClick={() => removeVideo(i)}
-                          className="text-[11px] text-red-500 hover:underline font-medium px-1"
+                          className="text-[12px] text-red-500 hover:text-red-700 font-medium ml-2"
                         >
-                          Remove
+                          Delete
                         </button>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <Field label="Title" value={v.title} onChange={(val) => setVideo(i, "title", val)} placeholder="Short Video Title" />
-                      <Field label="Status tag" value={v.status} onChange={(val) => setVideo(i, "status", val)} placeholder="Boosted? / Elevated?" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <Field
+                        label="Title"
+                        value={v.title}
+                        onChange={(val) => setVideo(i, "title", val)}
+                      />
+                      <Field
+                        label="Status Badge"
+                        value={v.status}
+                        onChange={(val) => setVideo(i, "status", val)}
+                      />
                     </div>
 
-                    {/* Backlink */}
                     <Field
-                      label="Post Backlink URL"
-                      hint="Direct link to social media post on X, Instagram, TikTok"
+                      label="Backlink URL"
                       value={v.backlink || ""}
                       onChange={(val) => setVideo(i, "backlink", val)}
-                      placeholder="https://x.com/yourpost"
+                      placeholder="https://..."
                     />
 
-                    {/* Dual Video Source: HLS Stream URL or Manual Upload */}
-                    <div className="border-t border-[#eee] pt-3 flex flex-col gap-3">
-                      <Field
-                        label="HLS Stream Link (.m3u8 / Mux Video Link)"
-                        hint="Paste Mux link (player.mux.com/YOUR_ID) or HLS URL"
-                        value={v.streamUrl || ""}
-                        onChange={(val) => setVideo(i, "streamUrl", val)}
-                        placeholder="https://player.mux.com/YOUR_PLAYBACK_ID"
-                      />
-
-                      {/* Manual Upload from Computer */}
-                      <div className="flex flex-col gap-1.5">
-                        <label className="text-[11px] font-semibold text-[#666]">
-                          Or Choose Local Video File (.mp4)
-                        </label>
-                        <div className="flex items-center gap-3">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[11px] font-semibold text-[#666]">
+                        Video Source (HLS .m3u8 link OR Direct MP4 upload)
+                      </label>
+                      <div className="flex flex-col gap-2">
+                        <input
+                          type="text"
+                          value={v.streamUrl || ""}
+                          onChange={(e) => setVideo(i, "streamUrl", e.target.value)}
+                          placeholder="Paste HLS Stream URL (e.g., https://.../manifest.m3u8)"
+                          className="w-full text-[13px] px-3.5 py-2 rounded-lg bg-white border border-[#e0e0e0] focus:border-[#1a1a1a] outline-none"
+                        />
+                        <div className="flex items-center gap-2">
                           <input
-                            ref={(el) => { videoFileRefs.current[i] = el; }}
                             type="file"
-                            accept="video/*"
-                            className="hidden"
+                            accept="video/mp4,video/*"
+                            ref={(el) => (videoFileRefs.current[i] = el)}
                             onChange={(e) => {
-                              const f = e.target.files?.[0];
-                              if (f) handleVideoFileLoad(i, f);
+                              const file = e.target.files?.[0];
+                              if (file) handleVideoFileUpload(i, file);
                             }}
+                            className="hidden"
                           />
                           <button
+                            type="button"
                             onClick={() => videoFileRefs.current[i]?.click()}
                             disabled={uploadingIndex === i}
                             className="px-3.5 py-1.5 rounded-lg bg-[#eef2ff] text-[#4f46e5] text-[12px] font-semibold hover:bg-[#e0e7ff] transition-colors border border-[#c7d2fe]"
@@ -430,9 +462,142 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                 ))}
               </div>
             ) : (
-              /* Tweets Placeholders */
-              <div className="flex flex-col gap-4">
-                <p className="text-[12px] text-[#888]">Tweets UI is under active development.</p>
+              /* Tweets Studio — Full Pinterest Pins Manager */
+              <div className="flex flex-col gap-5">
+                <div className="flex items-center justify-between pb-1">
+                  <div className="flex flex-col gap-0.5">
+                    <p className="text-[12px] font-semibold text-[#666]">
+                      Tweets & Pins Matrix ({draft.tweets.length} items)
+                    </p>
+                    <p className="text-[11px] text-[#999]">
+                      💡 Upload 2x high-density images or paste image URLs. Aspect ratio calculates automatically!
+                    </p>
+                  </div>
+                  <button
+                    onClick={addTweet}
+                    className="text-[12px] font-bold text-[#ff5100] hover:underline flex items-center gap-1 shrink-0"
+                  >
+                    + Add New Tweet Pin
+                  </button>
+                </div>
+
+                {draft.tweets.map((t, i) => (
+                  <div
+                    key={t.id || i}
+                    className={`border rounded-[14px] p-4 flex flex-col gap-3.5 transition-colors ${
+                      t.isPinned ? "border-[#ff5100]/40 bg-[#fffbf9]" : "border-[#e0e0e0] bg-[#fafafa]"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[12px] font-mono text-[#aaa]">#{i + 1}</span>
+                        {t.isPinned && (
+                          <span className="bg-[#ff5100]/10 text-[#ff5100] border border-[#ff5100]/20 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                            📌 Pinned
+                          </span>
+                        )}
+                        <span className="text-[11px] font-mono text-[#888] bg-white px-2 py-0.5 rounded border">
+                          Aspect: {t.aspectRatio ? `${t.aspectRatio} (W/H)` : "Auto-detecting..."}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => togglePinTweet(i)}
+                          className={`px-2.5 py-0.5 text-[11px] font-medium rounded transition-colors ${
+                            t.isPinned
+                              ? "bg-[#ff5100] text-white"
+                              : "bg-[#f0f0f0] text-[#666] hover:bg-[#e0e0e0]"
+                          }`}
+                        >
+                          {t.isPinned ? "Unpin" : "Pin Item"}
+                        </button>
+                        <button
+                          onClick={() => removeTweet(i)}
+                          className="text-[12px] text-red-500 hover:text-red-700 font-medium ml-2"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <Field
+                        label="Title"
+                        value={t.title}
+                        onChange={(val) => setTweet(i, "title", val)}
+                      />
+                      <Field
+                        label="Backlink URL"
+                        value={t.backlink || ""}
+                        onChange={(val) => setTweet(i, "backlink", val)}
+                        placeholder="https://x.com/..."
+                      />
+                    </div>
+
+                    <Field
+                      label="Caption / Description"
+                      value={t.caption || ""}
+                      onChange={(val) => setTweet(i, "caption", val)}
+                      multiline
+                    />
+
+                    {/* Image URL & File Upload */}
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[11px] font-semibold text-[#666]">
+                        Image Source URL (2x density recommended)
+                      </label>
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="text"
+                            value={t.image}
+                            onChange={(e) => {
+                              const url = e.target.value;
+                              setTweet(i, "image", url);
+                              autoDetectTweetAspect(i, url);
+                            }}
+                            placeholder="https://images.unsplash.com/..."
+                            className="flex-1 text-[13px] px-3.5 py-2 rounded-lg bg-white border border-[#e0e0e0] focus:border-[#1a1a1a] outline-none"
+                          />
+                          <input
+                            type="file"
+                            accept="image/*"
+                            ref={(el) => (tweetFileRefs.current[i] = el)}
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) handleTweetImageUpload(i, file);
+                            }}
+                            className="hidden"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => tweetFileRefs.current[i]?.click()}
+                            disabled={uploadingTweetIndex === i}
+                            className="px-3.5 py-2 rounded-lg bg-[#f0fdf4] text-[#16a34a] text-[12px] font-semibold hover:bg-[#dcfce7] transition-colors border border-[#bbf7d0] shrink-0"
+                          >
+                            {uploadingTweetIndex === i ? "Uploading Image..." : "🖼️ Upload Image File"}
+                          </button>
+                        </div>
+
+                        {/* Image Preview Thumbnail */}
+                        {t.image && (
+                          <div className="flex items-center gap-3 pt-1">
+                            <div
+                              className="w-16 rounded-lg bg-[#eee] border overflow-hidden shrink-0"
+                              style={{ aspectRatio: t.aspectRatio ? `${t.aspectRatio}` : "1" }}
+                            >
+                              <img src={t.image} alt="Preview" className="w-full h-full object-cover" />
+                            </div>
+                            <p className="text-[11px] text-[#888]">
+                              Preview locked at pre-allocated aspect ratio wrapper.
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -460,10 +625,10 @@ function Field({
   label: string; hint?: string; value: string; onChange: (v: string) => void; placeholder?: string; multiline?: boolean;
 }) {
   return (
-    <div className="flex flex-col gap-1 flex-1">
-      <div className="flex items-baseline justify-between gap-2">
-        <label className="text-[12px] font-medium text-[#555] tracking-[-0.01em]">{label}</label>
-        {hint && <span className="text-[11px] text-[#a0a0a0] font-normal">{hint}</span>}
+    <div className="flex flex-col gap-1.5 w-full">
+      <div className="flex items-center justify-between">
+        <label className="text-[11px] font-semibold text-[#666]">{label}</label>
+        {hint && <span className="text-[11px] text-[#aaa]">{hint}</span>}
       </div>
       {multiline ? (
         <textarea
@@ -471,7 +636,7 @@ function Field({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full text-[13px] text-[#1a1a1a] px-3.5 py-2.5 rounded-[10px] bg-[#f7f7f8] border border-[#e5e5e7] focus:border-[#1a1a1a] focus:bg-white outline-none transition-colors leading-relaxed resize-y"
+          className="text-[13px] px-3.5 py-2.5 rounded-lg bg-white border border-[#e0e0e0] focus:border-[#1a1a1a] outline-none transition-colors leading-relaxed"
         />
       ) : (
         <input
@@ -479,7 +644,7 @@ function Field({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full text-[13px] text-[#1a1a1a] px-3.5 py-2 rounded-[10px] bg-[#f7f7f8] border border-[#e5e5e7] focus:border-[#1a1a1a] focus:bg-white outline-none transition-colors"
+          className="text-[13px] px-3.5 py-2 rounded-lg bg-white border border-[#e0e0e0] focus:border-[#1a1a1a] outline-none transition-colors"
         />
       )}
     </div>
