@@ -55,6 +55,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
   const [isBulkProcessing, setIsBulkProcessing] = useState(false);
   const [bulkStatusText, setBulkStatusText] = useState("");
   const [bulkUrls, setBulkUrls] = useState("");
+  const [isDraggingOverZone, setIsDraggingOverZone] = useState(false);
 
   const [cardTab, setCardTab] = useState<CardTab>("shorts");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
@@ -159,7 +160,6 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
 
   // --- BULK TWEETS / PINS IMPORTER ENGINE ---
 
-  // Measures image width & height to calculate aspect ratio (W / H)
   const measureAspect = (url: string): Promise<number> => {
     return new Promise((resolve) => {
       const img = new Image();
@@ -175,7 +175,6 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
     });
   };
 
-  // Convert File to permanent Base64 Data URL
   const fileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -185,9 +184,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
     });
   };
 
-  // Handle Multiple File Selection from Computer (e.g., 20, 50, 100 images at once)
-  const handleBulkFilesSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
+  const processFileList = async (files: File[]) => {
     if (files.length === 0) return;
 
     setIsBulkProcessing(true);
@@ -223,11 +220,21 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
     setSaveState("idle");
     setTimeout(() => setBulkStatusText(""), 4000);
 
-    // Reset file input
     if (bulkFileRef.current) bulkFileRef.current.value = "";
   };
 
-  // Handle Bulk URL Textarea Import (one link per line)
+  const handleBulkFilesSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    processFileList(files);
+  };
+
+  const handleDropZoneDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDraggingOverZone(false);
+    const files = Array.from(e.dataTransfer.files || []).filter((f) => f.type.startsWith("image/"));
+    processFileList(files);
+  };
+
   const handleBulkUrlsImport = async () => {
     const lines = bulkUrls
       .split("\n")
@@ -318,7 +325,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
       </header>
 
       {/* Main Form */}
-      <main className="max-w-[920px] mx-auto px-5 py-8 flex flex-col gap-8">
+      <main className="max-w-[960px] mx-auto px-5 py-8 flex flex-col gap-8">
         {/* Profile Info */}
         <Section
           label="Profile & Bio Settings"
@@ -345,7 +352,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                 <rect x="1" y="2.5" width="12" height="9" rx="1.5" stroke="#888" strokeWidth="1.3" />
                 <path d="M5.5 5l3.5 2-3.5 2V5z" fill="#888" />
               </svg>
-              <h2 className="text-[13px] font-semibold text-[#1a1a1a] tracking-[-0.02em]">Shorts & Tweets Studio</h2>
+              <h2 className="text-[13px] font-semibold text-[#1a1a1a] tracking-[-0.02em]">Shorts & Tweets Content Studio</h2>
             </div>
             {/* Tab pills */}
             <div className="flex gap-0.5 bg-[#f5f5f5] p-0.5 rounded-full">
@@ -353,19 +360,19 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                 <button
                   key={tab}
                   onClick={() => setCardTab(tab)}
-                  className={`px-3.5 py-1 rounded-full text-[12px] font-medium transition-all duration-150 tracking-[-0.01em] capitalize ${
+                  className={`px-4 py-1.5 rounded-full text-[12px] font-semibold transition-all duration-150 tracking-[-0.01em] capitalize ${
                     cardTab === tab
-                      ? "bg-white text-[#1a1a1a] shadow-sm font-semibold"
-                      : "text-[#999] hover:text-[#666]"
+                      ? "bg-black text-white shadow-sm font-semibold"
+                      : "text-[#888] hover:text-[#333]"
                   }`}
                 >
-                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  {tab === "tweets" ? "Tweets (Pinterest Grid)" : "Shorts"}
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="px-5 py-5">
+          <div className="px-5 py-6">
             {cardTab === "shorts" ? (
               /* Shorts Studio */
               <div className="flex flex-col gap-5">
@@ -502,110 +509,122 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                 ))}
               </div>
             ) : (
-              /* BULK IMAGE IMPORTER — PURE PINTEREST GRID MANAGER */
+              /* BULK IMAGE DROPZONE & IMPORTER — 100% PURE PINTEREST GRID MANAGER */
               <div className="flex flex-col gap-6">
-                {/* Importer Controls Box */}
-                <div className="bg-[#fcfcfd] border border-[#e2e4e9] rounded-[16px] p-5 flex flex-col gap-4 shadow-xs">
+                {/* Large Drag & Drop Box */}
+                <div
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDraggingOverZone(true);
+                  }}
+                  onDragLeave={() => setIsDraggingOverZone(false)}
+                  onDrop={handleDropZoneDrop}
+                  className={`border-2 border-dashed rounded-[20px] p-8 flex flex-col items-center justify-center text-center gap-3 transition-colors cursor-pointer ${
+                    isDraggingOverZone
+                      ? "border-[#ff5100] bg-[#fff8f5]"
+                      : "border-[#d8d8d8] bg-[#fafafa] hover:border-[#1a1a1a] hover:bg-white"
+                  }`}
+                  onClick={() => bulkFileRef.current?.click()}
+                >
+                  <div className="w-14 h-14 rounded-full bg-[#f0f0f0] flex items-center justify-center text-[#ff5100]">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+
                   <div className="flex flex-col gap-1">
-                    <h3 className="text-[14px] font-bold text-[#1a1a1a] tracking-[-0.01em]">
-                      🖼️ Bulk Image Importer
-                    </h3>
-                    <p className="text-[12px] text-[#666] leading-relaxed">
-                      Select multiple image files at once from your computer or paste image links in bulk. Aspect ratios & 2x previews calculate automatically!
+                    <p className="text-[16px] font-bold text-[#1a1a1a] tracking-[-0.01em]">
+                      Drag & Drop Multiple Images Here
+                    </p>
+                    <p className="text-[13px] text-[#777]">
+                      or click to select 10, 20, 50+ files from your computer
                     </p>
                   </div>
 
-                  {/* Bulk Input Options */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Method 1: Bulk Computer File Picker */}
-                    <div className="flex flex-col gap-2 p-4 rounded-[12px] bg-white border border-[#e5e5e5]">
-                      <span className="text-[12px] font-semibold text-[#1a1a1a]">
-                        📁 Select Multiple Files from PC
-                      </span>
-                      <p className="text-[11px] text-[#888]">
-                        Hold Shift/Ctrl to select 10, 20, or 50+ images at once.
-                      </p>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    ref={bulkFileRef}
+                    onChange={handleBulkFilesSelect}
+                    className="hidden"
+                  />
 
-                      <input
-                        type="file"
-                        multiple
-                        accept="image/*"
-                        ref={bulkFileRef}
-                        onChange={handleBulkFilesSelect}
-                        className="hidden"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => bulkFileRef.current?.click()}
-                        disabled={isBulkProcessing}
-                        className="mt-1 w-full py-2.5 rounded-lg bg-[#ff5100] hover:bg-[#e04700] text-white text-[13px] font-semibold transition-colors flex items-center justify-center gap-2 shadow-xs"
-                      >
-                        <span>📁 Choose Multiple Files</span>
-                      </button>
-                    </div>
-
-                    {/* Method 2: Bulk Image Links Paste */}
-                    <div className="flex flex-col gap-2 p-4 rounded-[12px] bg-white border border-[#e5e5e5]">
-                      <span className="text-[12px] font-semibold text-[#1a1a1a]">
-                        📋 Paste Multiple Image URLs
-                      </span>
-                      <textarea
-                        rows={2}
-                        value={bulkUrls}
-                        onChange={(e) => setBulkUrls(e.target.value)}
-                        placeholder="Paste image links here (one URL per line)..."
-                        className="text-[12px] font-mono px-3 py-1.5 rounded-lg border border-[#e0e0e0] focus:border-[#1a1a1a] outline-none resize-none"
-                      />
-                      <button
-                        type="button"
-                        onClick={handleBulkUrlsImport}
-                        disabled={isBulkProcessing || !bulkUrls.trim()}
-                        className="w-full py-2 rounded-lg bg-[#1a1a1a] hover:bg-[#333] disabled:opacity-40 text-white text-[12px] font-semibold transition-colors flex items-center justify-center gap-1"
-                      >
-                        Import Links
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Status Banner */}
-                  {bulkStatusText && (
-                    <div className="p-3 rounded-lg bg-[#f0fdf4] border border-[#bbf7d0] text-[#166534] text-[12px] font-medium animate-fade-in flex items-center gap-2">
-                      <span className="animate-spin">⏳</span>
-                      <span>{bulkStatusText}</span>
-                    </div>
-                  )}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      bulkFileRef.current?.click();
+                    }}
+                    disabled={isBulkProcessing}
+                    className="mt-2 px-6 py-2.5 rounded-full bg-[#ff5100] hover:bg-[#e04700] text-white text-[13px] font-semibold transition-all shadow-sm"
+                  >
+                    {isBulkProcessing ? "Processing Images..." : "🖼️ Choose Multiple Files from PC"}
+                  </button>
                 </div>
 
-                {/* Grid Management Header */}
-                <div className="flex items-center justify-between pt-2">
+                {/* Bulk URL Paste Option */}
+                <div className="bg-[#f7f7f8] border border-[#e8e8e8] rounded-[16px] p-5 flex flex-col gap-3">
                   <span className="text-[13px] font-bold text-[#1a1a1a]">
-                    Image Gallery ({draft.tweets.length} items total)
+                    📋 Alternatively: Paste Multiple Image Links (One URL per line)
+                  </span>
+                  <textarea
+                    rows={3}
+                    value={bulkUrls}
+                    onChange={(e) => setBulkUrls(e.target.value)}
+                    placeholder="https://images.unsplash.com/photo-1&#10;https://images.unsplash.com/photo-2&#10;..."
+                    className="w-full text-[12px] font-mono p-3 rounded-lg border border-[#e0e0e0] focus:border-[#1a1a1a] outline-none bg-white"
+                  />
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      onClick={handleBulkUrlsImport}
+                      disabled={isBulkProcessing || !bulkUrls.trim()}
+                      className="px-5 py-2 rounded-lg bg-[#1a1a1a] hover:bg-[#333] disabled:opacity-40 text-white text-[12px] font-semibold transition-colors"
+                    >
+                      Import Links
+                    </button>
+                  </div>
+                </div>
+
+                {/* Status Banner */}
+                {bulkStatusText && (
+                  <div className="p-3.5 rounded-xl bg-[#f0fdf4] border border-[#bbf7d0] text-[#166534] text-[13px] font-semibold flex items-center gap-2">
+                    <span className="animate-spin">⏳</span>
+                    <span>{bulkStatusText}</span>
+                  </div>
+                )}
+
+                {/* Grid Management Header */}
+                <div className="flex items-center justify-between pt-2 border-t border-[#eee]">
+                  <span className="text-[14px] font-bold text-[#1a1a1a]">
+                    Pinterest Image Gallery ({draft.tweets.length} items total)
                   </span>
 
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={resetToDefaultDemoTweets}
-                      className="px-3 py-1.5 rounded-lg text-[12px] font-medium text-[#666] hover:bg-[#f0f0f0] transition-colors border border-[#e0e0e0]"
+                      className="px-3.5 py-1.5 rounded-lg text-[12px] font-medium text-[#666] hover:bg-[#f0f0f0] transition-colors border border-[#e0e0e0]"
                     >
                       Reset to 12 Demo Pins
                     </button>
                     <button
                       type="button"
                       onClick={clearAllTweets}
-                      className="px-3 py-1.5 rounded-lg text-[12px] font-medium text-red-600 hover:bg-red-50 transition-colors border border-red-200"
+                      className="px-3.5 py-1.5 rounded-lg text-[12px] font-medium text-red-600 hover:bg-red-50 transition-colors border border-red-200"
                     >
                       Clear All
                     </button>
                   </div>
                 </div>
 
-                {/* Thumbnail Grid Matrix for quick inspection & deletion */}
-                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+                {/* Thumbnail Matrix Preview */}
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3.5">
                   {draft.tweets.map((t, idx) => (
                     <div
                       key={t.id || idx}
-                      className="group relative rounded-xl overflow-hidden bg-[#eee] border border-[#e5e5e5] shadow-xs"
+                      className="group relative rounded-2xl overflow-hidden bg-[#eee] border border-[#e5e5e5] shadow-xs"
                       style={{ aspectRatio: t.aspectRatio ? `${t.aspectRatio}` : "1" }}
                     >
                       <img
@@ -616,14 +635,11 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                       <button
                         type="button"
                         onClick={() => removeTweet(idx)}
-                        className="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-red-700"
+                        className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-red-600 text-white text-[11px] font-bold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-red-700"
                         title="Remove Image"
                       >
                         ✕
                       </button>
-                      <div className="absolute bottom-1 left-1 bg-black/60 text-white text-[9px] font-mono px-1.5 py-0.5 rounded backdrop-blur-xs">
-                        {t.aspectRatio ? `${t.aspectRatio} W/H` : "1:1"}
-                      </div>
                     </div>
                   ))}
                 </div>
