@@ -52,12 +52,15 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
   }));
   const [saveState, setSaveState] = useState<"idle" | "saved">("idle");
   const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
-  const [uploadingTweetIndex, setUploadingTweetIndex] = useState<number | null>(null);
+  const [isBulkProcessing, setIsBulkProcessing] = useState(false);
+  const [bulkStatusText, setBulkStatusText] = useState("");
+  const [bulkUrls, setBulkUrls] = useState("");
+
   const [cardTab, setCardTab] = useState<CardTab>("shorts");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   const videoFileRefs = useRef<(HTMLInputElement | null)[]>([]);
-  const tweetFileRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const bulkFileRef = useRef<HTMLInputElement | null>(null);
 
   const set = <K extends keyof SiteContent>(key: K, value: SiteContent[K]) => {
     setDraft((d) => ({ ...d, [key]: value }));
@@ -154,56 +157,112 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
     }
   };
 
-  // --- Tweets Studio Handlers ---
-  const setTweet = (i: number, key: keyof TweetEntry, value: any) => {
-    setDraft((d) => {
-      const tweets = [...d.tweets];
-      tweets[i] = { ...tweets[i], [key]: value };
-      return { ...d, tweets };
+  // --- BULK TWEETS / PINS IMPORTER ENGINE ---
+
+  // Measures image width & height to calculate aspect ratio (W / H)
+  const measureAspect = (url: string): Promise<number> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        if (img.width && img.height) {
+          resolve(Number((img.width / img.height).toFixed(3)));
+        } else {
+          resolve(1.0);
+        }
+      };
+      img.onerror = () => resolve(1.0);
+      img.src = url;
     });
-    setSaveState("idle");
   };
 
-  const autoDetectTweetAspect = (i: number, url: string) => {
-    if (!url) return;
-    const img = new Image();
-    img.onload = () => {
-      if (img.width && img.height) {
-        const ratio = Number((img.width / img.height).toFixed(3));
-        setTweet(i, "aspectRatio", ratio);
+  // Convert File to permanent Base64 Data URL
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target?.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
+  // Handle Multiple File Selection from Computer (e.g., 20, 50, 100 images at once)
+  const handleBulkFilesSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    setIsBulkProcessing(true);
+    setBulkStatusText(`Processing 0 / ${files.length} images...`);
+
+    const newItems: TweetEntry[] = [];
+
+    for (let idx = 0; idx < files.length; idx++) {
+      const file = files[idx];
+      setBulkStatusText(`Processing ${idx + 1} / ${files.length}: ${file.name}`);
+      try {
+        const base64Url = await fileToBase64(file);
+        const aspect = await measureAspect(base64Url);
+        newItems.push({
+          id: `pin-${Date.now()}-${idx}`,
+          image: base64Url,
+          aspectRatio: aspect,
+          placeholderColor: "#1f1f23",
+          createdAt: new Date().toISOString(),
+        });
+      } catch (err) {
+        console.error("Error reading file:", file.name, err);
       }
-    };
-    img.src = url;
-  };
+    }
 
-  const togglePinTweet = (i: number) => {
-    setDraft((d) => {
-      const tweets = [...d.tweets];
-      tweets[i] = { ...tweets[i], isPinned: !tweets[i].isPinned };
-      return { ...d, tweets };
-    });
-    setSaveState("idle");
-  };
-
-  const addTweet = () => {
-    const newEntry: TweetEntry = {
-      id: `tweet-${Date.now()}`,
-      title: "New Pin Showcase",
-      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop",
-      aspectRatio: 0.75,
-      placeholderColor: "#1f1f23",
-      caption: "Add custom description or insights here...",
-      backlink: "",
-      likes: 0,
-      retweets: 0,
-      isPinned: false,
-      createdAt: new Date().toISOString(),
-    };
     setDraft((d) => ({
       ...d,
-      tweets: [newEntry, ...d.tweets],
+      tweets: [...newItems, ...d.tweets],
     }));
+
+    setIsBulkProcessing(false);
+    setBulkStatusText(`✓ Successfully imported ${newItems.length} images!`);
     setSaveState("idle");
+    setTimeout(() => setBulkStatusText(""), 4000);
+
+    // Reset file input
+    if (bulkFileRef.current) bulkFileRef.current.value = "";
+  };
+
+  // Handle Bulk URL Textarea Import (one link per line)
+  const handleBulkUrlsImport = async () => {
+    const lines = bulkUrls
+      .split("\n")
+      .map((l) => l.trim())
+      .filter((l) => l.startsWith("http://") || l.startsWith("https://"));
+
+    if (lines.length === 0) return;
+
+    setIsBulkProcessing(true);
+    setBulkStatusText(`Importing ${lines.length} URLs...`);
+
+    const newItems: TweetEntry[] = [];
+
+    for (let idx = 0; idx < lines.length; idx++) {
+      const url = lines[idx];
+      const aspect = await measureAspect(url);
+      newItems.push({
+        id: `pin-url-${Date.now()}-${idx}`,
+        image: url,
+        aspectRatio: aspect,
+        placeholderColor: "#1f1f23",
+        createdAt: new Date().toISOString(),
+      });
+    }
+
+    setDraft((d) => ({
+      ...d,
+      tweets: [...newItems, ...d.tweets],
+    }));
+
+    setBulkUrls("");
+    setIsBulkProcessing(false);
+    setBulkStatusText(`✓ Successfully imported ${newItems.length} image URLs!`);
+    setSaveState("idle");
+    setTimeout(() => setBulkStatusText(""), 4000);
   };
 
   const removeTweet = (i: number) => {
@@ -211,25 +270,16 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
     setSaveState("idle");
   };
 
-  const handleTweetImageUpload = async (i: number, file: File) => {
-    setUploadingTweetIndex(i);
-    try {
-      // Convert file to permanent Base64 Data URL to guarantee cross-device persistence without expiring blob URLs
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target?.result as string;
-        if (dataUrl) {
-          setTweet(i, "image", dataUrl);
-          autoDetectTweetAspect(i, dataUrl);
-        }
-        setUploadingTweetIndex(null);
-      };
-      reader.onerror = () => setUploadingTweetIndex(null);
-      reader.readAsDataURL(file);
-    } catch (err) {
-      console.error("Image file read error:", err);
-      setUploadingTweetIndex(null);
+  const clearAllTweets = () => {
+    if (window.confirm("Are you sure you want to clear all images from the Tweets grid?")) {
+      setDraft((d) => ({ ...d, tweets: [] }));
+      setSaveState("idle");
     }
+  };
+
+  const resetToDefaultDemoTweets = () => {
+    setDraft((d) => ({ ...d, tweets: DEMO_TWEETS }));
+    setSaveState("idle");
   };
 
   const handleSave = async () => {
@@ -268,7 +318,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
       </header>
 
       {/* Main Form */}
-      <main className="max-w-[860px] mx-auto px-5 py-8 flex flex-col gap-8">
+      <main className="max-w-[920px] mx-auto px-5 py-8 flex flex-col gap-8">
         {/* Profile Info */}
         <Section
           label="Profile & Bio Settings"
@@ -295,7 +345,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                 <rect x="1" y="2.5" width="12" height="9" rx="1.5" stroke="#888" strokeWidth="1.3" />
                 <path d="M5.5 5l3.5 2-3.5 2V5z" fill="#888" />
               </svg>
-              <h2 className="text-[13px] font-semibold text-[#1a1a1a] tracking-[-0.02em]">Shorts & Tweets Content Studio</h2>
+              <h2 className="text-[13px] font-semibold text-[#1a1a1a] tracking-[-0.02em]">Shorts & Tweets Studio</h2>
             </div>
             {/* Tab pills */}
             <div className="flex gap-0.5 bg-[#f5f5f5] p-0.5 rounded-full">
@@ -315,7 +365,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
             </div>
           </div>
 
-          <div className="px-5 py-4">
+          <div className="px-5 py-5">
             {cardTab === "shorts" ? (
               /* Shorts Studio */
               <div className="flex flex-col gap-5">
@@ -452,125 +502,131 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                 ))}
               </div>
             ) : (
-              /* Tweets Studio — Full Pinterest Pins Manager */
-              <div className="flex flex-col gap-5">
-                <div className="flex items-center justify-between pb-1">
-                  <div className="flex flex-col gap-0.5">
-                    <p className="text-[12px] font-semibold text-[#666]">
-                      Tweets & Pins Matrix ({draft.tweets.length} items)
-                    </p>
-                    <p className="text-[11px] text-[#999]">
-                      💡 Upload 2x high-density images or paste image URLs. Aspect ratio calculates automatically!
+              /* BULK IMAGE IMPORTER — PURE PINTEREST GRID MANAGER */
+              <div className="flex flex-col gap-6">
+                {/* Importer Controls Box */}
+                <div className="bg-[#fcfcfd] border border-[#e2e4e9] rounded-[16px] p-5 flex flex-col gap-4 shadow-xs">
+                  <div className="flex flex-col gap-1">
+                    <h3 className="text-[14px] font-bold text-[#1a1a1a] tracking-[-0.01em]">
+                      🖼️ Bulk Image Importer
+                    </h3>
+                    <p className="text-[12px] text-[#666] leading-relaxed">
+                      Select multiple image files at once from your computer or paste image links in bulk. Aspect ratios & 2x previews calculate automatically!
                     </p>
                   </div>
-                  <button
-                    onClick={addTweet}
-                    className="text-[12px] font-bold text-[#ff5100] hover:underline flex items-center gap-1 shrink-0"
-                  >
-                    + Add New Tweet Pin
-                  </button>
+
+                  {/* Bulk Input Options */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Method 1: Bulk Computer File Picker */}
+                    <div className="flex flex-col gap-2 p-4 rounded-[12px] bg-white border border-[#e5e5e5]">
+                      <span className="text-[12px] font-semibold text-[#1a1a1a]">
+                        📁 Select Multiple Files from PC
+                      </span>
+                      <p className="text-[11px] text-[#888]">
+                        Hold Shift/Ctrl to select 10, 20, or 50+ images at once.
+                      </p>
+
+                      <input
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        ref={bulkFileRef}
+                        onChange={handleBulkFilesSelect}
+                        className="hidden"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => bulkFileRef.current?.click()}
+                        disabled={isBulkProcessing}
+                        className="mt-1 w-full py-2.5 rounded-lg bg-[#ff5100] hover:bg-[#e04700] text-white text-[13px] font-semibold transition-colors flex items-center justify-center gap-2 shadow-xs"
+                      >
+                        <span>📁 Choose Multiple Files</span>
+                      </button>
+                    </div>
+
+                    {/* Method 2: Bulk Image Links Paste */}
+                    <div className="flex flex-col gap-2 p-4 rounded-[12px] bg-white border border-[#e5e5e5]">
+                      <span className="text-[12px] font-semibold text-[#1a1a1a]">
+                        📋 Paste Multiple Image URLs
+                      </span>
+                      <textarea
+                        rows={2}
+                        value={bulkUrls}
+                        onChange={(e) => setBulkUrls(e.target.value)}
+                        placeholder="Paste image links here (one URL per line)..."
+                        className="text-[12px] font-mono px-3 py-1.5 rounded-lg border border-[#e0e0e0] focus:border-[#1a1a1a] outline-none resize-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleBulkUrlsImport}
+                        disabled={isBulkProcessing || !bulkUrls.trim()}
+                        className="w-full py-2 rounded-lg bg-[#1a1a1a] hover:bg-[#333] disabled:opacity-40 text-white text-[12px] font-semibold transition-colors flex items-center justify-center gap-1"
+                      >
+                        Import Links
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Status Banner */}
+                  {bulkStatusText && (
+                    <div className="p-3 rounded-lg bg-[#f0fdf4] border border-[#bbf7d0] text-[#166534] text-[12px] font-medium animate-fade-in flex items-center gap-2">
+                      <span className="animate-spin">⏳</span>
+                      <span>{bulkStatusText}</span>
+                    </div>
+                  )}
                 </div>
 
-                {draft.tweets.map((t, i) => (
-                  <div
-                    key={t.id || i}
-                    className="border border-[#e0e0e0] bg-[#fafafa] rounded-[14px] p-4 flex flex-col gap-3.5"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[12px] font-mono text-[#aaa]">#{i + 1}</span>
-                        <span className="text-[11px] font-mono text-[#888] bg-white px-2 py-0.5 rounded border">
-                          Aspect: {t.aspectRatio ? `${t.aspectRatio} (W/H)` : "Auto-detecting..."}
-                        </span>
-                      </div>
+                {/* Grid Management Header */}
+                <div className="flex items-center justify-between pt-2">
+                  <span className="text-[13px] font-bold text-[#1a1a1a]">
+                    Image Gallery ({draft.tweets.length} items total)
+                  </span>
 
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => removeTweet(i)}
-                          className="text-[12px] text-red-500 hover:text-red-700 font-medium ml-2"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <Field
-                        label="Title"
-                        value={t.title}
-                        onChange={(val) => setTweet(i, "title", val)}
-                      />
-                      <Field
-                        label="Backlink URL"
-                        value={t.backlink || ""}
-                        onChange={(val) => setTweet(i, "backlink", val)}
-                        placeholder="https://x.com/..."
-                      />
-                    </div>
-
-                    <Field
-                      label="Caption / Description"
-                      value={t.caption || ""}
-                      onChange={(val) => setTweet(i, "caption", val)}
-                      multiline
-                    />
-
-                    {/* Image URL & File Upload */}
-                    <div className="flex flex-col gap-1.5">
-                      <label className="text-[11px] font-semibold text-[#666]">
-                        Image Source URL (2x density recommended)
-                      </label>
-                      <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="text"
-                            value={t.image}
-                            onChange={(e) => {
-                              const url = e.target.value;
-                              setTweet(i, "image", url);
-                              autoDetectTweetAspect(i, url);
-                            }}
-                            placeholder="https://images.unsplash.com/..."
-                            className="flex-1 text-[13px] px-3.5 py-2 rounded-lg bg-white border border-[#e0e0e0] focus:border-[#1a1a1a] outline-none"
-                          />
-                          <input
-                            type="file"
-                            accept="image/*"
-                            ref={(el) => (tweetFileRefs.current[i] = el)}
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) handleTweetImageUpload(i, file);
-                            }}
-                            className="hidden"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => tweetFileRefs.current[i]?.click()}
-                            disabled={uploadingTweetIndex === i}
-                            className="px-3.5 py-2 rounded-lg bg-[#f0fdf4] text-[#16a34a] text-[12px] font-semibold hover:bg-[#dcfce7] transition-colors border border-[#bbf7d0] shrink-0"
-                          >
-                            {uploadingTweetIndex === i ? "Uploading Image..." : "🖼️ Upload Image File"}
-                          </button>
-                        </div>
-
-                        {/* Image Preview Thumbnail */}
-                        {t.image && (
-                          <div className="flex items-center gap-3 pt-1">
-                            <div
-                              className="w-16 rounded-lg bg-[#eee] border overflow-hidden shrink-0"
-                              style={{ aspectRatio: t.aspectRatio ? `${t.aspectRatio}` : "1" }}
-                            >
-                              <img src={t.image} alt="Preview" className="w-full h-full object-cover" />
-                            </div>
-                            <p className="text-[11px] text-[#888]">
-                              Preview locked at pre-allocated aspect ratio wrapper.
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={resetToDefaultDemoTweets}
+                      className="px-3 py-1.5 rounded-lg text-[12px] font-medium text-[#666] hover:bg-[#f0f0f0] transition-colors border border-[#e0e0e0]"
+                    >
+                      Reset to 12 Demo Pins
+                    </button>
+                    <button
+                      type="button"
+                      onClick={clearAllTweets}
+                      className="px-3 py-1.5 rounded-lg text-[12px] font-medium text-red-600 hover:bg-red-50 transition-colors border border-red-200"
+                    >
+                      Clear All
+                    </button>
                   </div>
-                ))}
+                </div>
+
+                {/* Thumbnail Grid Matrix for quick inspection & deletion */}
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+                  {draft.tweets.map((t, idx) => (
+                    <div
+                      key={t.id || idx}
+                      className="group relative rounded-xl overflow-hidden bg-[#eee] border border-[#e5e5e5] shadow-xs"
+                      style={{ aspectRatio: t.aspectRatio ? `${t.aspectRatio}` : "1" }}
+                    >
+                      <img
+                        src={t.image}
+                        alt="Pin preview"
+                        className="w-full h-full object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeTweet(idx)}
+                        className="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-red-700"
+                        title="Remove Image"
+                      >
+                        ✕
+                      </button>
+                      <div className="absolute bottom-1 left-1 bg-black/60 text-white text-[9px] font-mono px-1.5 py-0.5 rounded backdrop-blur-xs">
+                        {t.aspectRatio ? `${t.aspectRatio} W/H` : "1:1"}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
