@@ -12,6 +12,7 @@ export default function TweetCard({ tweet, onExpand }: TweetCardProps) {
   const [hasError, setHasError] = useState(false);
 
   const fallbackColor = tweet.placeholderColor || "#1f1f23";
+  const displayImage = tweet.image || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop";
 
   return (
     <motion.div
@@ -46,7 +47,7 @@ export default function TweetCard({ tweet, onExpand }: TweetCardProps) {
 
         {/* Layer 2: 2x High-Density Image Asset */}
         <img
-          src={tweet.image}
+          src={displayImage}
           alt={tweet.title || "Tweet item"}
           loading="lazy"
           onLoad={() => setIsLoaded(true)}

@@ -160,6 +160,19 @@ export default function App() {
     return 0;
   });
 
+  // Ensure tweets array has valid images and aspect ratio metadata from DEMO_TWEETS
+  const rawTweets = content.tweets && content.tweets.length > 0 ? content.tweets : DEMO_TWEETS;
+  const displayTweets = rawTweets.map((t, i) => {
+    const demo = DEMO_TWEETS[i % DEMO_TWEETS.length];
+    return {
+      ...demo,
+      ...t,
+      image: t.image || demo.image,
+      aspectRatio: t.aspectRatio || demo.aspectRatio,
+      placeholderColor: t.placeholderColor || demo.placeholderColor,
+    };
+  });
+
   if (page === "dashboard") {
     return (
       <Dashboard
@@ -352,7 +365,7 @@ export default function App() {
           </div>
         ) : (
           <TweetsMasonryGrid
-            tweets={content.tweets && content.tweets.length > 0 ? content.tweets : DEMO_TWEETS}
+            tweets={displayTweets}
             onSelectTweet={(idx) => setTweetLightboxIndex(idx)}
           />
         )}
@@ -371,7 +384,7 @@ export default function App() {
       <TweetLightboxModal
         isOpen={tweetLightboxIndex !== null}
         currentIndex={tweetLightboxIndex ?? 0}
-        tweets={content.tweets && content.tweets.length > 0 ? content.tweets : DEMO_TWEETS}
+        tweets={displayTweets}
         onClose={() => setTweetLightboxIndex(null)}
         onNavigate={(idx) => setTweetLightboxIndex(idx)}
       />
