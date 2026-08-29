@@ -214,30 +214,20 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
   const handleTweetImageUpload = async (i: number, file: File) => {
     setUploadingTweetIndex(i);
     try {
-      const filename = `tweet-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        headers: {
-          "Content-Type": file.type,
-          "x-filename": filename,
-        },
-        body: file,
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setTweet(i, "image", data.url);
-        autoDetectTweetAspect(i, data.url);
-      } else {
-        const localUrl = URL.createObjectURL(file);
-        setTweet(i, "image", localUrl);
-        autoDetectTweetAspect(i, localUrl);
-      }
-    } catch {
-      const localUrl = URL.createObjectURL(file);
-      setTweet(i, "image", localUrl);
-      autoDetectTweetAspect(i, localUrl);
-    } finally {
+      // Convert file to permanent Base64 Data URL to guarantee cross-device persistence without expiring blob URLs
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const dataUrl = e.target?.result as string;
+        if (dataUrl) {
+          setTweet(i, "image", dataUrl);
+          autoDetectTweetAspect(i, dataUrl);
+        }
+        setUploadingTweetIndex(null);
+      };
+      reader.onerror = () => setUploadingTweetIndex(null);
+      reader.readAsDataURL(file);
+    } catch (err) {
+      console.error("Image file read error:", err);
       setUploadingTweetIndex(null);
     }
   };

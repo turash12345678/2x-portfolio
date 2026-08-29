@@ -9,13 +9,14 @@ interface TweetCardProps {
 
 export default function TweetCard({ tweet, onExpand }: TweetCardProps) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false);
 
   const fallbackColor = tweet.placeholderColor || "#1f1f23";
   const rawImage = tweet.image;
-  const displayImage = rawImage && !rawImage.startsWith("blob:")
+  const initialImage = rawImage && !rawImage.startsWith("blob:")
     ? rawImage
     : "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop";
+
+  const [imgSrc, setImgSrc] = useState(initialImage);
 
   return (
     <motion.div
@@ -39,7 +40,7 @@ export default function TweetCard({ tweet, onExpand }: TweetCardProps) {
         }}
       >
         {/* Layer 1: Dominant Color / Skeleton Loading State */}
-        {!isLoaded && !hasError && (
+        {!isLoaded && (
           <div
             className="absolute inset-0 animate-pulse transition-opacity duration-300"
             style={{ backgroundColor: fallbackColor }}
@@ -50,11 +51,14 @@ export default function TweetCard({ tweet, onExpand }: TweetCardProps) {
 
         {/* Layer 2: 2x High-Density Image Asset */}
         <img
-          src={displayImage}
+          src={imgSrc}
           alt={tweet.title || "Tweet item"}
           loading="lazy"
           onLoad={() => setIsLoaded(true)}
-          onError={() => setHasError(true)}
+          onError={() => {
+            setImgSrc("https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop");
+            setIsLoaded(true);
+          }}
           className={`w-full h-full object-cover transition-all duration-500 group-hover:scale-105 ${
             isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-105"
           }`}
