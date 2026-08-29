@@ -112,6 +112,13 @@ export default function App() {
     }
   };
 
+  // Sort videos: Pinned shorts first, then order of addition (recent first)
+  const displayVideos = [...content.videos].sort((a, b) => {
+    if (a.isPinned && !b.isPinned) return -1;
+    if (!a.isPinned && b.isPinned) return 1;
+    return 0;
+  });
+
   if (page === "dashboard") {
     return (
       <Dashboard
@@ -280,7 +287,7 @@ export default function App() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-          {content.videos.map((v, i) => (
+          {displayVideos.map((v, i) => (
             <VideoCard
               key={i}
               title={v.title}

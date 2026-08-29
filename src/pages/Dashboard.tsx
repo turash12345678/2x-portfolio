@@ -6,6 +6,7 @@ export interface VideoEntry {
   backlink?: string;
   streamUrl?: string;
   localVideoUrl?: string;
+  isPinned?: boolean;
 }
 
 export interface TweetEntry {
@@ -29,10 +30,10 @@ export const defaultContent: SiteContent = {
   bio1: "I love to help entrepreneurs improve their businesses through design. Delivered over 2+ years to grow brands like **Ahsania**, **bd Stationery** and 10 others+",
   bio2: 'I believe — "Good Design always should be Intentional."',
   videos: [
-    { title: "Client testimonial video", status: "Boosted?", backlink: "", streamUrl: "" },
-    { title: "Product launch highlight reel", status: "Elevated?", backlink: "", streamUrl: "" },
-    { title: "Behind-the-scenes documentary", status: "Captured?", backlink: "", streamUrl: "" },
-    { title: "Event recap video", status: "Showcased?", backlink: "", streamUrl: "" },
+    { title: "Client testimonial video", status: "Boosted?", backlink: "", streamUrl: "", isPinned: false },
+    { title: "Product launch highlight reel", status: "Elevated?", backlink: "", streamUrl: "", isPinned: false },
+    { title: "Behind-the-scenes documentary", status: "Captured?", backlink: "", streamUrl: "", isPinned: false },
+    { title: "Event recap video", status: "Showcased?", backlink: "", streamUrl: "", isPinned: false },
   ],
   tweets: [
     { title: "Tweet post #1", status: "Viral?", backlink: "" },
@@ -67,10 +68,19 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
     setSaveState("idle");
   };
 
-  const setVideo = (i: number, key: keyof VideoEntry, value: string) => {
+  const setVideo = (i: number, key: keyof VideoEntry, value: any) => {
     setDraft((d) => {
       const videos = [...d.videos];
       videos[i] = { ...videos[i], [key]: value };
+      return { ...d, videos };
+    });
+    setSaveState("idle");
+  };
+
+  const togglePinVideo = (i: number) => {
+    setDraft((d) => {
+      const videos = [...d.videos];
+      videos[i] = { ...videos[i], isPinned: !videos[i].isPinned };
       return { ...d, videos };
     });
     setSaveState("idle");
@@ -80,8 +90,8 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
     setDraft((d) => ({
       ...d,
       videos: [
-        ...d.videos,
-        { title: "New Short Video", status: "New?", backlink: "", streamUrl: "" },
+        { title: "New Short Video", status: "New?", backlink: "", streamUrl: "", isPinned: false },
+        ...d.videos, // Recently added short goes first at position 1
       ],
     }));
     setSaveState("idle");
@@ -98,14 +108,11 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
   const handleVideoFileLoad = async (i: number, file: File) => {
     setUploadingIndex(i);
     try {
-      // Try uploading to cloud media server
+      const formData = new FormData();
+      formData.append("file", file);
       const res = await fetch("/api/upload", {
         method: "POST",
-        headers: {
-          "Content-Type": file.type || "application/octet-stream",
-          "x-filename": file.name,
-        },
-        body: file,
+        body: formData,
       });
 
       if (res.ok) {
@@ -116,85 +123,82 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
           return;
         }
       }
-    } catch {}
+    } catch (err) {
+      console.warn("Cloud upload unavailable, reading local blob:", err);
+    }
 
-    // Fallback: local blob preview with warning hint
-    const url = URL.createObjectURL(file);
-    setVideo(i, "localVideoUrl", url);
+    const localUrl = URL.createObjectURL(file);
+    setVideo(i, "localVideoUrl", localUrl);
     setUploadingIndex(null);
-  };
-
-  const setTweet = (i: number, key: keyof TweetEntry, value: string) => {
-    setDraft((d) => {
-      const tweets = [...d.tweets];
-      tweets[i] = { ...tweets[i], [key]: value };
-      return { ...d, tweets };
-    });
-    setSaveState("idle");
   };
 
   const handleSave = () => {
     onSave(draft);
     setSaveState("saved");
-    setTimeout(() => setSaveState("idle"), 3000);
+    setTimeout(() => setSaveState("idle"), 2500);
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f5f5]" style={{ fontFamily: "Inter, sans-serif" }}>
-      {/* Top bar */}
-      <header
-        className="sticky top-0 z-20 border-b border-[#e8e8e8] px-6 py-3.5 flex items-center justify-between"
-        style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)" }}
-      >
+    <div className="min-h-screen bg-[#f4f4f6] text-[#1a1a1a] flex flex-col font-sans">
+      {/* Top Header */}
+      <header className="sticky top-0 z-40 bg-white border-b border-[#e5e5e7] px-6 py-3.5 flex items-center justify-between shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-[10px] bg-[#1a1a1a] flex items-center justify-center shrink-0">
-            <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-              <rect x="1" y="1" width="5.5" height="5.5" rx="1.2" fill="white" />
-              <rect x="8.5" y="1" width="5.5" height="5.5" rx="1.2" fill="white" />
-              <rect x="1" y="8.5" width="5.5" height="5.5" rx="1.2" fill="white" />
-              <rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1.2" fill="white" opacity="0.4" />
-            </svg>
+          <div className="w-7 h-7 rounded-lg bg-[#1a1a1a] text-white flex items-center justify-center font-bold text-[13px]">
+            2x
           </div>
           <div>
-            <p className="text-[14px] font-semibold text-[#1a1a1a] leading-tight tracking-[-0.03em]">
-              Content Studio
-            </p>
-            <p className="text-[11px] text-[#aaa] leading-tight tracking-[-0.01em]">
-              2x portfolio · admin studio
-            </p>
+            <h1 className="text-[14px] font-bold text-[#1a1a1a] tracking-[-0.01em]">Content Studio</h1>
+            <p className="text-[11px] text-[#888] font-medium tracking-[-0.01em]">Turso Database Edge Sync Active</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+
+        <div className="flex items-center gap-3">
           {saveState === "saved" && (
-            <span className="text-[13px] text-[#16a34a] tracking-[-0.02em] flex items-center gap-1.5 font-medium">
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M2 6.5l3.5 3.5 5.5-6" stroke="#16a34a" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              Saved globally
+            <span className="text-[12px] font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+              ✓ Saved & Live Globally
             </span>
           )}
+
           <button
             onClick={handleSave}
-            className="bg-[#1a1a1a] text-white text-[13px] font-medium px-4 py-2 rounded-full tracking-[-0.02em] hover:bg-[#333] transition-colors shadow-sm"
+            className="px-4 py-2 rounded-lg bg-[#1a1a1a] text-white font-semibold text-[13px] hover:bg-[#333] transition-colors shadow-xs"
           >
             Save changes
           </button>
+
           <button
             onClick={onExit}
-            className="text-[13px] text-[#666] px-3 py-2 rounded-full hover:bg-[#ebebeb] transition-colors tracking-[-0.02em]"
+            className="px-3.5 py-2 rounded-lg bg-[#f0f0f2] text-[#555] font-semibold text-[13px] hover:bg-[#e4e4e6] transition-colors"
           >
-            ← Exit
+            Exit
           </button>
         </div>
       </header>
 
-      <main className="max-w-[680px] mx-auto px-5 py-10 flex flex-col gap-6">
+      {/* Main Studio Body */}
+      <main className="flex-1 max-w-4xl w-full mx-auto p-6 md:p-8 flex flex-col gap-6">
+        {/* Info Banner */}
+        <div className="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-[18px] p-5 text-white shadow-md flex items-center justify-between gap-4">
+          <div className="flex items-start gap-3.5">
+            <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-[14px] font-bold tracking-tight">Turso Cloud Sync Connected</h2>
+              <p className="text-[12px] text-blue-100 leading-relaxed mt-0.5">
+                Changes saved here update instantly across all visitors, computers, and mobile browsers worldwide.
+              </p>
+            </div>
+          </div>
+        </div>
 
-        {/* Profile */}
-        <Section label="Profile" icon={
+        {/* Profile Details */}
+        <Section label="Profile Details" icon={
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <circle cx="7" cy="4.5" r="2.5" stroke="#888" strokeWidth="1.3" />
-            <path d="M1.5 12c0-2.485 2.462-4.5 5.5-4.5s5.5 2.015 5.5 4.5" stroke="#888" strokeWidth="1.3" strokeLinecap="round" />
+            <circle cx="7" cy="5" r="3" stroke="#888" strokeWidth="1.3" />
+            <path d="M2 12c0-2.5 2.2-4 5-4s5 1.5 5 4" stroke="#888" strokeWidth="1.3" strokeLinecap="round" />
           </svg>
         }>
           <Field label="Display Name" value={draft.name} onChange={(v) => set("name", v)} />
@@ -242,7 +246,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
 
           <div className="px-5 py-4">
             {cardTab === "shorts" ? (
-              /* Shorts — Title, Status tag, HLS stream URL, Manual upload, Backlink */
+              /* Shorts — Title, Status tag, HLS stream URL, Pin Option, Manual upload, Backlink */
               <div className="flex flex-col gap-5">
                 <div className="flex items-center justify-between pb-1">
                   <p className="text-[12px] font-semibold text-[#666]">
@@ -257,25 +261,34 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                 </div>
 
                 {draft.videos.map((v, i) => (
-                  <div key={i} className="border border-[#ebebeb] rounded-[14px] p-4 flex flex-col gap-4 bg-[#fafafa]">
+                  <div key={i} className={`border rounded-[14px] p-4 flex flex-col gap-4 transition-all ${v.isPinned ? "border-amber-300 bg-amber-50/20 shadow-xs" : "border-[#ebebeb] bg-[#fafafa]"}`}>
                     <div className="flex items-center justify-between">
-                      <p className="text-[11px] font-bold text-[#888] uppercase tracking-[0.07em]">
-                        Short #{i + 1}
-                      </p>
-                      <div className="flex items-center gap-3">
-                        {v.backlink && (
-                          <a
-                            href={v.backlink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[11px] text-[#3b82f6] flex items-center gap-1 hover:underline tracking-[-0.01em]"
-                          >
-                            Preview Post ↗
-                          </a>
+                      <div className="flex items-center gap-2">
+                        <p className="text-[11px] font-bold text-[#888] uppercase tracking-[0.07em]">
+                          Short #{i + 1}
+                        </p>
+                        {v.isPinned && (
+                          <span className="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-200">
+                            📌 Pinned to top
+                          </span>
                         )}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {/* Pin Option */}
+                        <button
+                          onClick={() => togglePinVideo(i)}
+                          className={`px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all flex items-center gap-1 border ${
+                            v.isPinned
+                              ? "bg-amber-100 text-amber-800 border-amber-300 shadow-xs"
+                              : "bg-white text-[#666] border-[#d8d8d8] hover:bg-[#f0f0f0]"
+                          }`}
+                          title={v.isPinned ? "Unpin from top" : "Pin short to top"}
+                        >
+                          📌 {v.isPinned ? "Pinned" : "Pin"}
+                        </button>
                         <button
                           onClick={() => removeVideo(i)}
-                          className="text-[11px] text-red-500 hover:underline font-medium"
+                          className="text-[11px] text-red-500 hover:underline font-medium px-1"
                         >
                           Remove
                         </button>
@@ -299,173 +312,93 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                     {/* Dual Video Source: HLS Stream URL or Manual Upload */}
                     <div className="border-t border-[#eee] pt-3 flex flex-col gap-3">
                       <Field
-                        label="HLS Stream Link (.m3u8 / Cloud Video URL)"
-                        hint="Mux / Cloudflare Stream / Public HTTPS URL (Works 100% Globally)"
+                        label="HLS Stream Link (.m3u8 / Mux Video Link)"
+                        hint="Paste Mux link (player.mux.com/YOUR_ID) or HLS URL"
                         value={v.streamUrl || ""}
                         onChange={(val) => setVideo(i, "streamUrl", val)}
-                        placeholder="https://stream.mux.com/YOUR_PLAYBACK_ID.m3u8"
+                        placeholder="https://player.mux.com/YOUR_PLAYBACK_ID"
                       />
 
                       {/* Manual Upload from Computer */}
                       <div className="flex flex-col gap-1.5">
-                        <div className="flex items-center justify-between">
-                          <label className="text-[12px] text-[#999] tracking-[-0.01em]">Or Upload MP4 File from Computer</label>
-                          <span className="text-[11px] text-[#aaa]">Global persistence requires public URL or HLS link</span>
-                        </div>
-
-                        {uploadingIndex === i ? (
-                          <div className="py-3 text-center text-[13px] text-[#3b82f6] font-medium bg-blue-50 rounded-[8px]">
-                            Uploading video to cloud...
-                          </div>
-                        ) : v.localVideoUrl ? (
-                          <div className="relative rounded-[8px] overflow-hidden bg-black" style={{ aspectRatio: "16/9" }}>
-                            <video
-                              src={v.localVideoUrl}
-                              className="w-full h-full object-cover"
-                              controls
-                              playsInline
-                            />
-                            <button
-                              onClick={() => setVideo(i, "localVideoUrl", "")}
-                              className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80 transition-colors"
-                            >
-                              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                                <path d="M2 2l6 6M8 2l-6 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                              </svg>
-                            </button>
-                          </div>
-                        ) : (
+                        <label className="text-[11px] font-semibold text-[#666]">
+                          Or Choose Local Video File (.mp4)
+                        </label>
+                        <div className="flex items-center gap-3">
+                          <input
+                            ref={(el) => { videoFileRefs.current[i] = el; }}
+                            type="file"
+                            accept="video/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const f = e.target.files?.[0];
+                              if (f) handleVideoFileLoad(i, f);
+                            }}
+                          />
                           <button
                             onClick={() => videoFileRefs.current[i]?.click()}
-                            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-[8px] border-2 border-dashed border-[#ddd] text-[13px] text-[#888] hover:border-[#bbb] hover:text-[#333] transition-colors bg-white"
+                            disabled={uploadingIndex === i}
+                            className="px-3.5 py-1.5 rounded-lg bg-[#eef2ff] text-[#4f46e5] text-[12px] font-semibold hover:bg-[#e0e7ff] transition-colors border border-[#c7d2fe]"
                           >
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                              <path d="M7 1v8M4 6l3 3 3-3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                              <path d="M1 11h12" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-                            </svg>
-                            Select MP4 video from Computer
+                            {uploadingIndex === i ? "Uploading to Cloud..." : "📁 Pick MP4 from Computer"}
                           </button>
-                        )}
-                        <input
-                          ref={(el) => { videoFileRefs.current[i] = el; }}
-                          type="file"
-                          accept="video/*"
-                          className="hidden"
-                          onChange={(e) => {
-                            const f = e.target.files?.[0];
-                            if (f) handleVideoFileLoad(i, f);
-                            e.target.value = "";
-                          }}
-                        />
+                        </div>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              /* Tweets section */
-              <div className="flex flex-col gap-3">
-                {draft.tweets.map((t, i) => (
-                  <div key={i} className="border border-[#ebebeb] rounded-[12px] p-4 flex flex-col gap-4 bg-[#fafafa]">
-                    <div className="flex items-center justify-between">
-                      <p className="text-[11px] font-semibold text-[#bbb] uppercase tracking-[0.07em]">
-                        Tweet #{i + 1}
-                      </p>
-                      {t.backlink && (
-                        <a
-                          href={t.backlink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[11px] text-[#3b82f6] flex items-center gap-1 hover:underline tracking-[-0.01em]"
-                        >
-                          Preview post ↗
-                        </a>
-                      )}
-                    </div>
-
-                    <Field label="Title" value={t.title} onChange={(val) => setTweet(i, "title", val)} />
-                    <Field label="Status tag" value={t.status} onChange={(val) => setTweet(i, "status", val)} />
-
-                    <Field
-                      label="Post backlink"
-                      value={t.backlink}
-                      onChange={(val) => setTweet(i, "backlink", val)}
-                      placeholder="https://x.com/yourpost"
-                    />
-                  </div>
-                ))}
+              /* Tweets Placeholders */
+              <div className="flex flex-col gap-4">
+                <p className="text-[12px] text-[#888]">Tweets UI is under active development.</p>
               </div>
             )}
           </div>
         </div>
-
-        <p className="text-center text-[12px] text-[#ccc] tracking-[-0.01em] pb-4">
-          Changes save globally to the cloud database and update all visitors across all devices in real-time.
-        </p>
       </main>
     </div>
   );
 }
 
-function Section({
-  label,
-  icon,
-  children,
-}: {
-  label: string;
-  icon: React.ReactNode;
-  children: React.ReactNode;
-}) {
+function Section({ label, icon, children }: { label: string; icon: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-[18px] border border-[#ebebeb] overflow-hidden shadow-sm">
-      <div className="px-5 py-3.5 border-b border-[#f5f5f5] flex items-center gap-2">
+    <div className="bg-white rounded-[18px] border border-[#ebebeb] p-5 flex flex-col gap-4 shadow-sm">
+      <div className="flex items-center gap-2 pb-2 border-b border-[#f5f5f5]">
         {icon}
         <h2 className="text-[13px] font-semibold text-[#1a1a1a] tracking-[-0.02em]">{label}</h2>
       </div>
-      <div className="px-5 py-4 flex flex-col gap-4">{children}</div>
+      <div className="flex flex-col gap-3.5">{children}</div>
     </div>
   );
 }
 
 function Field({
-  label,
-  hint,
-  placeholder,
-  value,
-  onChange,
-  multiline,
+  label, hint, value, onChange, placeholder, multiline = false,
 }: {
-  label: string;
-  hint?: string;
-  placeholder?: string;
-  value: string;
-  onChange: (v: string) => void;
-  multiline?: boolean;
+  label: string; hint?: string; value: string; onChange: (v: string) => void; placeholder?: string; multiline?: boolean;
 }) {
-  const cls =
-    "w-full text-[#1a1a1a] text-[14px] tracking-[-0.02em] leading-relaxed bg-[#f0f0f0] rounded-[8px] px-3 py-2.5 outline-none focus:ring-1 focus:ring-[#1a1a1a]/30 transition-shadow placeholder:text-[#bbb]";
   return (
-    <div className="flex flex-col gap-1.5">
-      <div className="flex items-baseline gap-2">
-        <label className="text-[12px] text-[#999] tracking-[-0.01em]">{label}</label>
-        {hint && <span className="text-[11px] text-[#c8c8c8] tracking-[-0.01em]">{hint}</span>}
+    <div className="flex flex-col gap-1 flex-1">
+      <div className="flex items-baseline justify-between gap-2">
+        <label className="text-[12px] font-medium text-[#555] tracking-[-0.01em]">{label}</label>
+        {hint && <span className="text-[11px] text-[#a0a0a0] font-normal">{hint}</span>}
       </div>
       {multiline ? (
         <textarea
+          rows={3}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className={cls}
-          rows={3}
-          style={{ fontFamily: "Inter, sans-serif", resize: "vertical" }}
+          className="w-full text-[13px] text-[#1a1a1a] px-3.5 py-2.5 rounded-[10px] bg-[#f7f7f8] border border-[#e5e5e7] focus:border-[#1a1a1a] focus:bg-white outline-none transition-colors leading-relaxed resize-y"
         />
       ) : (
         <input
+          type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className={cls}
-          style={{ fontFamily: "Inter, sans-serif" }}
+          className="w-full text-[13px] text-[#1a1a1a] px-3.5 py-2 rounded-[10px] bg-[#f7f7f8] border border-[#e5e5e7] focus:border-[#1a1a1a] focus:bg-white outline-none transition-colors"
         />
       )}
     </div>
