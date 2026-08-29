@@ -60,6 +60,7 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
   const [saveState, setSaveState] = useState<"idle" | "saved">("idle");
   const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
   const [cardTab, setCardTab] = useState<CardTab>("shorts");
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   const videoFileRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -84,6 +85,31 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
       return { ...d, videos };
     });
     setSaveState("idle");
+  };
+
+  const moveVideo = (fromIndex: number, toIndex: number) => {
+    if (toIndex < 0 || toIndex >= draft.videos.length) return;
+    setDraft((d) => {
+      const videos = [...d.videos];
+      const [item] = videos.splice(fromIndex, 1);
+      videos.splice(toIndex, 0, item);
+      return { ...d, videos };
+    });
+    setSaveState("idle");
+  };
+
+  const handleDragStart = (i: number) => {
+    setDraggedIndex(i);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (toIndex: number) => {
+    if (draggedIndex === null || draggedIndex === toIndex) return;
+    moveVideo(draggedIndex, toIndex);
+    setDraggedIndex(null);
   };
 
   const addVideo = () => {
@@ -246,33 +272,88 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
 
           <div className="px-5 py-4">
             {cardTab === "shorts" ? (
-              /* Shorts — Title, Status tag, HLS stream URL, Pin Option, Manual upload, Backlink */
+              /* Shorts — Title, Status tag, HLS stream URL, Drag & Drop Reordering, Pin Option */
               <div className="flex flex-col gap-5">
                 <div className="flex items-center justify-between pb-1">
-                  <p className="text-[12px] font-semibold text-[#666]">
-                    Shorts Collection ({draft.videos.length} videos)
-                  </p>
+                  <div className="flex flex-col gap-0.5">
+                    <p className="text-[12px] font-semibold text-[#666]">
+                      Shorts Collection ({draft.videos.length} videos)
+                    </p>
+                    <p className="text-[11px] text-[#999]">
+                      💡 Drag cards or use ▲ ▼ arrows to reorder them as you like
+                    </p>
+                  </div>
                   <button
                     onClick={addVideo}
-                    className="text-[12px] font-bold text-[#3b82f6] hover:underline flex items-center gap-1"
+                    className="text-[12px] font-bold text-[#3b82f6] hover:underline flex items-center gap-1 shrink-0"
                   >
                     + Add New Short
                   </button>
                 </div>
 
                 {draft.videos.map((v, i) => (
-                  <div key={i} className={`border rounded-[14px] p-4 flex flex-col gap-4 transition-all ${v.isPinned ? "border-amber-300 bg-amber-50/20 shadow-xs" : "border-[#ebebeb] bg-[#fafafa]"}`}>
+                  <div
+                    key={i}
+                    draggable
+                    onDragStart={() => handleDragStart(i)}
+                    onDragOver={handleDragOver}
+                    onDrop={() => handleDrop(i)}
+                    className={`border rounded-[14px] p-4 flex flex-col gap-4 transition-all ${
+                      draggedIndex === i ? "opacity-40 scale-[0.99] border-blue-400 bg-blue-50/30" : ""
+                    } ${v.isPinned ? "border-amber-300 bg-amber-50/20 shadow-xs" : "border-[#ebebeb] bg-[#fafafa]"}`}
+                  >
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2.5">
+                        {/* Drag Handle Icon */}
+                        <div
+                          className="cursor-grab active:cursor-grabbing p-1 text-[#aaa] hover:text-[#555] transition-colors"
+                          title="Drag to reorder"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                            <circle cx="5" cy="4" r="1.5" />
+                            <circle cx="11" cy="4" r="1.5" />
+                            <circle cx="5" cy="8" r="1.5" />
+                            <circle cx="11" cy="8" r="1.5" />
+                            <circle cx="5" cy="12" r="1.5" />
+                            <circle cx="11" cy="12" r="1.5" />
+                          </svg>
+                        </div>
+
+                        {/* Quick Up/Down Move Buttons */}
+                        <div className="flex flex-col gap-0.5">
+                          <button
+                            disabled={i === 0}
+                            onClick={() => moveVideo(i, i - 1)}
+                            className="text-[#999] hover:text-black disabled:opacity-20 transition-colors p-0.5"
+                            title="Move up"
+                          >
+                            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                              <path d="M2 8l4-4 4 4" />
+                            </svg>
+                          </button>
+                          <button
+                            disabled={i === draft.videos.length - 1}
+                            onClick={() => moveVideo(i, i + 1)}
+                            className="text-[#999] hover:text-black disabled:opacity-20 transition-colors p-0.5"
+                            title="Move down"
+                          >
+                            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                              <path d="M2 4l4 4 4-4" />
+                            </svg>
+                          </button>
+                        </div>
+
                         <p className="text-[11px] font-bold text-[#888] uppercase tracking-[0.07em]">
                           Short #{i + 1}
                         </p>
+
                         {v.isPinned && (
                           <span className="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-200">
                             📌 Pinned to top
                           </span>
                         )}
                       </div>
+
                       <div className="flex items-center gap-2">
                         {/* Pin Option */}
                         <button
