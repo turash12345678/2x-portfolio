@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Lenis from "lenis";
+import { animate, stagger } from "animejs";
 import DotGrid from "@/components/DotGrid/DotGrid";
 import VideoCard from "@/components/VideoCard/VideoCard";
 import VideoLightboxModal from "@/components/VideoLightbox/VideoLightboxModal";
@@ -83,6 +85,39 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [filterTooltip, setFilterTooltip] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  // Lenis Smooth Scroll initialization
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    return () => lenis.destroy();
+  }, []);
+
+  // Anime.js smooth text reveal animation on load
+  useEffect(() => {
+    if (page !== "home") return;
+    try {
+      animate(".anime-reveal", {
+        translateY: [28, 0],
+        opacity: [0, 1],
+        ease: "outExpo",
+        duration: 1100,
+        delay: stagger(130, { start: 150 }),
+      });
+    } catch (err) {
+      console.warn("Anime.js reveal error:", err);
+    }
+  }, [page]);
 
   useEffect(() => {
     fetchGlobalContent().then((data) => {
@@ -185,7 +220,7 @@ export default function App() {
         <div className="relative z-10 flex flex-col items-center text-center px-6 pt-[42px] pb-[42px] md:pt-20 md:pb-20 w-full max-w-[640px] mx-auto gap-x-[28px] gap-y-[23px] md:gap-10">
 
           {/* Avatar — click to open PIN modal */}
-          <div className="flex flex-col items-center gap-[10px]">
+          <div className="flex flex-col items-center gap-[10px] anime-reveal">
             <div className="relative">
               <button
                 onClick={() => { setShowPinModal(true); setPinError(false); setPin(""); }}
@@ -218,14 +253,14 @@ export default function App() {
             </div>
           </div>
 
-          {/* Bio */}
-          <div className="flex flex-col gap-2 text-[#808080] text-[13px] md:text-[16px] tracking-[-0.01em] leading-[1.8]">
+          {/* Bio — Anime.js text reveal */}
+          <div className="flex flex-col gap-2 text-[#808080] text-[13px] md:text-[16px] tracking-[-0.01em] leading-[1.8] anime-reveal">
             <p>{parseBold(content.bio1)}</p>
             <p>{parseBold(content.bio2)}</p>
           </div>
 
-          {/* Social links */}
-          <div className="flex flex-col items-center gap-3">
+          {/* Social links — Anime.js reveal */}
+          <div className="flex flex-col items-center gap-3 anime-reveal">
             <div className="flex items-center gap-[10px]">
               <a href="#" className="text-[#666] hover:text-[#1a1a1a] transition-colors p-2"><TwitterIcon /></a>
               <a href="#" className="text-[#666] hover:text-[#1a1a1a] transition-colors p-2"><FacebookIcon /></a>
@@ -240,7 +275,7 @@ export default function App() {
 
       {/* Cards section */}
       <section className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-11 pb-16 md:pb-24">
-        <div className="flex items-center justify-between mb-5 md:mb-7">
+        <div className="flex items-center justify-between mb-5 md:mb-7 anime-reveal">
           <div className="bg-[rgba(132,132,132,0.08)] p-1 rounded-full flex items-center gap-0.5">
             <button
               onClick={() => setActiveTab("shorts")}
@@ -251,12 +286,11 @@ export default function App() {
               Shorts
             </button>
             <button
-              onClick={() => setActiveTab("tweets")}
-              className={`px-3.5 py-[5px] rounded-full text-[14px] font-medium tracking-[0.2px] transition-all duration-150 leading-5 capitalize ${
-                activeTab === "tweets" ? "bg-[#1a1a1a] text-white shadow-sm" : "text-[#707070] hover:text-black"
-              }`}
+              disabled
+              title="Tweets UI under development"
+              className="px-3.5 py-[5px] rounded-full text-[14px] font-medium tracking-[0.2px] leading-5 text-[#b0b0b0] opacity-50 cursor-not-allowed"
             >
-              Tweets
+              Tweets (Soon)
             </button>
           </div>
 
@@ -289,11 +323,16 @@ export default function App() {
           </div>
         </div>
 
-        {activeTab === "shorts" ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-            {displayVideos.map((v, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+          {displayVideos.map((v, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: (i % 2) * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            >
               <VideoCard
-                key={i}
                 title={v.title}
                 status={v.status}
                 image={v.thumbnail || VIDEO_IMAGES[i % VIDEO_IMAGES.length]}
@@ -302,25 +341,9 @@ export default function App() {
                 loadable={isAuthenticated}
                 onExpand={() => setLightboxIndex(i)}
               />
-            ))}
-          </div>
-        ) : (
-          <div className="min-h-[360px] w-full rounded-[24px] border border-dashed border-[#e5e5e5] bg-[#fafafa]/50 flex items-center justify-center p-8">
-            <div className="text-center flex flex-col items-center gap-3 max-w-[320px]">
-              <div className="w-12 h-12 rounded-full bg-[#f0f0f0] flex items-center justify-center text-[#999]">
-                <svg width="22" height="22" viewBox="0 0 16.2 16.2" fill="none">
-                  <path d={svgPaths.p33ab300} stroke="#888" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="text-[15px] font-semibold text-[#1a1a1a] tracking-[-0.01em]">Tweets Area</p>
-                <p className="text-[13px] text-[#888] tracking-[-0.01em] leading-relaxed">
-                  Blank placeholder — ready for new Twitter layout & content structure.
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
+            </motion.div>
+          ))}
+        </div>
       </section>
 
       {/* Pop-up Video Lightbox Modal with side navigation arrows */}
