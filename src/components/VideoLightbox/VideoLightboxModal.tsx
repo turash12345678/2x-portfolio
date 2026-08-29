@@ -123,7 +123,7 @@ export default function VideoLightboxModal({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.22 }}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+        className="fixed inset-0 z-[100] flex items-center justify-center p-3 md:p-6"
         style={{
           backgroundColor: "rgba(0, 0, 0, 0.88)",
           backdropFilter: "blur(20px)",
@@ -131,10 +131,10 @@ export default function VideoLightboxModal({
         }}
         onClick={onClose}
       >
-        {/* Close Button (Top Right) */}
+        {/* Close Button (Top Right Outside / Overlay) */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 z-50 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-lg border border-white/10"
+          className="absolute top-4 right-4 md:top-6 md:right-6 z-50 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-lg border border-white/10"
           title="Close (Esc)"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
@@ -147,7 +147,7 @@ export default function VideoLightboxModal({
         {videos.length > 1 && (
           <button
             onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-xl border border-white/15 active:scale-95"
+            className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-xl border border-white/15 active:scale-95"
             title="Previous Short (Left Arrow)"
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -160,7 +160,7 @@ export default function VideoLightboxModal({
         {videos.length > 1 && (
           <button
             onClick={(e) => { e.stopPropagation(); handleNext(); }}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-xl border border-white/15 active:scale-95"
+            className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-xl border border-white/15 active:scale-95"
             title="Next Short (Right Arrow)"
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -169,46 +169,19 @@ export default function VideoLightboxModal({
           </button>
         )}
 
-        {/* Main Lightbox Pop-up Player Container */}
+        {/* Main Lightbox Pop-up Player Container — Enlarged Size */}
         <motion.div
           key={currentIndex}
           initial={{ opacity: 0, scale: 0.93, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.93, y: 10 }}
           transition={{ type: "spring", stiffness: 350, damping: 30 }}
-          className="relative w-full max-w-4xl max-h-[85vh] bg-[#0c0c0e] rounded-[24px] overflow-hidden shadow-2xl border border-white/10 flex flex-col"
+          className="relative w-[92vw] max-w-[1100px] h-[88vh] bg-[#0c0c0e] rounded-[24px] overflow-hidden shadow-2xl border border-white/10 flex flex-col justify-center"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header Bar inside Lightbox */}
-          <div className="px-6 py-4 bg-gradient-to-b from-black/80 to-transparent absolute top-0 left-0 right-0 z-30 flex items-center justify-between pointer-events-none">
-            <div className="flex flex-col gap-0.5">
-              <h3 className="text-white text-[16px] font-semibold tracking-[-0.02em]">
-                {currentVideo.title}
-              </h3>
-              <p className="text-[#a0a0a0] text-[13px] tracking-[-0.01em]">
-                {currentVideo.status}
-              </p>
-            </div>
-            {currentVideo.backlink && (
-              <a
-                href={currentVideo.backlink}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="pointer-events-auto text-white/70 hover:text-white p-2 transition-colors flex items-center gap-1 text-[13px]"
-              >
-                <span>View Original</span>
-                <svg width="14" height="14" viewBox="0 0 15 15" fill="none">
-                  <path d="M3 12L12 3M12 3H6M12 3V9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
-            )}
-          </div>
-
           {/* Video Display Area */}
           <div
-            className="relative w-full flex-1 bg-black flex items-center justify-center cursor-pointer overflow-hidden"
-            style={{ minHeight: "360px", maxHeight: "80vh", aspectRatio: "16/9" }}
+            className="relative w-full h-full bg-black flex items-center justify-center cursor-pointer overflow-hidden"
             onClick={togglePlay}
           >
             {hlsUrl ? (
@@ -225,25 +198,55 @@ export default function VideoLightboxModal({
               <img src={posterImage} alt={currentVideo.title} className="w-full h-full object-contain" />
             )}
 
-            {/* Sound Toggle Button inside Pop-up */}
-            <button
-              onClick={toggleMute}
-              className="absolute bottom-5 right-5 z-40 w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-lg border border-white/10"
-              title={muted ? "Unmute sound" : "Mute sound"}
-            >
-              {muted ? (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                  <line x1="23" y1="9" x2="17" y2="15" />
-                  <line x1="17" y1="9" x2="23" y2="15" />
-                </svg>
-              ) : (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
-                </svg>
-              )}
-            </button>
+            {/* Smooth Bottom Overlay Bar: Title, Status & Action Buttons at Bottom */}
+            <div className="px-6 py-5 bg-gradient-to-t from-black/90 via-black/50 to-transparent absolute bottom-0 left-0 right-0 z-30 flex items-end justify-between pointer-events-none">
+              <div className="flex flex-col gap-1 pr-4">
+                <h3 className="text-white text-[16px] md:text-[18px] font-semibold tracking-[-0.02em] leading-snug">
+                  {currentVideo.title}
+                </h3>
+                <p className="text-[#a0a0a0] text-[13px] md:text-[14px] tracking-[-0.01em]">
+                  {currentVideo.status}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2.5 shrink-0 pointer-events-auto">
+                {/* Backlink Icon (No "View Original" text label) */}
+                {currentVideo.backlink && (
+                  <a
+                    href={currentVideo.backlink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md border border-white/10"
+                    title="Open post"
+                  >
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                      <path d="M3 12L12 3M12 3H6M12 3V9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
+                )}
+
+                {/* Sound Toggle Button */}
+                <button
+                  onClick={toggleMute}
+                  className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md border border-white/10"
+                  title={muted ? "Unmute sound" : "Mute sound"}
+                >
+                  {muted ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <line x1="23" y1="9" x2="17" y2="15" />
+                      <line x1="17" y1="9" x2="23" y2="15" />
+                    </svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
         </motion.div>
       </motion.div>
