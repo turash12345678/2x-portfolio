@@ -4,6 +4,28 @@ const LOCAL_STORAGE_KEY = "ta-portfolio-content";
 const API_ENDPOINT = "/api/content";
 
 /**
+ * Synchronous local cache loader.
+ * Guarantees zero flash of default content on reload.
+ */
+export function getCachedContent(): SiteContent {
+  try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === "object") {
+        return {
+          ...defaultContent,
+          ...parsed,
+          videos: Array.isArray(parsed.videos) ? parsed.videos : defaultContent.videos,
+          tweets: Array.isArray(parsed.tweets) ? parsed.tweets : defaultContent.tweets,
+        };
+      }
+    }
+  } catch {}
+  return defaultContent;
+}
+
+/**
  * Fetch portfolio content globally.
  * Tries cloud API first, falls back to local storage or defaults.
  */
@@ -12,7 +34,7 @@ export async function fetchGlobalContent(): Promise<SiteContent> {
     const res = await fetch(API_ENDPOINT, { method: "GET" });
     if (res.ok) {
       const data = await res.json();
-      if (data && typeof data === "object") {
+      if (data && typeof data === "object" && Object.keys(data).length > 0) {
         const merged: SiteContent = {
           ...defaultContent,
           ...data,
@@ -28,21 +50,7 @@ export async function fetchGlobalContent(): Promise<SiteContent> {
     console.warn("Global fetch offline, reading local fallback:", err);
   }
 
-  // Fallback to local storage
-  try {
-    const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      return {
-        ...defaultContent,
-        ...parsed,
-        videos: parsed.videos ?? defaultContent.videos,
-        tweets: parsed.tweets ?? defaultContent.tweets,
-      };
-    }
-  } catch {}
-
-  return defaultContent;
+  return getCachedContent();
 }
 
 /**

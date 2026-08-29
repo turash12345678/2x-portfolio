@@ -4,8 +4,8 @@ import DotGrid from "@/components/DotGrid/DotGrid";
 import VideoCard from "@/components/VideoCard/VideoCard";
 import Component from "@/imports/Component1/index";
 import Component1_1 from "@/imports/Component1-1/index";
-import Dashboard, { defaultContent, type SiteContent } from "@/pages/Dashboard";
-import { fetchGlobalContent, saveGlobalContent } from "@/services/db";
+import Dashboard, { type SiteContent } from "@/pages/Dashboard";
+import { getCachedContent, fetchGlobalContent, saveGlobalContent } from "@/services/db";
 import svgPaths from "@/imports/Desktop3/svg-kyk0s1v2sg";
 import imgAvatar from "@/imports/Desktop3/72045e7df721190a6b214bc6d3bf1f20b56300de.png";
 import imgVideoThumb from "@/imports/Desktop3/749cd5750ae3155ad330123057def42bde6aceee.png";
@@ -14,12 +14,6 @@ import imgVideoThumb2 from "@/imports/Desktop3/9404713afb5bab1fa0aba27e8f5b6f787
 const ACCESS_KEY = "200836";
 
 const VIDEO_IMAGES = [imgVideoThumb, imgVideoThumb, imgVideoThumb, imgVideoThumb2];
-const VIDEO_FLAGS = [
-  { hasWatchAgain: false, time: undefined },
-  { hasWatchAgain: true, time: "3:45 / 3:45" },
-  { hasWatchAgain: true, time: undefined },
-  { hasWatchAgain: false, time: undefined },
-];
 
 function parseBold(text: string): React.ReactNode {
   const parts = text.split(/\*\*(.*?)\*\*/g);
@@ -77,7 +71,8 @@ function LinkedinIcon() {
 }
 
 export default function App() {
-  const [content, setContent] = useState<SiteContent>(defaultContent);
+  // Synchronous state initialization from local cache for instant render on reload
+  const [content, setContent] = useState<SiteContent>(getCachedContent);
   const [page, setPage] = useState<"home" | "dashboard">("home");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showPinModal, setShowPinModal] = useState(false);
@@ -291,8 +286,6 @@ export default function App() {
               title={v.title}
               status={v.status}
               image={v.thumbnail || VIDEO_IMAGES[i % VIDEO_IMAGES.length]}
-              hasWatchAgain={VIDEO_FLAGS[i % VIDEO_FLAGS.length]?.hasWatchAgain}
-              time={VIDEO_FLAGS[i % VIDEO_FLAGS.length]?.time}
               backlink={v.backlink || undefined}
               streamUrl={v.streamUrl || v.localVideoUrl || undefined}
               loadable={isAuthenticated}
