@@ -10,8 +10,14 @@ import Component1_1 from "@/imports/Component1-1/index";
 import Dashboard, { type SiteContent } from "@/pages/Dashboard";
 import { getCachedContent, fetchGlobalContent, saveGlobalContent } from "@/services/db";
 import TweetsMasonryGrid from "@/components/TweetsGrid/TweetsMasonryGrid";
-import TweetLightboxModal from "@/components/TweetsGrid/TweetLightboxModal";
 import { DEMO_TWEETS } from "@/types/tweet";
+import {
+  NewTwitterIcon,
+  Facebook02Icon,
+  WhatsappIcon,
+  InstagramIcon,
+  Linkedin02Icon,
+} from "hugeicons-react";
 import svgPaths from "@/imports/Desktop3/svg-kyk0s1v2sg";
 import imgAvatar from "@/imports/Desktop3/72045e7df721190a6b214bc6d3bf1f20b56300de.png";
 import imgVideoThumb from "@/imports/Desktop3/749cd5750ae3155ad330123057def42bde6aceee.png";
@@ -36,46 +42,6 @@ function parseBold(text: string): React.ReactNode {
 
 type Tab = "shorts" | "tweets";
 
-function TwitterIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16.2 16.2" fill="none">
-      <path d={svgPaths.p33ab300} stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-function FacebookIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16.2 16.2" fill="none">
-      <path d={svgPaths.p2719280} stroke="#666" strokeWidth="1.5" strokeLinejoin="round" fillRule="evenodd" clipRule="evenodd" />
-    </svg>
-  );
-}
-function WhatsappIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16.2 16.2" fill="none">
-      <path d={svgPaths.p24d3c580} fill="#666" />
-    </svg>
-  );
-}
-function InstagramIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16.2 16.2" fill="none">
-      <path d={svgPaths.paaa1480} stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d={svgPaths.p1df18d80} stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d={svgPaths.p15ecbbc0} stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-function LinkedinIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16.2 16.2" fill="none">
-      <path d={svgPaths.p22826680} stroke="#666" strokeWidth="1.5" />
-      <path d={svgPaths.p2efeb870} stroke="#666" strokeWidth="1.5" />
-      <path d={svgPaths.p8f88d00} stroke="#666" strokeWidth="1.5" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 export default function App() {
   // Synchronous state initialization from local cache for instant render on reload
   const [content, setContent] = useState<SiteContent>(getCachedContent);
@@ -87,6 +53,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>("shorts");
   const [scrolled, setScrolled] = useState(false);
   const [filterTooltip, setFilterTooltip] = useState(false);
+  const [showInstaToast, setShowInstaToast] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [tweetLightboxIndex, setTweetLightboxIndex] = useState<number | null>(null);
 
@@ -161,27 +128,11 @@ export default function App() {
     return 0;
   });
 
-  // Ensure we display all 12 DEMO_TWEETS and filter out temporary local browser blob URLs
-  const dbTweets = content.tweets && content.tweets.length > 0 ? content.tweets : [];
-  const baseTweets = dbTweets.length >= DEMO_TWEETS.length ? dbTweets : DEMO_TWEETS;
-  const displayTweets = baseTweets.map((t, i) => {
-    const demo = DEMO_TWEETS[i % DEMO_TWEETS.length];
-    const userItem = dbTweets[i];
-
-    // Filter out temporary blob: URLs (blob: URLs only exist in memory on the tab where uploaded)
-    const validUserImage = userItem && userItem.image && !userItem.image.startsWith("blob:") ? userItem.image : null;
-    const validItemImage = t && t.image && !t.image.startsWith("blob:") ? t.image : validUserImage;
-
-    return {
-      ...demo,
-      ...userItem,
-      ...t,
-      image: validItemImage || demo.image,
-      aspectRatio: (t && t.aspectRatio) || (userItem && userItem.aspectRatio) || demo.aspectRatio,
-      placeholderColor: (t && t.placeholderColor) || (userItem && userItem.placeholderColor) || demo.placeholderColor,
-      isPinned: false,
-    };
-  });
+  // Display user's uploaded tweets/pins; fallback to DEMO_TWEETS only when gallery is completely empty
+  const validUserTweets = (content.tweets || []).filter(
+    (t) => t && t.image && !t.image.startsWith("blob:")
+  );
+  const displayTweets = validUserTweets.length > 0 ? validUserTweets : DEMO_TWEETS;
 
   if (page === "dashboard") {
     return (
@@ -286,14 +237,83 @@ export default function App() {
             <p>{parseBold(content.bio2)}</p>
           </div>
 
-          {/* Social links — Anime.js reveal */}
-          <div className="flex flex-col items-center gap-3 anime-reveal">
-            <div className="flex items-center gap-[10px]">
-              <a href="#" className="text-[#666] hover:text-[#1a1a1a] transition-colors p-2"><TwitterIcon /></a>
-              <a href="#" className="text-[#666] hover:text-[#1a1a1a] transition-colors p-2"><FacebookIcon /></a>
-              <a href="#" className="text-[#666] hover:text-[#1a1a1a] transition-colors p-2"><WhatsappIcon /></a>
-              <a href="#" className="text-[#666] hover:text-[#1a1a1a] transition-colors p-2"><InstagramIcon /></a>
-              <a href="#" className="text-[#666] hover:text-[#1a1a1a] transition-colors p-2"><LinkedinIcon /></a>
+          {/* Social links — Consistent Hugeicons with active backlinks */}
+          <div className="flex flex-col items-center gap-2.5 anime-reveal">
+            <div className="flex items-center gap-2">
+              {/* X (Twitter) */}
+              <a
+                href="https://x.com/turashahsan8"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X (Twitter)"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-[#555] hover:text-[#1a1a1a] hover:bg-[#f0f0f2] transition-all duration-200"
+              >
+                <NewTwitterIcon size={19} strokeWidth={1.75} />
+              </a>
+
+              {/* Facebook */}
+              <a
+                href="https://www.facebook.com/turashahsan"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-[#555] hover:text-[#1a1a1a] hover:bg-[#f0f0f2] transition-all duration-200"
+              >
+                <Facebook02Icon size={19} strokeWidth={1.75} />
+              </a>
+
+              {/* WhatsApp */}
+              <a
+                href="https://wa.me/8801723253615"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-[#555] hover:text-[#1a1a1a] hover:bg-[#f0f0f2] transition-all duration-200"
+              >
+                <WhatsappIcon size={19} strokeWidth={1.75} />
+              </a>
+
+              {/* Instagram with Pop-up Message */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowInstaToast(true);
+                    setTimeout(() => setShowInstaToast(false), 3500);
+                  }}
+                  aria-label="Instagram"
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-[#555] hover:text-[#1a1a1a] hover:bg-[#f0f0f2] transition-all duration-200 cursor-pointer"
+                >
+                  <InstagramIcon size={19} strokeWidth={1.75} />
+                </button>
+
+                <AnimatePresence>
+                  {showInstaToast && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute bottom-[calc(100%+10px)] left-1/2 -translate-x-1/2 z-50 bg-[#1a1a1a] text-white text-[12px] font-medium px-3.5 py-2 rounded-xl shadow-xl whitespace-nowrap pointer-events-none flex items-center gap-1.5"
+                    >
+                      <span>✨</span>
+                      <span>Will start creating content soon, Stay Tuned</span>
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-[5px] border-x-transparent border-t-[6px] border-t-[#1a1a1a]" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* LinkedIn */}
+              <a
+                href="https://www.linkedin.com/in/turashahsan1234/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-[#555] hover:text-[#1a1a1a] hover:bg-[#f0f0f2] transition-all duration-200"
+              >
+                <Linkedin02Icon size={19} strokeWidth={1.75} />
+              </a>
             </div>
             <p className="text-[12px] text-[#999] tracking-[-0.03em]">Follow me</p>
           </div>
