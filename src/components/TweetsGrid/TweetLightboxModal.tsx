@@ -113,11 +113,6 @@ export default function TweetLightboxModal({
                 <span className="text-[12px] font-mono text-white/50">
                   {currentIndex + 1} / {tweets.length}
                 </span>
-                {currentTweet.isPinned && (
-                  <span className="bg-[#ff5100]/20 text-[#ff7733] border border-[#ff5100]/30 text-[11px] font-semibold px-2.5 py-0.5 rounded-full">
-                    📌 Pinned
-                  </span>
-                )}
               </div>
 
               {currentTweet.title && (

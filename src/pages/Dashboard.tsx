@@ -484,34 +484,17 @@ export default function Dashboard({ content, onSave, onExit }: Props) {
                 {draft.tweets.map((t, i) => (
                   <div
                     key={t.id || i}
-                    className={`border rounded-[14px] p-4 flex flex-col gap-3.5 transition-colors ${
-                      t.isPinned ? "border-[#ff5100]/40 bg-[#fffbf9]" : "border-[#e0e0e0] bg-[#fafafa]"
-                    }`}
+                    className="border border-[#e0e0e0] bg-[#fafafa] rounded-[14px] p-4 flex flex-col gap-3.5"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="text-[12px] font-mono text-[#aaa]">#{i + 1}</span>
-                        {t.isPinned && (
-                          <span className="bg-[#ff5100]/10 text-[#ff5100] border border-[#ff5100]/20 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                            📌 Pinned
-                          </span>
-                        )}
                         <span className="text-[11px] font-mono text-[#888] bg-white px-2 py-0.5 rounded border">
                           Aspect: {t.aspectRatio ? `${t.aspectRatio} (W/H)` : "Auto-detecting..."}
                         </span>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => togglePinTweet(i)}
-                          className={`px-2.5 py-0.5 text-[11px] font-medium rounded transition-colors ${
-                            t.isPinned
-                              ? "bg-[#ff5100] text-white"
-                              : "bg-[#f0f0f0] text-[#666] hover:bg-[#e0e0e0]"
-                          }`}
-                        >
-                          {t.isPinned ? "Unpin" : "Pin Item"}
-                        </button>
                         <button
                           onClick={() => removeTweet(i)}
                           className="text-[12px] text-red-500 hover:text-red-700 font-medium ml-2"

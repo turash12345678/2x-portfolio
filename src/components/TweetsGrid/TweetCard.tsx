@@ -57,16 +57,6 @@ export default function TweetCard({ tweet, onExpand }: TweetCardProps) {
           }`}
         />
 
-        {/* Pinned Badge */}
-        {tweet.isPinned && (
-          <div className="absolute top-3 left-3 z-10 bg-black/70 backdrop-blur-md text-white text-[11px] font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md border border-white/10">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" />
-            </svg>
-            Pinned
-          </div>
-        )}
-
         {/* Hover Overlay Matrix */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 text-white">
           <div className="flex justify-end">
