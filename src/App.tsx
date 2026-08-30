@@ -10,6 +10,7 @@ import Component1_1 from "@/imports/Component1-1/index";
 import Dashboard, { type SiteContent } from "@/pages/Dashboard";
 import { getCachedContent, fetchGlobalContent, saveGlobalContent } from "@/services/db";
 import TweetsMasonryGrid from "@/components/TweetsGrid/TweetsMasonryGrid";
+import TweetLightboxModal from "@/components/TweetsGrid/TweetLightboxModal";
 import { DEMO_TWEETS } from "@/types/tweet";
 import {
   NewTwitterIcon,
