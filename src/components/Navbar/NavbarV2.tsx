@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FigmaIcon, Copy01Icon, File01Icon, Tick01Icon } from "hugeicons-react";
 import { BorderBeam } from "border-beam";
+import { motion, AnimatePresence } from "framer-motion";
 
 type PillProps = {
   label: string;
@@ -84,6 +85,7 @@ function Pill({ label, icon, onClick, href, isCopied }: PillProps) {
 
 export default function NavbarV2() {
   const [copied, setCopied] = useState(false);
+  const [showCaseTooltip, setShowCaseTooltip] = useState(false);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("turashahsan8@gmail.com");
@@ -116,12 +118,35 @@ export default function NavbarV2() {
           >
             Playground
           </a>
-          <span
-            className="relative shrink-0 text-[#999] cursor-default"
-            title="My business story is coming soon. Stay tuned ✦"
-          >
-            Case Story
-          </span>
+
+          {/* Case Story with instant animated tooltip */}
+          <div className="relative inline-flex items-center">
+            <button
+              type="button"
+              onMouseEnter={() => setShowCaseTooltip(true)}
+              onMouseLeave={() => setShowCaseTooltip(false)}
+              onClick={() => setShowCaseTooltip((prev) => !prev)}
+              className="relative shrink-0 text-[#999] hover:text-[#666] cursor-pointer transition-colors select-none font-medium text-[18.388px] tracking-[-0.5516px]"
+            >
+              Case Story
+            </button>
+
+            <AnimatePresence>
+              {showCaseTooltip && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 6, scale: 0.95 }}
+                  transition={{ duration: 0.18, ease: "easeOut" }}
+                  className="absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 z-50 bg-[#1a1a1a] text-white text-[12px] font-medium px-3.5 py-1.5 rounded-xl shadow-xl whitespace-nowrap pointer-events-none flex items-center gap-1.5"
+                >
+                  <span className="text-[#ff5100]">✦</span>
+                  <span>My business story is coming soon. Stay tuned</span>
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-[5px] border-x-transparent border-b-[6px] border-b-[#1a1a1a]" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
 
