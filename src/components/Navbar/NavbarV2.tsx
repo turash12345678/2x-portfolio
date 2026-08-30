@@ -86,7 +86,7 @@ export default function NavbarV2() {
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText("turash@turashahsan.com");
+    navigator.clipboard.writeText("turashahsan8@gmail.com");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -131,7 +131,7 @@ export default function NavbarV2() {
           <Pill
             label="View Design"
             icon={<FigmaIcon size={14} strokeWidth={1.75} color="#707070" />}
-            href="https://www.figma.com/@turashahsan"
+            href="https://www.figma.com/proto/UIakmdXF7sal4uNvHR9whI/Turash-Ahsan-%E2%9C%A7-Design-File?page-id=134%3A14390&node-id=180-3183&viewport=60%2C222%2C0.04&t=30tNU6cmMi4KHq28-1&scaling=min-zoom&content-scaling=fixed"
           />
           <Pill
             label="Copy mail"
@@ -148,7 +148,7 @@ export default function NavbarV2() {
           <Pill
             label="Resume"
             icon={<File01Icon size={14} strokeWidth={1.75} color="#707070" />}
-            href="/resume.pdf"
+            href="/Turash_Ahsan_resume.pdf"
           />
         </div>
       </div>
