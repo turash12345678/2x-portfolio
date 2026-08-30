@@ -9,6 +9,8 @@ import Component from "@/imports/Component1/index";
 import Component1_1 from "@/imports/Component1-1/index";
 import Dashboard, { type SiteContent } from "@/pages/Dashboard";
 import { getCachedContent, fetchGlobalContent, saveGlobalContent } from "@/services/db";
+import { siteConfig, NAVBAR_VERSION } from "@/config/site";
+import NavbarV2 from "@/components/Navbar/NavbarV2";
 import TweetsMasonryGrid from "@/components/TweetsGrid/TweetsMasonryGrid";
 import TweetLightboxModal from "@/components/TweetsGrid/TweetLightboxModal";
 import { DEMO_TWEETS } from "@/types/tweet";
@@ -165,7 +167,13 @@ export default function App() {
               transition={{ type: "spring", stiffness: 420, damping: 38 }}
               className="fixed top-0 left-0 right-0 z-50"
             >
-              <Component property1="nev - dark" className="w-full h-[56px] relative top-[14px]" />
+              {NAVBAR_VERSION === 2 ? (
+                <div className="w-full h-[56px] relative top-[14px] flex items-center px-[24px]">
+                  <NavbarV2 />
+                </div>
+              ) : (
+                <Component property1="nev - dark" className="w-full h-[56px] relative top-[14px]" />
+              )}
             </motion.div>
           ) : (
             <motion.div
