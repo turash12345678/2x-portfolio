@@ -1,49 +1,88 @@
-import { FigmaIcon, Copy01Icon, File01Icon } from "hugeicons-react";
+import { useState } from "react";
+import { FigmaIcon, Copy01Icon, File01Icon, Tick01Icon } from "hugeicons-react";
+import { BorderBeam } from "border-beam";
 
 type PillProps = {
   label: string;
   icon: React.ReactNode;
   onClick?: () => void;
   href?: string;
+  isCopied?: boolean;
 };
 
-function Pill({ label, icon, onClick, href }: PillProps) {
+function Pill({ label, icon, onClick, href, isCopied }: PillProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   const base =
-    "content-stretch flex gap-[4px] items-center px-[8px] py-[4px] rounded-full shrink-0 " +
-    "bg-[rgba(132,132,132,0.08)] transition-colors hover:bg-[rgba(132,132,132,0.16)]";
+    "relative h-[35px] pt-[4px] pb-[4px] px-[12px] rounded-full shrink-0 " +
+    "bg-[#F4F4F4] transition-all duration-200 flex items-center gap-[6px] " +
+    "hover:bg-[#ebebeb] cursor-pointer select-none";
 
   const labelClass =
     "font-medium leading-[20px] not-italic text-[#707070] text-[14px] tracking-[0.2px] " +
     "whitespace-nowrap [word-break:break-word]";
 
+  const content = (
+    <div
+      className={base}
+      data-name="PopperAnchor"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <span className="relative shrink-0 size-[14px] flex items-center justify-center">
+        {icon}
+      </span>
+      <span className={labelClass}>{isCopied ? "Copied!" : label}</span>
+    </div>
+  );
+
   if (href) {
     return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={base}
-        data-name="PopperAnchor"
+      <BorderBeam
+        size="sm"
+        colorVariant="sunset"
+        theme="light"
+        borderRadius={999}
+        active={isHovered}
+        className="rounded-full overflow-visible"
       >
-        <span className="relative shrink-0 size-[14px] flex items-center justify-center">
-          {icon}
-        </span>
-        <span className={labelClass}>{label}</span>
-      </a>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block rounded-full"
+        >
+          {content}
+        </a>
+      </BorderBeam>
     );
   }
 
   return (
-    <button type="button" onClick={onClick} className={base} data-name="PopperAnchor">
-      <span className="relative shrink-0 size-[14px] flex items-center justify-center">
-        {icon}
-      </span>
-      <span className={labelClass}>{label}</span>
-    </button>
+    <BorderBeam
+      size="sm"
+      colorVariant="sunset"
+      theme="light"
+      borderRadius={999}
+      active={isHovered}
+      className="rounded-full overflow-visible"
+    >
+      <button type="button" onClick={onClick} className="block rounded-full">
+        {content}
+      </button>
+    </BorderBeam>
   );
 }
 
 export default function NavbarV2() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("turash@turashahsan.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div
       className="content-stretch flex items-center justify-between relative w-full h-[35px]"
@@ -78,7 +117,7 @@ export default function NavbarV2() {
         </div>
       </div>
 
-      {/* Right: 3 pill buttons */}
+      {/* Right: 3 pill buttons with 100% opacity #F4F4F4, 35px height, border-beam hover & copy checkmark */}
       <div className="flex flex-row items-center self-stretch">
         <div className="content-stretch flex gap-[12px] h-full items-center justify-end relative shrink-0">
           <Pill
@@ -88,10 +127,15 @@ export default function NavbarV2() {
           />
           <Pill
             label="Copy mail"
-            icon={<Copy01Icon size={14} strokeWidth={1.75} color="#707070" />}
-            onClick={() => {
-              navigator.clipboard.writeText("turash@turashahsan.com");
-            }}
+            icon={
+              copied ? (
+                <Tick01Icon size={14} strokeWidth={2.2} color="#16a34a" />
+              ) : (
+                <Copy01Icon size={14} strokeWidth={1.75} color="#707070" />
+              )
+            }
+            onClick={handleCopyEmail}
+            isCopied={copied}
           />
           <Pill
             label="Resume"
