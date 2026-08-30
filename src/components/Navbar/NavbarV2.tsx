@@ -43,6 +43,10 @@ function Pill({ label, icon, onClick, href, isCopied }: PillProps) {
         colorVariant="sunset"
         theme="light"
         borderRadius={999}
+        duration={1.0}
+        brightness={1.85}
+        saturation={1.6}
+        strength={1.0}
         active={isHovered}
         className="rounded-full overflow-visible"
       >
@@ -64,6 +68,10 @@ function Pill({ label, icon, onClick, href, isCopied }: PillProps) {
       colorVariant="sunset"
       theme="light"
       borderRadius={999}
+      duration={1.0}
+      brightness={1.85}
+      saturation={1.6}
+      strength={1.0}
       active={isHovered}
       className="rounded-full overflow-visible"
     >
