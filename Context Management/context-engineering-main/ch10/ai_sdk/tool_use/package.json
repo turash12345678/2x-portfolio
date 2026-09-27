@@ -1,0 +1,13 @@
+{
+  "name": "tool_use",
+  "version": "1.0.0",
+  "description": "Minimal AI SDK tool use example with a mock model",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ai": "^7.0.93",
+    "zod": "^4.5.4"
+  }
+}

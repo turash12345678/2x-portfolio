@@ -8,6 +8,7 @@ import VideoLightboxModal from "@/components/VideoLightbox/VideoLightboxModal";
 import Component from "@/imports/Component1/index";
 import Component1_1 from "@/imports/Component1-1/index";
 import Dashboard, { type SiteContent } from "@/pages/Dashboard";
+import CaseStudy from "@/pages/CaseStudy";
 import { getCachedContent, fetchGlobalContent, saveGlobalContent } from "@/services/db";
 import { siteConfig, NAVBAR_VERSION } from "@/config/site";
 import NavbarV2 from "@/components/Navbar/NavbarV2";
@@ -48,7 +49,7 @@ type Tab = "shorts" | "tweets";
 export default function App() {
   // Synchronous state initialization from local cache for instant render on reload
   const [content, setContent] = useState<SiteContent>(getCachedContent);
-  const [page, setPage] = useState<"home" | "dashboard">("home");
+  const [page, setPage] = useState<"home" | "dashboard" | "casestudy">("home");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showPinModal, setShowPinModal] = useState(false);
   const [pin, setPin] = useState("");
@@ -147,12 +148,16 @@ export default function App() {
     );
   }
 
+  if (page === "casestudy") {
+    return <CaseStudy onBack={() => setPage("home")} />;
+  }
+
   return (
     <div className="min-h-full bg-[#fefefe]" style={{ fontFamily: "Inter, sans-serif" }}>
 
       {/* Mobile nav */}
       <div className="md:hidden fixed bottom-6 left-4 right-4 z-50">
-        <Component1_1 />
+        <Component1_1 onNavigateCaseStory={() => setPage("casestudy")} />
       </div>
 
       {/* Desktop nav */}
@@ -169,10 +174,14 @@ export default function App() {
             >
               {NAVBAR_VERSION === 2 ? (
                 <div className="w-full h-[56px] relative top-[14px] flex items-center px-[24px]">
-                  <NavbarV2 />
+                  <NavbarV2 onNavigateCaseStory={() => setPage("casestudy")} />
                 </div>
               ) : (
-                <Component property1="nev - dark" className="w-full h-[56px] relative top-[14px]" />
+                <Component
+                  property1="nev - dark"
+                  className="w-full h-[56px] relative top-[14px]"
+                  onNavigateCaseStory={() => setPage("casestudy")}
+                />
               )}
             </motion.div>
           ) : (
@@ -184,7 +193,10 @@ export default function App() {
               transition={{ type: "spring", stiffness: 380, damping: 34, mass: 0.85 }}
               className="fixed bottom-6 left-1/2 z-50"
             >
-              <Component property1="nev (Scroll down)" />
+              <Component
+                property1="nev (Scroll down)"
+                onNavigateCaseStory={() => setPage("casestudy")}
+              />
             </motion.div>
           )}
         </AnimatePresence>

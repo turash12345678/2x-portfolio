@@ -1,0 +1,165 @@
+from unittest.mock import MagicMock
+
+import pytest
+
+from trustgraph.base import metrics
+
+
+@pytest.fixture(autouse=True)
+def reset_metric_singletons():
+    """Temporarily remove metric singletons so each test can inject mocks.
+
+    Saves any existing class-level metrics and restores them after the test
+    so that later tests in the same process still find the hasattr() guard
+    intact — deleting without restoring causes every subsequent Processor()
+    construction to re-register the same Prometheus metric name, which raises
+    ValueError: Duplicated timeseries.
+    """
+    classes_and_attrs = {
+        metrics.ConsumerMetrics: [
+            "state_metric",
+            "request_metric",
+            "processing_metric",
+            "rate_limit_metric",
+        ],
+        metrics.ProducerMetrics: ["producer_metric"],
+        metrics.ProcessorMetrics: [
+            "processor_metric",
+            "config_version_metric",
+        ],
+        metrics.DownstreamMetrics: [
+            "duration_metric",
+            "timeout_metric",
+            "error_metric",
+        ],
+    }
+
+    saved = {}
+    for cls, attrs in classes_and_attrs.items():
+        for attr in attrs:
+            if hasattr(cls, attr):
+                saved[(cls, attr)] = getattr(cls, attr)
+                delattr(cls, attr)
+
+    yield
+
+    # Remove anything the test may have set, then restore originals
+    for cls, attrs in classes_and_attrs.items():
+        for attr in attrs:
+            if hasattr(cls, attr):
+                delattr(cls, attr)
+
+    for (cls, attr), value in saved.items():
+        setattr(cls, attr, value)
+
+
+def test_consumer_metrics_reuses_singletons_and_records_events(monkeypatch):
+    enum_factory = MagicMock()
+    histogram_factory = MagicMock()
+    counter_factory = MagicMock()
+
+    state_labels = MagicMock()
+    request_labels = MagicMock()
+    processing_labels = MagicMock()
+    rate_limit_labels = MagicMock()
+
+    enum_factory.return_value.labels.return_value = state_labels
+    histogram_factory.return_value.labels.return_value = request_labels
+    counter_factory.side_effect = [
+        MagicMock(labels=MagicMock(return_value=processing_labels)),
+        MagicMock(labels=MagicMock(return_value=rate_limit_labels)),
+    ]
+
+    monkeypatch.setattr(metrics, "Enum", enum_factory)
+    monkeypatch.setattr(metrics, "Histogram", histogram_factory)
+    monkeypatch.setattr(metrics, "Counter", counter_factory)
+
+    first = metrics.ConsumerMetrics("proc", "cons")
+    second = metrics.ConsumerMetrics("proc-2", "cons-2")
+
+    assert enum_factory.call_count == 1
+    assert histogram_factory.call_count == 1
+    assert counter_factory.call_count == 2
+
+    first.process("ok")
+    first.rate_limit()
+    first.state("running")
+    first.observe_latency(1.5)
+
+    processing_labels.inc.assert_called_once_with()
+    rate_limit_labels.inc.assert_called_once_with()
+    state_labels.state.assert_called_once_with("running")
+    request_labels.observe.assert_called_once_with(1.5)
+
+
+def test_producer_metrics_increments_counter_once(monkeypatch):
+    counter_factory = MagicMock()
+    labels = MagicMock()
+    counter_factory.return_value.labels.return_value = labels
+    monkeypatch.setattr(metrics, "Counter", counter_factory)
+
+    producer_metrics = metrics.ProducerMetrics("proc", "output")
+    producer_metrics.inc()
+
+    counter_factory.assert_called_once()
+    labels.inc.assert_called_once_with()
+
+
+def test_processor_metrics_reports_info(monkeypatch):
+    info_factory = MagicMock()
+    gauge_factory = MagicMock()
+    info_labels = MagicMock()
+    gauge_labels = MagicMock()
+    info_factory.return_value.labels.return_value = info_labels
+    gauge_factory.return_value.labels.return_value = gauge_labels
+    monkeypatch.setattr(metrics, "Info", info_factory)
+    monkeypatch.setattr(metrics, "Gauge", gauge_factory)
+
+    processor_metrics = metrics.ProcessorMetrics("proc")
+    processor_metrics.info({"kind": "test"})
+
+    info_factory.assert_called_once()
+    info_labels.info.assert_called_once_with({"kind": "test"})
+
+
+def test_processor_metrics_sets_config_version(monkeypatch):
+    info_factory = MagicMock()
+    gauge_factory = MagicMock()
+    gauge_labels = MagicMock()
+    info_factory.return_value.labels.return_value = MagicMock()
+    gauge_factory.return_value.labels.return_value = gauge_labels
+    monkeypatch.setattr(metrics, "Info", info_factory)
+    monkeypatch.setattr(metrics, "Gauge", gauge_factory)
+
+    processor_metrics = metrics.ProcessorMetrics("proc")
+    processor_metrics.set_config_version(42)
+
+    gauge_labels.set.assert_called_once_with(42)
+
+
+def test_downstream_metrics_tracks_duration_timeout_error(monkeypatch):
+    histogram_factory = MagicMock()
+    counter_factory = MagicMock()
+
+    duration_labels = MagicMock()
+    timeout_labels = MagicMock()
+    error_labels = MagicMock()
+
+    histogram_factory.return_value.labels.return_value = duration_labels
+    counter_factory.side_effect = [
+        MagicMock(labels=MagicMock(return_value=timeout_labels)),
+        MagicMock(labels=MagicMock(return_value=error_labels)),
+    ]
+
+    monkeypatch.setattr(metrics, "Histogram", histogram_factory)
+    monkeypatch.setattr(metrics, "Counter", counter_factory)
+
+    dm = metrics.DownstreamMetrics("proc", "embeddings")
+
+    dm.observe_duration(2.5)
+    dm.timeout()
+    dm.error("connection-error")
+
+    duration_labels.observe.assert_called_once_with(2.5)
+    timeout_labels.inc.assert_called_once_with()
+    error_labels.inc.assert_called_once_with()

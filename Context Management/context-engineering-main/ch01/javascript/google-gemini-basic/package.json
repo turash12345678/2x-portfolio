@@ -1,0 +1,13 @@
+{
+  "name": "google-gemini-basic",
+  "version": "1.0.0",
+  "description": "Basic interaction with Google Gemini models",
+  "main": "google-gemini-basic.js",
+  "type": "module",
+  "scripts": {
+    "start": "node google-gemini-basic.js"
+  },
+  "dependencies": {
+    "@google/genai": "^2.21.0"
+  }
+}

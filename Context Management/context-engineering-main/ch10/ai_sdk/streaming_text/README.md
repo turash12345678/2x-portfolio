@@ -1,0 +1,23 @@
+# Streaming text with the AI SDK
+
+This example uses `streamText()` with `MockLanguageModelV3` and `simulateReadableStream()` so it runs locally without an API key.
+
+## Requirements
+
+* [Node.js](https://nodejs.org/)
+
+## Steps for running this example in the shell
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Run the script:
+```bash
+npm start
+```
+
+## Output
+
+The script streams `Hello, world!` to the terminal.

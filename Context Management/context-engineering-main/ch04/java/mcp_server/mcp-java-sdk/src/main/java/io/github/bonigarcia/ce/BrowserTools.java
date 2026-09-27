@@ -1,0 +1,109 @@
+/*
+ * (C) Copyright 2026 Boni Garcia (https://bonigarcia.github.io/)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package io.github.bonigarcia.ce;
+
+import java.util.List;
+import java.util.Map;
+
+import io.github.bonigarcia.ce.browser.BrowserManager;
+import io.modelcontextprotocol.server.McpServerFeatures;
+import io.modelcontextprotocol.spec.McpSchema;
+import io.modelcontextprotocol.spec.McpSchema.Tool;
+import reactor.core.publisher.Mono;
+
+public class BrowserTools {
+
+    private final BrowserManager browserManager = new BrowserManager();
+
+    public McpServerFeatures.AsyncToolSpecification browserStart() {
+        final String browserNamergument = "browser_name";
+
+        McpSchema.JsonSchema inputSchema = new McpSchema.JsonSchema("object",
+                Map.of(browserNamergument, Map.of("type", "string",
+                        "description",
+                        "The name of the browser to open. Supported values: 'chrome', 'firefox'")),
+                List.of(browserNamergument), null, null, null);
+        Tool tool = McpSchema.Tool.builder().name("open_browser").description(
+                "Launches a new browser instance. Supports Chrome and Firefox browsers")
+                .inputSchema(inputSchema).build();
+
+        return McpServerFeatures.AsyncToolSpecification.builder().tool(tool)
+                .callHandler((exchange, args) -> {
+                    String browserName = (String) args.arguments()
+                            .get(browserNamergument);
+                    var result = browserManager.start(browserName);
+                    return Mono.just(McpSchema.CallToolResult.builder()
+                            .addTextContent(result.message())
+                            .isError(result.error()).build());
+                }).build();
+    }
+
+    public McpServerFeatures.AsyncToolSpecification browserNavigate() {
+        McpSchema.JsonSchema inputSchema = new McpSchema.JsonSchema("object",
+                Map.of("url", Map.of("type", "string", "description",
+                        "The complete URL to navigate to (e.g., https://example.com)")),
+                List.of("url"), null, null, null);
+
+        Tool tool = McpSchema.Tool.builder().name("navigate_url").description(
+                "Navigate the browser to a specified URL. The browser must be started first")
+                .inputSchema(inputSchema).build();
+
+        return McpServerFeatures.AsyncToolSpecification.builder().tool(tool)
+                .callHandler((exchange, args) -> {
+                    String url = (String) args.arguments().get("url");
+                    var result = browserManager.navigate(url);
+                    return Mono.just(McpSchema.CallToolResult.builder()
+                            .addTextContent(result.message())
+                            .isError(result.error()).build());
+                }).build();
+    }
+
+    public McpServerFeatures.AsyncToolSpecification browserClose() {
+        McpSchema.JsonSchema inputSchema = new McpSchema.JsonSchema("object",
+                Map.of(), List.of(), null, null, null);
+
+        Tool tool = McpSchema.Tool.builder().name("close_browser")
+                .description("Close the browser").inputSchema(inputSchema)
+                .build();
+
+        return McpServerFeatures.AsyncToolSpecification.builder().tool(tool)
+                .callHandler((exchange, args) -> {
+                    var result = browserManager.close();
+                    return Mono.just(McpSchema.CallToolResult.builder()
+                            .addTextContent(result.message())
+                            .isError(result.error()).build());
+                }).build();
+    }
+
+    public McpServerFeatures.AsyncToolSpecification readPageText() {
+        McpSchema.JsonSchema inputSchema = new McpSchema.JsonSchema("object",
+                Map.of(), List.of(), null, null, null);
+
+        Tool tool = McpSchema.Tool.builder().name("get_browser_text")
+                .description("Read the visible text of the entire page")
+                .inputSchema(inputSchema).build();
+
+        return McpServerFeatures.AsyncToolSpecification.builder().tool(tool)
+                .callHandler((exchange, args) -> {
+                    var result = browserManager.readText();
+                    return Mono.just(McpSchema.CallToolResult.builder()
+                            .addTextContent(result.message())
+                            .isError(result.error()).build());
+                }).build();
+    }
+
+}

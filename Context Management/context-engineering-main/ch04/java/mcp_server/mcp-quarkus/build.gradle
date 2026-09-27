@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+    id 'io.quarkus' version '3.39.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+dependencies {
+    implementation enforcedPlatform("io.quarkus.platform:quarkus-bom:3.39.2")
+    implementation "io.quarkiverse.mcp:quarkus-mcp-server-stdio:2.0.0"
+    implementation "org.seleniumhq.selenium:selenium-java:4.48.0"
+}

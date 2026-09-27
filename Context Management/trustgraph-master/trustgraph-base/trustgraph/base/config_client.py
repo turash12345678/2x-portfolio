@@ -1,0 +1,126 @@
+
+from . request_response_spec import RequestResponseSpec
+from . async_processor import default_config_timeout
+from .. schema import ConfigRequest, ConfigResponse, ConfigKey, ConfigValue
+
+CONFIG_TIMEOUT = 10
+
+
+class ConfigClient:
+
+    async def _request(self, timeout=None, **kwargs):
+        resp = await self.request(
+            ConfigRequest(**kwargs),
+            timeout=timeout,
+        )
+        if resp.error:
+            raise RuntimeError(
+                f"{resp.error.type}: {resp.error.message}"
+            )
+        return resp
+
+    async def get(self, workspace, type, key, timeout=None):
+        """Get a single config value. Returns the value string or None."""
+        resp = await self._request(
+            operation="get",
+            workspace=workspace,
+            keys=[ConfigKey(type=type, key=key)],
+            timeout=timeout,
+        )
+        if resp.values and len(resp.values) > 0:
+            return resp.values[0].value
+        return None
+
+    async def put(self, workspace, type, key, value, timeout=None):
+        """Put a single config value."""
+        await self._request(
+            operation="put",
+            workspace=workspace,
+            values=[ConfigValue(type=type, key=key, value=value)],
+            timeout=timeout,
+        )
+
+    async def put_many(self, workspace, values, timeout=None):
+        """Put multiple config values in a single request within a
+        single workspace. values is a list of (type, key, value) tuples."""
+        await self._request(
+            operation="put",
+            workspace=workspace,
+            values=[
+                ConfigValue(type=t, key=k, value=v)
+                for t, k, v in values
+            ],
+            timeout=timeout,
+        )
+
+    async def delete(self, workspace, type, key, timeout=None):
+        """Delete a single config key."""
+        await self._request(
+            operation="delete",
+            workspace=workspace,
+            keys=[ConfigKey(type=type, key=key)],
+            timeout=timeout,
+        )
+
+    async def delete_many(self, workspace, keys, timeout=None):
+        """Delete multiple config keys in a single request within a
+        single workspace. keys is a list of (type, key) tuples."""
+        await self._request(
+            operation="delete",
+            workspace=workspace,
+            keys=[
+                ConfigKey(type=t, key=k)
+                for t, k in keys
+            ],
+            timeout=timeout,
+        )
+
+    async def keys(self, workspace, type, timeout=None):
+        """List all keys for a config type within a workspace."""
+        resp = await self._request(
+            operation="list",
+            workspace=workspace,
+            type=type,
+            timeout=timeout,
+        )
+        return resp.directory
+
+    async def get_all(self, workspace, timeout=None):
+        """Return every config entry in ``workspace`` as a nested dict
+        ``{type: {key: value}}``.  Values are returned as the raw
+        strings stored by config-svc (typically JSON); callers parse
+        as needed.  An empty dict means the workspace has no config."""
+        resp = await self._request(
+            operation="config",
+            workspace=workspace,
+            timeout=timeout,
+        )
+        return resp.config
+
+    async def workspaces_for_type(self, type, timeout=None):
+        """Return the set of distinct workspaces with any config of
+        the given type."""
+        resp = await self._request(
+            operation="getvalues-all-ws",
+            type=type,
+            timeout=timeout,
+        )
+        return {v.workspace for v in resp.values if v.workspace}
+
+
+class ConfigClientSpec(RequestResponseSpec):
+
+    timeout_param = "config_timeout"
+    default_timeout = default_config_timeout
+
+    def __init__(
+            self, request_name, response_name, timeout=None,
+    ):
+        super(ConfigClientSpec, self).__init__(
+            request_name=request_name,
+            request_schema=ConfigRequest,
+            response_name=response_name,
+            response_schema=ConfigResponse,
+            impl=ConfigClient,
+            timeout=timeout,
+        )

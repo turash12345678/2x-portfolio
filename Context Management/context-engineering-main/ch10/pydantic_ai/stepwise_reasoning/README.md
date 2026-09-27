@@ -1,0 +1,42 @@
+# Stepwise reasoning
+
+This example streams a short answer in steps using a fully local model function.
+
+## Requirements
+
+* [Python](https://www.python.org/) 3.10+
+
+## Steps for running this example in the shell
+
+1. Install dependencies:
+```bash
+python -m venv .venv
+
+# macOS/Linux:
+source .venv/bin/activate
+
+# Windows Command Prompt:
+.venv\Scripts\activate.bat
+
+# Windows PowerShell:
+.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+```
+
+2. Run the script:
+```bash
+python stepwise_reasoning.py
+```
+
+## Output
+
+```
+Step 1: Read the ticket.
+Step 1: Read the ticket.
+Step 2: Check the queue rules.
+Step 3: Route the ticket and confirm.
+Step 1: Read the ticket.
+Step 2: Check the queue rules.
+Step 3: Route the ticket and confirm.
+```

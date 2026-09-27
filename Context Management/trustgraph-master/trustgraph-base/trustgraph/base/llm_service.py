@@ -1,0 +1,229 @@
+"""
+LLM text completion base class
+"""
+
+from __future__ import annotations
+
+from argparse import ArgumentParser
+
+import time
+import logging
+from prometheus_client import Histogram, Info
+
+from .. schema import TextCompletionRequest, TextCompletionResponse, Error
+from .. exceptions import TooManyRequests
+from .. base import FlowProcessor, ConsumerSpec, ProducerSpec, ParameterSpec
+
+# Module logger
+logger = logging.getLogger(__name__)
+
+default_ident = "text-completion"
+default_concurrency = 1
+
+class LlmResult:
+    def __init__(
+            self, text = None, in_token = None, out_token = None,
+            model = None,
+    ):
+        self.text = text
+        self.in_token = in_token
+        self.out_token = out_token
+        self.model = model
+    __slots__ = ["text", "in_token", "out_token", "model"]
+
+class LlmChunk:
+    """Represents a streaming chunk from an LLM"""
+    def __init__(
+            self, text = None, in_token = None, out_token = None,
+            model = None, is_final = False,
+    ):
+        self.text = text
+        self.in_token = in_token
+        self.out_token = out_token
+        self.model = model
+        self.is_final = is_final
+    __slots__ = ["text", "in_token", "out_token", "model", "is_final"]
+
+class LlmService(FlowProcessor):
+    """
+    Extensible service processing requests to Large Language Models (LLMs).
+    
+    This class handles the core logic of dispatching text completion or chat requests
+    to integrated underlying LLM providers (e.g. OpenAI, vertex ai).
+    """
+
+    def __init__(self, **params):
+
+        id = params.get("id", default_ident)
+        concurrency = params.get("concurrency", 1)
+
+        super(LlmService, self).__init__(**params | {
+            "id": id,
+            "concurrency": concurrency,
+        })
+
+        self.register_specification(
+            ConsumerSpec(
+                name = "request",
+                schema = TextCompletionRequest,
+                handler = self.on_request,
+                concurrency = concurrency,
+            )
+        )
+
+        self.register_specification(
+            ProducerSpec(
+                name = "response",
+                schema = TextCompletionResponse
+            )
+        )
+
+        self.register_specification(
+            ParameterSpec(
+                name = "model",
+            )
+        )
+
+        self.register_specification(
+            ParameterSpec(
+                name = "temperature",
+            )
+        )
+
+        if not hasattr(__class__, "text_completion_metric"):
+            from . metrics import BUCKETS_LLM
+            __class__.text_completion_metric = Histogram(
+                'tg_text_completion_duration_seconds',
+                'Text completion duration (seconds)',
+                ["processor"],
+                buckets=BUCKETS_LLM,
+            )
+
+        if not hasattr(__class__, "text_completion_model_metric"):
+            __class__.text_completion_model_metric = Info(
+                'tg_text_completion_model',
+                'Text completion model',
+                ["processor"]
+            )
+
+    async def on_request(self, msg, consumer, flow):
+
+        try:
+
+            request = msg.value()
+
+            # Sender-produced ID
+
+            id = msg.properties()["id"]
+
+            model = flow("model")
+            temperature = flow("temperature")
+
+            # Check if streaming is requested and supported
+            streaming = getattr(request, 'streaming', False)
+            response_format = getattr(request, 'response_format', None)
+            schema = getattr(request, 'schema', None)
+
+            if streaming and self.supports_streaming():
+
+                # Streaming mode
+                with __class__.text_completion_metric.labels(
+                        processor=self.id,
+                ).time():
+
+                    async for chunk in self.generate_content_stream(
+                        request.system, request.prompt, model, temperature,
+                        response_format=response_format, schema=schema,
+                    ):
+                        await flow("response").send(
+                            TextCompletionResponse(
+                                error=None,
+                                response=chunk.text,
+                                in_token=chunk.in_token,
+                                out_token=chunk.out_token,
+                                model=chunk.model,
+                                end_of_stream=chunk.is_final
+                            ),
+                            properties={"id": id}
+                        )
+
+            else:
+
+                # Non-streaming mode (original behavior)
+                with __class__.text_completion_metric.labels(
+                        processor=self.id,
+                ).time():
+
+                    response = await self.generate_content(
+                        request.system, request.prompt, model, temperature,
+                        response_format=response_format, schema=schema,
+                    )
+
+                await flow("response").send(
+                    TextCompletionResponse(
+                        error=None,
+                        response=response.text,
+                        in_token=response.in_token,
+                        out_token=response.out_token,
+                        model=response.model,
+                        end_of_stream=True
+                    ),
+                    properties={"id": id}
+                )
+
+            __class__.text_completion_model_metric.labels(
+                processor=self.id,
+            ).info({
+                "model": str(model) if model is not None else "",
+                "temperature": str(temperature) if temperature is not None else "",
+            })
+
+        except TooManyRequests as e:
+            raise e
+
+        except Exception as e:
+
+            # Apart from rate limits, treat all exceptions as unrecoverable
+
+            logger.error(f"LLM service exception: {e}", exc_info=True)
+
+            logger.debug("Sending error response...")
+
+            await flow.producer["response"].send(
+                TextCompletionResponse(
+                    error=Error(
+                        type = "llm-error",
+                        message = str(e),
+                    ),
+                    response=None,
+                    in_token=None,
+                    out_token=None,
+                    model=None,
+                    end_of_stream=True
+                ),
+                properties={"id": id}
+            )
+
+    def supports_streaming(self) -> bool:
+        """
+        Override in subclass to indicate streaming support.
+        Returns False by default.
+        """
+        return False
+
+    async def generate_content_stream(
+        self, system, prompt, model=None, temperature=None,
+        response_format=None, schema=None,
+    ):
+        """
+        Override in subclass to implement streaming.
+        Should yield LlmChunk objects.
+        The final chunk should have is_final=True.
+        """
+        raise NotImplementedError("Streaming not implemented for this provider")
+
+    @staticmethod
+    def add_args(parser: ArgumentParser) -> None:
+
+        FlowProcessor.add_args(parser)
+

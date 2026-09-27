@@ -1,0 +1,5 @@
+--pre
+agent-framework-core
+agent-framework
+semantic-kernel
+python-dotenv

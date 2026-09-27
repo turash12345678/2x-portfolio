@@ -1,0 +1,64 @@
+# Cache-Augmented Generation (CAG)
+
+This sample application implements a minimal CAG system using the following stack:
+
+- LLM: [GPT-2](https://huggingface.co/gpt2)
+- Libraries: [PyTorch](https://pytorch.org/), [Hugging Face Transformers](https://huggingface.co/docs/transformers/index)
+
+This example demonstrates how to preload external knowledge into the model's internal Key-Value (KV) cache. It uses a manual generation loop to provide a view of how the cache is injected and updated.
+
+### Requirements
+
+* [Python](https://www.python.org/) 3.x
+
+## Steps for running this example in the shell
+
+1. Install dependencies:
+```bash
+python -m venv .venv
+
+# macOS/Linux:
+source .venv/bin/activate
+
+# Windows Command Prompt:
+.venv\Scripts\activate.bat
+
+# Windows PowerShell:
+.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+```
+
+2. Run the script:
+```bash
+python cag.py
+```
+
+### Output
+
+After running the script, you will see the model being loaded, the context being cached, and then the model answering questions using that cache. The output should look similar to this:
+
+```
+Loading model: gpt2...
+Running on device: cpu
+
+--- [Phase 1] Pre-loading context... ---
+Context ingested and cached in 153.66ms.
+
+--- [Phase 2] Answering query: 'What is the function of mitochondria?' ---
+Query processed in 1908.55ms via manual generation loop.
+  - User: What is the function of mitochondria?
+  - AI:  The mitochondria are the most important organelles in the body. They are responsible for the production of energy, which is why they are called "energy-producing" cells. The mitochondria are also responsible for the production of oxygen, which is
+
+--- [Phase 2] Answering query: 'How massive is Jupiter?' ---
+Query processed in 1846.99ms via manual generation loop.
+  - User: How massive is Jupiter?
+  - AI:  The largest planet in our solar system is about the size of Jupiter. It is about the size of the Earth. It is about the size of the Sun. It is about the size of the Moon. It is about the size of the Earth.
+
+--- Asking another question to show cache reusability ---
+
+--- [Phase 2] Answering query: 'Which planet is the most massive in our solar system?' ---
+Query processed in 1891.84ms via manual generation loop.
+  - User: Which planet is the most massive in our solar system?
+  - AI:  The Earth is about the size of the Sun. It is about the size of the Moon. It is about the size of the Earth. It is about the size of the Sun. It is about the size of the Earth. It is about the
+```

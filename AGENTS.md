@@ -2,6 +2,10 @@
 
 React + Vite + Tailwind CSS project running inside Figma Make.
 
+> **CRITICAL INSTRUCTION FOR ALL AI AGENTS:**  
+> Before taking any action or planning changes, **ALWAYS READ `read-agent.md`**.  
+> It contains the complete project identity, owner profile, architecture, tech stack details, living state, and recent progress so you have 100% context even if conversation history was lost or you are working on a new machine.
+
 ## Development Server
 
 A Vite development server is **already running** on `$PORT` (default 8443). You don't need to start it manually.

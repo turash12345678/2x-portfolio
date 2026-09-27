@@ -1,0 +1,6 @@
+openai
+rich
+pydantic
+sentence-transformers
+faiss-cpu
+numpy

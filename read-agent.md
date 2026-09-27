@@ -1,0 +1,172 @@
+# 🤖 2X Portfolio & Agent Workspace — Master AI Context (read-agent.md)
+
+> **CRITICAL DIRECTIVE FOR ALL AI AGENTS (Antigravity, Cursor, Claude Code, Copilot, ChatGPT, etc.):**  
+> Whenever you start working in this repository on ANY computer or session, **READ THIS FILE FIRST**.  
+> Because local AI chat conversation histories do not synchronize across devices, this file serves as the **Permanent Collective Brain, Architecture Guide, and Living State Tracker** for Turash Ahsan's 2X Portfolio project.  
+> **RULE:** At the end of every task or milestone, or when prompted via `/schedule`, you **MUST** update the [Recent Progress & Living State](#-8-recent-progress--living-state) section with what you modified and what the current next steps are.
+
+---
+
+## 👤 1. Project Owner & Profile
+
+* **Full Name:** Turash Ahsan (First: Turash | Last: Ahsan)
+* **Role / Profession:** UI/UX Designer & Product Designer
+* **Current Company:** Ahsania (Leading web/mobile design systems, UX architecture in Figma)
+* **Experience:** 2+ Years (Enterprise products + 15+ client & freelance projects)
+* **Phone / WhatsApp:** `+880 172 325 3615` (Local: `01723253615`)
+* **Primary Email:** `turashahsan8@gmail.com`
+* **Live Portfolio Website:** [turashahsan.vercel.app](https://turashahsan.vercel.app)
+* **GitHub Repository:** [github.com/turash12345678/2x-portfolio](https://github.com/turash12345678/2x-portfolio)
+* **LinkedIn:** [linkedin.com/in/turashahsan1234](https://www.linkedin.com/in/turashahsan1234/)
+* **Location:** Dhaka, Bangladesh
+* **Expected Salary:** 35,000 BDT (Local / Negotiable) | Market Rate (Remote / Global)
+
+---
+
+## 🏗️ 2. Tech Stack & Architecture
+
+* **Framework:** React 19 + TypeScript 5.7
+* **Build Tool:** Vite 8 (`@vitejs/plugin-react`)
+* **Styling:** Tailwind CSS v4 (`@tailwindcss/vite` plugin, configured via `@import 'tailwindcss';` in `src/index.css`)
+* **Animation:** Framer Motion (`framer-motion`)
+* **Icons:** HugeIcons (`@hugeicons/react`), Lucide React (`lucide-react`)
+* **Database & Persistence:** Supabase Client (`@supabase/supabase-js`), synchronizing site configuration and content with local storage fallback (`src/services/db.ts`).
+* **Deployment:** Vercel (Auto-deploy on git push to `main` branch).
+* **Development Environment:** Figma Make App runtime environment. Vite dev server runs on `$PORT` (default `8443`).
+
+---
+
+## 📁 3. Repository Map & Key Modules
+
+```text
+e:\2x ✦ Portfolio\
+├── read-agent.md              <-- YOU ARE HERE: Master living brain for all AI sessions
+├── AGENTS.md                  <-- System rules automatically loaded by Antigravity
+├── Job Application Agent.md   <-- Instructions, templates & ATS rules for job automation
+├── job_tracker.json & .csv    <-- 400+ job applications database with statuses & timestamps
+├── jobs_1000_master_list.md   <-- Master company and hiring pipeline targets
+├── proof_*.png                <-- Screenshot evidence of submitted job applications
+├── Context Management/        <-- Agentic AI context frameworks & research archives
+├── public/                    <-- Static assets, favicons, OG banners, PDFs
+│   ├── Turash Ahsan Portfolio.pdf
+│   └── Turash Ahsan Resume (ATS Under 2MB).pdf
+└── src/
+    ├── main.tsx               <-- Application entrypoint
+    ├── App.tsx                <-- Primary shell, tab switcher, page routing (home/dashboard/casestudy)
+    ├── index.css              <-- Global Tailwind v4 styles and custom fonts
+    ├── pages/
+    │   ├── CaseStudy.tsx      <-- 10MS Live Class Redesign Case Study (interactive player & deep-dive)
+    │   └── Dashboard.tsx      <-- Protected Admin CMS for editing portfolio content
+    ├── components/
+    │   ├── Navbar/NavbarV2.tsx<-- Primary desktop navigation with Case Story link
+    │   ├── Hero/              <-- Portfolio hero section
+    │   ├── Bento/             <-- Interactive work showcase bento grids
+    │   ├── VideoLightbox/     <-- Modal video player
+    │   └── ...
+    ├── imports/
+    │   ├── Component1/        <-- Desktop floating navigation pill
+    │   └── Component1-1/      <-- Mobile responsive navigation pill
+    ├── services/
+    │   └── db.ts              <-- Supabase data fetching, syncing & local storage cache
+    └── config/
+        └── site.ts            <-- Site metadata, PIN authentication & navbar version flags
+```
+
+---
+
+## 🧭 4. Core Application Flows
+
+### 1. Portfolio Home (`src/App.tsx`)
+- Renders the primary portfolio landing page showcasing Turash's case studies, skills, experience, and interactive elements.
+- Features top navigation (`NavbarV2`) and floating bottom pill navigation (`Component1` / `Component1-1`).
+- Has a secret admin dashboard trigger via PIN modal.
+
+### 2. Case Study Hub (`src/pages/CaseStudy.tsx`)
+- Detailed design case study for the **10 Minute School (10MS) Live Class Experience Redesign**.
+- Contains an **interactive live class mock player** with interactive tabs (`Inbox`, `Discussion`, `Quiz`), stream quality toggles, AI answer preview, interactive quiz submission, emotion reactions, and exit modal with feedback rating.
+- Includes problem statements, legacy audit, user personas, design psychology, design system tokens, and business metrics.
+- Navigation: Accessed via the **"Case Story"** button (tagged with a green `New` badge) on all navbars.
+
+### 3. Admin CMS Dashboard (`src/pages/Dashboard.tsx`)
+- Protected by PIN (`siteConfig.adminPin`).
+- Allows editing copy, video links, social handles, and highlights without touching code.
+- Synced directly to Supabase via `src/services/db.ts`.
+
+### 4. Autonomous Job Application System
+- Documented in `Job Application Agent.md`.
+- Tracks submissions in `job_tracker.json` and `job_tracker.csv`.
+- Captures screenshot proofs in `proof_*.png`.
+- Strictly enforces ATS resume guidelines (<= 2MB for portals like Lever/Freshteam; master full PDF for direct emails).
+
+---
+
+## ⚡ 5. Strict Coding Guidelines & Rules
+
+1. **Apostrophes in Strings:** Always use double quotes for strings containing apostrophes (`"We're here to help"`), or escape single quotes (`'We\'re'`). Unescaped single quotes break Vite builds.
+2. **Tailwind CSS v4:** Directly use Tailwind utility classes in JSX. Do NOT attempt to create `tailwind.config.js` or `postcss.config.js`. Global font wiring belongs in `src/index.css`.
+3. **Component Exports:** Export components as default exports (`export default function ComponentName()`).
+4. **Build Verification:** Always verify code changes with:
+   ```bash
+   npm run build
+   ```
+   Must pass cleanly with zero TypeScript / Vite compilation errors.
+5. **Preserve Comments & Architecture:** Keep existing comments and docstrings intact.
+
+---
+
+## 🤖 6. AI Agent Collaboration Protocol
+
+When working across multiple machines or fresh AI instances:
+1. **On Session Start:**
+   - Read this file (`read-agent.md`).
+   - Check `git status` and `git log -n 5` to see what was done last.
+2. **During Development:**
+   - Follow the design conventions and tech stack established here.
+   - Maintain the dual-navigation setup in `src/App.tsx` (mobile `Component1_1`, desktop `NavbarV2` and floating `Component1`).
+3. **On Session Finish or Milestone:**
+   - Update Section 8 of `read-agent.md` with:
+     - Date & Timestamp
+     - Summary of changes made
+     - Updated current status
+     - Next items to work on
+   - Commit and push to GitHub so your changes and context are available everywhere.
+
+---
+
+## ⏱️ 7. `/schedule` Context Maintenance Workflow
+
+You can set up or recommend the `/schedule` slash command to keep this context continuously updated:
+
+* **Example Schedule Command:**
+  > `/schedule CronExpression="0 */2 * * *" Prompt="Check recent git commits and repository changes, and ensure read-agent.md is updated with the latest progress and next steps."`
+* **One-Shot Update Prompt:**
+  > `"Inspect the current git status and recent diffs, then update the Living State in read-agent.md with our latest progress."`
+
+---
+
+## 📜 8. Recent Progress & Living State (Last Updated: 2026-09-27)
+
+### ✅ Completed Milestones:
+1. **10MS Live Class Case Study Developed:**
+   - Implemented `src/pages/CaseStudy.tsx` (~880 lines) featuring interactive live classroom demo, tab navigation, quiz submission logic, reaction triggers, exit modal, and deep-dive methodology sections.
+2. **Navigation Integration:**
+   - Connected `CaseStudy.tsx` to `src/App.tsx` page router (`page === 'casestudy'`).
+   - Updated `NavbarV2.tsx`, `Component1/index.tsx`, and `Component1-1/index.tsx` with clickable `Case Story` buttons equipped with green `New` badges.
+3. **Typography & Styling:**
+   - Imported Geist and Geist Mono font weights in `src/index.css` for enhanced editorial typography.
+4. **Job Application Agent & Data Tracking:**
+   - Documented complete agent procedures in `Job Application Agent.md`.
+   - Recorded 400+ job applications in `job_tracker.json` and `job_tracker.csv`.
+   - Verified 360 visual screenshot proofs saved in root.
+5. **Context Synchronization Framework:**
+   - Created this `read-agent.md` file and linked it from `AGENTS.md` to ensure multi-device continuity.
+
+### 📌 Current Status:
+- Application builds cleanly with `npm run build` (0 errors).
+- All changes staged, committed, and synced to GitHub `main` branch.
+
+### 🎯 Immediate Next Steps / Roadmap:
+1. Review live preview of the Case Study page on mobile and tablet viewport sizes.
+2. Add any custom project screenshots or Figma frames into the Case Study gallery if desired.
+3. Continue job application pipeline executions according to `Job Application Agent.md`.
+4. Keep `read-agent.md` updated as new features or experiments are added.

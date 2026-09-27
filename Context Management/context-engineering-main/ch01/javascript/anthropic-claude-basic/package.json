@@ -1,0 +1,13 @@
+{
+  "name": "anthropic-claude-basic",
+  "version": "1.0.0",
+  "description": "Basic interaction with Anthropic Claude models",
+  "main": "anthropic-claude-basic.js",
+  "type": "module",
+  "scripts": {
+    "start": "node anthropic-claude-basic.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.124.0"
+  }
+}

@@ -1,0 +1,110 @@
+"""
+(C) Copyright 2026 Boni Garcia (https://bonigarcia.github.io/)
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
+
+import os
+from dotenv import load_dotenv
+
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.documents import Document
+from langchain_core.runnables import RunnableLambda, RunnablePassthrough
+from langchain_core.vectorstores import InMemoryVectorStore
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Set up the OpenAI API key
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise ValueError("OPENAI_API_KEY not found in .env file")
+
+if __name__ == "__main__":
+    # Create a dummy document for demonstration
+    # In a real application, you would load from an actual file or database
+    document_content = """
+    The quick brown fox jumps over the lazy dog.
+    This is a sample document for demonstrating Retrieval-Augmented Generation (RAG).
+    RAG combines the power of large language models with external knowledge bases.
+    It allows LLMs to retrieve relevant information and use it to generate more accurate and up-to-date responses.
+    LangChain provides various components to build RAG applications, including document loaders, text splitters, embedding models, vector stores, and retrievers.
+    FAISS is a library for efficient similarity search and clustering of dense vectors.
+    """
+    # Define the path where the dummy document will be created
+    dummy_doc_path = "sample_document.txt"
+    with open(dummy_doc_path, "w") as f:
+        f.write(document_content)
+
+    # 1. Load the document. A plain read plus a Document is enough here, and
+    # it avoids the loader classes that live in the sunset langchain-community
+    # package
+    with open(dummy_doc_path, encoding="utf-8") as f:
+        docs = [Document(page_content=f.read(),
+                         metadata={"source": dummy_doc_path})]
+
+    # 2. Split the document into chunks
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    splits = text_splitter.split_documents(docs)
+
+    # 3. Create embeddings and a vector store
+    embeddings = OpenAIEmbeddings(api_key=api_key)
+    vectorstore = InMemoryVectorStore.from_documents(splits, embeddings)
+
+    # 4. Create a retriever
+    retriever = vectorstore.as_retriever()
+
+    # 5. Define a prompt for RAG
+    rag_prompt = ChatPromptTemplate.from_template("""Answer the following question based only on the provided context:
+    <context>
+    {context}
+    </context>
+    Question: {input}""")
+
+    # 6. Initialize the LLM
+    llm = ChatOpenAI(api_key=api_key, model="gpt-5-mini", temperature=0)
+
+    # 7. Build the generation step with LangChain Expression Language. The
+    # retrieved documents are flattened into a single string before they reach
+    # the prompt. The legacy create_stuff_documents_chain and
+    # create_retrieval_chain helpers moved to langchain-classic, and this
+    # explicit composition is the current way of wiring the same pipeline
+    def format_docs(documents):
+        return "\n\n".join(doc.page_content for doc in documents)
+
+    generation_chain = (
+        RunnablePassthrough.assign(context=lambda x: format_docs(x["context"]))
+        | rag_prompt
+        | llm
+        | StrOutputParser()
+    )
+
+    # 8. Create the retrieval chain, which adds the retrieved documents under
+    # the context key and then the generated text under the answer key
+    retrieval_chain = (
+        RunnablePassthrough.assign(
+            context=RunnableLambda(lambda x: x["input"]) | retriever
+        )
+        | RunnablePassthrough.assign(answer=generation_chain)
+    )
+
+    # 9. Invoke the retrieval chain with a query
+    query = "What is RAG and why is it useful?"
+    response = retrieval_chain.invoke({"input": query})
+
+    print(f"Query: {query}")
+    print(f"Response: {response['answer']}")
+    print(f"Source Documents: {[doc.metadata for doc in response['context']]}")
+
+    # Clean up the dummy document
+    os.remove(dummy_doc_path)

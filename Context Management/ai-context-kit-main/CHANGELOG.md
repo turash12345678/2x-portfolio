@@ -1,0 +1,250 @@
+# Changelog
+
+All notable changes to AI Context Kit are documented here. This changelog helps you decide what to pull into your own instance when the template is updated.
+
+## How to use this changelog
+
+When a new version is released:
+1. Check what changed in the version entry below
+2. Copy the files listed under **Safe to update** from the template into your instance
+3. Never overwrite files listed under **Protect** — those are your personal artifacts
+
+---
+
+## [Unreleased]
+
+---
+
+## [1.5.1] - 2026-09-06
+
+### Fixed
+- `time-awareness` skill, workflow step 3: corrected the config key reference back to `recheck.pacing.checkpoints` (it had regressed to the broader `recheck.pacing`, which doesn't itself list the checkpoints); matches `config/time-awareness.config.yaml` and `references/config-schema.md`
+- `SKILL.validation.md` for `time-awareness/` updated to match
+
+### Changed
+- Bumped `time-awareness` skill `version` `1.0.0` → `1.0.1` (patch: workflow reference fix)
+- Version bumped `1.5.0` → `1.5.1` (patch) so the fix is actually distributed: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and `.codex-plugin/plugin.json` all pin an explicit `version`, so Claude Code's plugin update mechanism only ships new content when that string changes — a content-only fix with no version bump would have been invisible to installed users
+
+### Safe to update from template
+- `skills/time-awareness/SKILL.md`
+- `skills/time-awareness/SKILL.validation.md`
+- `.claude-plugin/plugin.json`
+- `.claude-plugin/marketplace.json`
+- `.codex-plugin/plugin.json`
+- `CHANGELOG.md`
+
+### Protect (never overwrite)
+- Your personal `*_usercontext.instructions.md`
+- Your project `AGENTS.md`
+- Any custom skills, config overrides, or checkpoint files you have created
+
+---
+
+## [1.5.0] - 2026-09-06
+
+### Added
+- **`time-awareness` skill** — always-on guardrail that grounds date, time-of-day, elapsed-time, and pacing statements in a real local clock reading instead of an estimate, covering time-of-day framing, time-budget drift, stale artifact timestamps, and day-of-week scheduling errors; local time only, no network time service
+- `skills/time-awareness/references/config-schema.md` and a user-editable `skills/time-awareness/config/time-awareness.config.yaml` (time-of-day buckets, re-check cadence, trigger phrases)
+- `SKILL.validation.md` for `time-awareness/` (PASS, 100/100)
+- `.agents/skills/time-awareness` symlink for Codex repo-local discovery
+- `skills/README.md` skill inventory expanded with a Runtime Guardrails section (and the previously missing Checkpoint Workflows entries)
+
+### Changed
+- Version bumped `1.4.3` → `1.5.0` (minor: new skill). Synced across spec, `docs/spec-rationale.md`, `AGENTS.md`, README, templates, sample artifacts, and all `spec_version` stamps in create/validate skills
+- Realigned the three plugin manifests (`.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `.codex-plugin/plugin.json`) to the shared version — they were left at `1.4.2` by the 1.4.3 doc patch
+- README plugin and Codex sections now state 12 skills (was 11)
+- `last_updated` set to 2026-09-06 in `specs/context_aware_ai_session_spec.md` and `docs/spec-rationale.md`
+- Refreshed `AGENTS.validation.md` and `usercontexts/sample_usercontext.validation.md` to `spec_version` 1.5.0 (re-validated, still PASS 100/100) so no doc carries a stale version reference
+
+### Safe to update from template
+- `skills/time-awareness/` (new)
+- `.agents/skills/` (one new symlink)
+- `skills/README.md`
+- `README.md`
+- `AGENTS.md`
+- `CHANGELOG.md`
+- `specs/context_aware_ai_session_spec.md`
+- `docs/spec-rationale.md`
+- `templates/AGENTS_template.md`
+- `templates/usercontext_template.instructions.md`
+- `.claude-plugin/plugin.json`
+- `.claude-plugin/marketplace.json`
+- `.codex-plugin/plugin.json`
+- `skills/create-agents-md/SKILL.md`
+- `skills/create-project-instructions/SKILL.md`
+- `skills/create-usercontext-instructions/SKILL.md`
+- `skills/create-usercontext-instructions/references/quality-checklist.md`
+- `skills/validate-agents-md/SKILL.md`
+- `skills/validate-project-instructions/SKILL.md`
+- `skills/validate-usercontext-instructions/SKILL.md`
+- `AGENTS.validation.md`
+- `usercontexts/sample_usercontext.validation.md`
+
+### Protect (never overwrite)
+- Your personal `*_usercontext.instructions.md`
+- Your project `AGENTS.md`
+- Any custom skills, config overrides, or checkpoint files you have created
+
+---
+
+## [1.4.3] - 2026-07-07
+
+### Fixed
+- Replaced all surviving `deterministic` phrasing (spec §4.1 footnote, §10.8 workflow table; README session state section) with `consistent and predictable` — aligns with the reduced-variance language established in v1.4.2
+- Removed stale `agents/openai.yaml` sidecar claim from README Codex section (sidecars were deleted in v1.4.2 but the description was not updated)
+- Corrected Copilot platform table row: Copilot Code Review does support `AGENTS.md`; removed incorrect caveat and expanded label to reflect full Copilot coverage
+- Replaced `"Works seamlessly"` with honest cross-platform framing that matches the platform-variance caveat already present in the same section
+- Added provenance note to `agentskills.io` link — clarifies it is a third-party community site, not a project-maintained resource
+- Corrected `CLAUDE.md` / `.cursorrules` comparison: `"No layering"` was factually wrong (both support nested files); reframed around the actual gap — no personal/project separation that travels across tools
+- Added deprecation callout to template repository section directing new users to the plugin instead
+
+### Safe to update from template
+- `specs/context_aware_ai_session_spec.md`
+- `README.md`
+- `templates/usercontext_template.instructions.md`
+- `templates/AGENTS_template.md`
+- `skills/create-agents-md/SKILL.md`
+- `skills/create-project-instructions/SKILL.md`
+- `skills/create-usercontext-instructions/SKILL.md`
+- `skills/create-usercontext-instructions/references/quality-checklist.md`
+- `skills/validate-agents-md/SKILL.md`
+- `skills/validate-usercontext-instructions/SKILL.md`
+- `skills/validate-project-instructions/SKILL.md`
+
+### Protect (never overwrite)
+- Your personal `*_usercontext.instructions.md`
+- Your project `AGENTS.md`
+- Any custom skills you have created
+
+---
+
+## [1.4.2] - 2026-05-12
+
+### Added
+- **`create-checkpoint` skill** — guided workflow to capture session state as a checkpoint artifact per spec section 4.4, with schema reference and `agents/openai.yaml` sidecar
+- **`restore-checkpoint` skill** — guided workflow to load, validate, and restore a checkpoint artifact at session start per spec section 4.4 restore rules, with conflict resolution reference and `agents/openai.yaml` sidecar
+- **`checkpoint: true` required field** — added to spec section 4.4.2 schema so checkpoint files are self-identifying; restore validation is now fully spec-backed
+- AGENTS.md now references sections 4.4 (Cross-Session Persistence) and 4.5 (Context Compression) with explicit behavioral instructions for both
+- Prompts and Codex symlinks added for both new skills
+- `SKILL.validation.md` added to `create-checkpoint/` and `restore-checkpoint/` skill folders
+
+### Safe to update from template
+- `skills/create-checkpoint/` (new)
+- `skills/restore-checkpoint/` (new)
+- `.agents/skills/` (two new symlinks)
+- `prompts/` (two new prompt files)
+- `specs/context_aware_ai_session_spec.md`
+- `AGENTS.md`
+- `README.md`
+- `CHANGELOG.md`
+
+### Protect (never overwrite)
+- Your personal `*_usercontext.instructions.md`
+- Your project `AGENTS.md`
+- Any custom skills or checkpoint files you have created
+
+---
+
+## [1.4.1] - 2026-05-11
+- **Claude Code plugin** — `.claude-plugin/plugin.json` manifest makes the repo installable as a native Claude Code plugin; skills are auto-discovered from `skills/`
+- **GitHub Copilot CLI plugin** — `.claude-plugin/marketplace.json` turns the repo into a self-hosted marketplace, enabling `copilot plugin marketplace add MSiccDev/ai-context-kit` install flow (Claude Code and Copilot CLI share the same plugin spec)
+- **OpenAI Codex support** — `agents/openai.yaml` sidecar added to all 9 skill folders with UI display names, short descriptions, default prompts, and invocation policies for the Codex skill picker
+- **`.agents/skills/` discovery directory** — adds a symlink for each skill folder into `.agents/skills/` so Codex auto-discovers skills from its standard path without duplicating content
+- `version` and `allowed-tools` fields added to all 9 `skills/*/SKILL.md` frontmatter
+- README install sections for Claude Code, GitHub Copilot CLI, and OpenAI Codex
+
+### Safe to update from template
+- `.claude-plugin/` (new directory)
+- `.agents/` (new directory)
+- `skills/` (all skill folders — updated frontmatter + new `agents/openai.yaml` in each)
+- `templates/skill_template/SKILL.md`
+- `README.md`
+- `CHANGELOG.md`
+
+### Protect (never overwrite)
+- Your personal `*_usercontext.instructions.md`
+- Your project `AGENTS.md`
+- Any custom skills you have created
+
+---
+
+## [1.4.0] - 2026-05-08
+
+### Added
+- **Spec section 4.4 Cross-Session Persistence** — normative rules for checkpoint artifacts: proposal rules, required schema (project, role, phase, output_style, tone, interaction_mode, open_tasks, key_decisions, active_files, last_updated), and restore/conflict rules
+- **Spec section 4.5 Context Compression** — normative rules for managing context window pressure: proposal rules, required compression checkpoint contents, and reversibility requirements
+- `docs/spec-rationale.md`: new "Cross-Session Persistence and Context Compression" section with example checkpoint file, conflict resolution dialog, and annotated compression proposal dialog
+
+### Changed
+- Spec version bumped from 1.3.1 → 1.4.0 across spec, templates, skills, and all stamped artifacts
+- Session Persistence and Context Compression promoted from "Future Enhancements" (rationale doc) to normative spec sections
+
+### Safe to update from template
+- `specs/context_aware_ai_session_spec.md`
+- `docs/spec-rationale.md`
+- `templates/usercontext_template.instructions.md`
+- `templates/AGENTS_template.md`
+- `templates/skill_template/SKILL.md`
+- `skills/` (all skill folders)
+- `prompts/` (all prompt files)
+- `README.md`
+- `CHANGELOG.md`
+
+### Protect (never overwrite)
+- Your personal `*_usercontext.instructions.md`
+- Your project `AGENTS.md`
+- Any custom skills you have created under `skills/`
+
+---
+
+## [1.3.1] - 2026-05-07
+
+### Added
+- `CHANGELOG.md` to track changes and simplify instance update workflow
+- "See It In Action" before/after example section in README
+- "Why This Over Alternatives?" comparison section in README
+- Platform limitations column in the context loading table
+- `## How to Invoke` section in all skill `SKILL.md` files with per-platform guidance
+- Validation scope disclaimer in `AGENTS.validation.md`, `usercontexts/sample_usercontext.validation.md`, and README
+- `spec_version` stamping in templates and enforced in create/validate skill workflows
+- `docs/spec-rationale.md` companion document (rationale, examples, scenarios)
+- Realistic illustrative sample user context (Jordan Kim persona)
+
+### Changed
+- "Determinism" principle renamed to "Reduced variance" throughout spec and README
+- Validate skill Purpose/Constraints clarified to "structured checks based on a deterministic scoring rubric"
+- Platform table: Copilot row updated to distinguish coding agent (AGENTS.md ✅) from Code Review (AGENTS.md ❌)
+- Spec trimmed to normative rules only (426 lines); rationale and examples moved to `docs/spec-rationale.md`
+- References auto-loading claim scoped to repo-aware environments only
+
+### Safe to update from template
+- `specs/context_aware_ai_session_spec.md`
+- `templates/usercontext_template.instructions.md`
+- `templates/AGENTS_template.md`
+- `templates/skill_template/SKILL.md`
+- `skills/` (all skill folders)
+- `prompts/` (all prompt files)
+- `README.md`
+- `CHANGELOG.md`
+
+### Protect (never overwrite)
+- Your personal `*_usercontext.instructions.md`
+- Your project `AGENTS.md`
+- Any custom skills you have created under `skills/`
+
+---
+
+## [1.3.0] - 2025-12-23
+
+### Added
+- Initial skill ecosystem: create and validate workflows for user context, project instructions, AGENTS.md, and skills
+- Repository drift-control skill
+- Canonical templates for user context, AGENTS.md, and skill artifacts
+- Session specification v1.3.0
+
+### Safe to update from template
+- All files except personal artifacts listed below
+
+### Protect (never overwrite)
+- Your personal `*_usercontext.instructions.md`
+- Your project `AGENTS.md`

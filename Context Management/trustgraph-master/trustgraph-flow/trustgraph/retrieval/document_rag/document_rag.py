@@ -1,0 +1,530 @@
+
+import asyncio
+import logging
+import uuid
+from datetime import datetime, timezone
+
+# Provenance imports
+from trustgraph.provenance import (
+    docrag_question_uri,
+    docrag_grounding_uri,
+    docrag_exploration_uri,
+    docrag_focus_uri,
+    docrag_synthesis_uri,
+    docrag_question_triples,
+    grounding_triples,
+    docrag_exploration_triples,
+    docrag_chunk_selection_triples,
+    docrag_synthesis_triples,
+    set_graph,
+    GRAPH_RETRIEVAL,
+)
+
+from .rerank import RerankCandidate, mmr_select
+
+# Module logger
+logger = logging.getLogger(__name__)
+
+# When the caller does not specify a fetch_limit, reranking over-fetches this
+# many times the final doc_limit as the candidate pool, so the cross-encoder can
+# recover relevant chunks the bi-encoder ranked just outside the top doc_limit.
+# This is only the fallback default: an explicit fetch_limit overrides it.
+OVERFETCH_FACTOR = 3
+
+# Reciprocal Rank Fusion constant. The standard value from Cormack et al.
+# (SIGIR 2009); higher values flatten the contribution of top ranks.
+RRF_K = 60
+
+LABEL="http://www.w3.org/2000/01/rdf-schema#label"
+
+def rrf_fuse(ranked_lists, weights, limit):
+    """Fuse ranked ChunkMatch lists by weighted Reciprocal Rank Fusion.
+
+    score(chunk) = sum over lists of weight / (RRF_K + rank), so fusion
+    needs only each list's ordering, never its native score scale — BM25
+    and cosine scores are incomparable. Returns the surviving matches
+    (first-seen object per chunk_id) in fused order, truncated to limit.
+    """
+    scores = {}
+    first_seen = {}
+    for matches, weight in zip(ranked_lists, weights):
+        for rank, match in enumerate(matches, start=1):
+            if not match.chunk_id:
+                continue
+            scores[match.chunk_id] = (
+                scores.get(match.chunk_id, 0.0) + weight / (RRF_K + rank)
+            )
+            first_seen.setdefault(match.chunk_id, match)
+    ordered = sorted(scores, key=lambda cid: -scores[cid])
+    return [first_seen[cid] for cid in ordered[:limit]]
+
+class Query:
+
+    def __init__(
+            self, rag, workspace, collection, verbose,
+            fetch_limit=20, track_usage=None,
+    ):
+        self.rag = rag
+        self.workspace = workspace
+        self.collection = collection
+        self.verbose = verbose
+        self.fetch_limit = fetch_limit
+        self.track_usage = track_usage
+
+    async def extract_concepts(self, query):
+        """Extract key concepts from query for independent embedding."""
+        result = await self.rag.prompt_client.prompt(
+            "extract-concepts",
+            variables={"query": query}
+        )
+        if self.track_usage:
+            self.track_usage(result)
+
+        concepts = []
+        if result.text:
+            for line in result.text.strip().split('\n'):
+                line = line.strip()
+                if line:
+                    concepts.append(line)
+
+        # Fallback to raw query if no concepts extracted
+        if not concepts:
+            concepts = [query]
+
+        self.concepts_usage = result
+
+        if self.verbose:
+            logger.debug(f"Extracted concepts: {concepts}")
+
+        return concepts
+
+    async def get_vectors(self, concepts):
+        """Compute embeddings for a list of concepts."""
+        if self.verbose:
+            logger.debug("Computing embeddings...")
+
+        qembeds = await self.rag.embeddings_client.embed(concepts)
+
+        if self.verbose:
+            logger.debug("Embeddings computed")
+
+        return qembeds
+
+    async def get_vector_matches(self, concepts):
+        """Dense path: embed concepts, query the vector store, dedupe."""
+        vectors = await self.get_vectors(concepts)
+
+        if self.verbose:
+            logger.debug("Getting chunks from embeddings store...")
+
+        # Query chunk matches for each concept concurrently
+        per_concept_limit = max(
+            1, self.fetch_limit // len(vectors)
+        )
+
+        async def query_concept(vec):
+            return await self.rag.doc_embeddings_client.query(
+                vector=vec, limit=per_concept_limit,
+                collection=self.collection,
+            )
+
+        results = await asyncio.gather(
+            *[query_concept(v) for v in vectors]
+        )
+
+        # Deduplicate chunk matches by chunk_id
+        seen = set()
+        chunk_matches = []
+        for matches in results:
+            for match in matches:
+                if match.chunk_id and match.chunk_id not in seen:
+                    seen.add(match.chunk_id)
+                    chunk_matches.append(match)
+
+        return chunk_matches
+
+    async def get_keyword_matches(self, query):
+        """Sparse path: BM25 search on the raw query text."""
+        if self.verbose:
+            logger.debug("Getting chunks from keyword index...")
+
+        return await self.rag.kw_index_client.query(
+            query=query, limit=self.fetch_limit,
+            collection=self.collection,
+        )
+
+    async def get_docs(self, concepts, query=""):
+        """
+        Get documents (chunks) matching the query, via the retrieval mode's
+        paths: dense (concept embeddings), sparse (BM25 over the raw query
+        text), or both fused by RRF. `query` is only consulted by the sparse
+        path; existing vector-mode callers may omit it.
+
+        Returns:
+            tuple: (docs, chunk_ids) where:
+                - docs: list of document content strings
+                - chunk_ids: list of chunk IDs that were successfully fetched
+        """
+        mode = self.rag.retrieval_mode
+
+        if mode == "keyword":
+            chunk_matches = await self.get_keyword_matches(query)
+        elif mode == "hybrid":
+            # The paths are independent; a keyword-index failure degrades
+            # to vector-only rather than failing the whole query.
+            async def keyword_or_empty():
+                try:
+                    return await self.get_keyword_matches(query)
+                except Exception as e:
+                    logger.warning(f"Keyword path failed, using vector only: {e}")
+                    return []
+
+            vector_matches, keyword_matches = await asyncio.gather(
+                self.get_vector_matches(concepts),
+                keyword_or_empty(),
+            )
+            chunk_matches = rrf_fuse(
+                [vector_matches, keyword_matches],
+                [self.rag.vector_weight, self.rag.keyword_weight],
+                self.fetch_limit,
+            )
+        else:
+            chunk_matches = await self.get_vector_matches(concepts)
+
+        if self.verbose:
+            logger.debug(f"Got {len(chunk_matches)} chunks, fetching content from Garage...")
+
+        # Fetch chunk content from Garage
+        docs = []
+        chunk_ids = []
+        for match in chunk_matches:
+            if match.chunk_id:
+                try:
+                    content = await self.rag.fetch_chunk(match.chunk_id)
+                    docs.append(content)
+                    chunk_ids.append(match.chunk_id)
+                except Exception as e:
+                    logger.warning(f"Failed to fetch chunk {match.chunk_id}: {e}")
+
+        if self.verbose:
+            logger.debug("Documents fetched:")
+            for doc in docs:
+                logger.debug(f"  {doc[:100]}...")
+
+        return docs, chunk_ids
+
+class DocumentRag:
+
+    def __init__(
+            self, prompt_client, embeddings_client, doc_embeddings_client,
+            fetch_chunk,
+            reranker_client=None,
+            verbose=False,
+            rerank_diversity_mode="none",
+            rerank_diversity_lambda=0.7,
+            kw_index_client=None,
+            retrieval_mode="vector",
+            vector_weight=1.0,
+            keyword_weight=1.0,
+    ):
+
+        self.verbose = verbose
+
+        self.prompt_client = prompt_client
+        self.embeddings_client = embeddings_client
+        self.doc_embeddings_client = doc_embeddings_client
+        self.fetch_chunk = fetch_chunk
+
+        # Optional cross-encoder reranker. When None, the retrieval path is
+        # byte-identical to the pre-reranker behaviour.
+        self.reranker_client = reranker_client
+        self.rerank_diversity_mode = rerank_diversity_mode
+        self.rerank_diversity_lambda = rerank_diversity_lambda
+
+        # Optional sparse (BM25) retrieval path. "vector" keeps the current
+        # dense-only behaviour; "keyword"/"hybrid" need a keyword index
+        # client wired.
+        if retrieval_mode != "vector" and kw_index_client is None:
+            raise ValueError(
+                f"retrieval_mode={retrieval_mode!r} requires a keyword "
+                f"index client"
+            )
+        self.kw_index_client = kw_index_client
+        self.retrieval_mode = retrieval_mode
+        self.vector_weight = vector_weight
+        self.keyword_weight = keyword_weight
+
+        if self.verbose:
+            logger.debug("DocumentRag initialized")
+
+    async def query(
+            self, query, workspace="default", collection="default",
+            doc_limit=20, fetch_limit=0, streaming=False, chunk_callback=None,
+            explain_callback=None, save_answer_callback=None,
+    ):
+        """
+        Execute a Document RAG query with optional explainability tracking.
+
+        Args:
+            query: The query string
+            workspace: Workspace for isolation (also scopes chunk lookup)
+            collection: Collection identifier
+            doc_limit: Chunks selected into the synthesis prompt (after rerank)
+            fetch_limit: Candidate pool fetched from the vector store before
+                reranking. 0 = derive (OVERFETCH_FACTOR x doc_limit when a
+                reranker is wired, else doc_limit).
+            streaming: Enable streaming LLM response
+            chunk_callback: async def callback(chunk, end_of_stream) for streaming
+            explain_callback: async def callback(triples, explain_id) for explainability
+            save_answer_callback: async def callback(doc_id, answer_text) to save answer to librarian
+
+        Returns:
+            tuple: (answer_text, usage) where usage is a dict with
+                   in_token, out_token, model
+        """
+        total_in = 0
+        total_out = 0
+        last_model = None
+
+        def track_usage(result):
+            nonlocal total_in, total_out, last_model
+            if result is not None:
+                if result.in_token is not None:
+                    total_in += result.in_token
+                if result.out_token is not None:
+                    total_out += result.out_token
+                if result.model is not None:
+                    last_model = result.model
+
+        if self.verbose:
+            logger.debug("Constructing prompt...")
+
+        # Generate explainability URIs upfront
+        session_id = str(uuid.uuid4())
+        q_uri = docrag_question_uri(session_id)
+        gnd_uri = docrag_grounding_uri(session_id)
+        exp_uri = docrag_exploration_uri(session_id)
+        foc_uri = docrag_focus_uri(session_id)
+        syn_uri = docrag_synthesis_uri(session_id)
+
+        timestamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+        # Emit question explainability immediately
+        if explain_callback:
+            q_triples = set_graph(
+                docrag_question_triples(q_uri, query, timestamp),
+                GRAPH_RETRIEVAL
+            )
+            await explain_callback(q_triples, q_uri)
+
+        # Resolve the candidate-pool size fetched from the vector store. When a
+        # reranker is wired, honour an explicit fetch_limit; if unset, fall back
+        # to the OVERFETCH_FACTOR heuristic. Never fetch fewer than doc_limit,
+        # else the rerank could not fill the prompt. Without a reranker, fetch
+        # doc_limit as before (byte-identical behaviour).
+        if self.reranker_client is not None:
+            fl = fetch_limit or (OVERFETCH_FACTOR * doc_limit)
+            fetch_count = max(fl, doc_limit)
+        else:
+            fetch_count = doc_limit
+
+        q = Query(
+            rag=self, workspace=workspace, collection=collection,
+            verbose=self.verbose,
+            fetch_limit=fetch_count, track_usage=track_usage,
+        )
+
+        # Extract concepts from query (grounding step). Concepts only feed
+        # the dense path's embeddings; in keyword-only mode the LLM call
+        # would be paid and discarded, so ground on the raw query instead.
+        if self.retrieval_mode == "keyword":
+            concepts = [query]
+        else:
+            concepts = await q.extract_concepts(query)
+
+        # Emit grounding explainability after concept extraction
+        if explain_callback:
+            cu = getattr(q, 'concepts_usage', None)
+            gnd_triples = set_graph(
+                grounding_triples(
+                    gnd_uri, q_uri, concepts,
+                    in_token=cu.in_token if cu else None,
+                    out_token=cu.out_token if cu else None,
+                    model=cu.model if cu else None,
+                ),
+                GRAPH_RETRIEVAL
+            )
+            await explain_callback(gnd_triples, gnd_uri)
+
+        docs, chunk_ids = await q.get_docs(concepts, query)
+
+        # Emit exploration explainability after chunks retrieved
+        # (full candidate set, before any reranking)
+        if explain_callback:
+            exp_triples = set_graph(
+                docrag_exploration_triples(exp_uri, gnd_uri, len(chunk_ids), chunk_ids),
+                GRAPH_RETRIEVAL
+            )
+            await explain_callback(exp_triples, exp_uri)
+
+        # Optional cross-encoder reranking pass between retrieval and
+        # synthesis. Mirrors GraphRAG's reranker usage but with a single
+        # query (the question). When no reranker is wired, this block is
+        # skipped entirely and behaviour is byte-identical to before.
+        reranked = False
+        if self.reranker_client is not None and docs:
+            use_diversity = self.rerank_diversity_mode == "mmr"
+
+            # Without diversity selection, preserve the existing #1011
+            # behavior: ask the reranker for exactly doc_limit results.
+            #
+            # With diversity selection enabled, ask the reranker to score the
+            # full fetched candidate pool first, then let MMR choose the final
+            # doc_limit context set.
+            rerank_limit = len(docs) if use_diversity else doc_limit
+
+            results = await self.reranker_client.rerank(
+                queries=[{"id": "0", "text": query}],
+                documents=[
+                    {"id": str(i), "text": d} for i, d in enumerate(docs)
+                ],
+                limit=rerank_limit,
+            )
+
+            source_docs = docs
+            source_chunk_ids = chunk_ids
+
+            if use_diversity:
+                candidates = [
+                    RerankCandidate(
+                        index=int(r.document_id),
+                        chunk_id=source_chunk_ids[int(r.document_id)],
+                        text=source_docs[int(r.document_id)],
+                        reranker_score=r.score,
+                    )
+                    for r in results
+                ]
+
+                selected_candidates = mmr_select(
+                    candidates,
+                    limit=doc_limit,
+                    lambda_mult=self.rerank_diversity_lambda,
+                )
+
+                docs = [candidate.text for candidate in selected_candidates]
+                chunk_ids = [
+                    candidate.chunk_id for candidate in selected_candidates
+                ]
+
+                selected_chunks_with_scores = [
+                    {
+                        "chunk_id": candidate.chunk_id,
+                        "score": candidate.reranker_score,
+                    }
+                    for candidate in selected_candidates
+                ]
+
+            else:
+                # results are sorted desc by score and truncated to limit by the
+                # reranker service, so order gives the surviving top-N directly.
+                order = [int(r.document_id) for r in results]
+                docs = [source_docs[i] for i in order]
+                chunk_ids = [source_chunk_ids[i] for i in order]
+
+                selected_chunks_with_scores = [
+                    {"chunk_id": chunk_ids[i], "score": r.score}
+                    for i, r in enumerate(results)
+                ]
+
+            reranked = True
+
+            # Emit chunk-selection (focus) explainability: surviving chunks
+            # with their cross-encoder scores, derived from exploration.
+            if explain_callback:
+                foc_triples = set_graph(
+                    docrag_chunk_selection_triples(
+                        foc_uri, exp_uri,
+                        selected_chunks_with_scores, session_id,
+                    ),
+                    GRAPH_RETRIEVAL
+                )
+                await explain_callback(foc_triples, foc_uri)
+
+        if self.verbose:
+            logger.debug("Invoking LLM...")
+            logger.debug(f"Documents: {docs}")
+            logger.debug(f"Query: {query}")
+
+        if streaming and chunk_callback:
+            # Accumulate chunks for answer storage while forwarding to callback
+            accumulated_chunks = []
+
+            async def accumulating_callback(chunk, end_of_stream):
+                accumulated_chunks.append(chunk)
+                await chunk_callback(chunk, end_of_stream)
+
+            synthesis_result = await self.prompt_client.document_prompt(
+                query=query,
+                documents=docs,
+                streaming=True,
+                chunk_callback=accumulating_callback
+            )
+            track_usage(synthesis_result)
+            # Combine all chunks into full response
+            resp = "".join(accumulated_chunks)
+        else:
+            synthesis_result = await self.prompt_client.document_prompt(
+                query=query,
+                documents=docs
+            )
+            track_usage(synthesis_result)
+            resp = synthesis_result.text
+
+        if self.verbose:
+            logger.debug("Query processing complete")
+
+        # Emit synthesis explainability after answer generated
+        if explain_callback:
+            synthesis_doc_id = None
+            answer_text = resp if resp else ""
+
+            # Save answer to librarian
+            if save_answer_callback and answer_text:
+                synthesis_doc_id = f"urn:trustgraph:docrag:{session_id}/answer"
+                try:
+                    await save_answer_callback(synthesis_doc_id, answer_text)
+                    if self.verbose:
+                        logger.debug(f"Saved answer to librarian: {synthesis_doc_id}")
+                except Exception as e:
+                    logger.warning(f"Failed to save answer to librarian: {e}")
+                    synthesis_doc_id = None
+
+            # When reranking ran, synthesis derives from the focus (the
+            # reranked chunks actually fed to the LLM), as GraphRAG always does.
+            # When no reranker is wired, there is no focus stage, so synthesis
+            # derives from exploration (the unchanged no-op lineage) - a
+            # deliberate divergence from GraphRAG's always-on focus.
+            syn_parent = foc_uri if reranked else exp_uri
+            syn_triples = set_graph(
+                docrag_synthesis_triples(
+                    syn_uri, syn_parent,
+                    document_id=synthesis_doc_id,
+                    in_token=synthesis_result.in_token if synthesis_result else None,
+                    out_token=synthesis_result.out_token if synthesis_result else None,
+                    model=synthesis_result.model if synthesis_result else None,
+                ),
+                GRAPH_RETRIEVAL
+            )
+            await explain_callback(syn_triples, syn_uri)
+
+        if self.verbose:
+            logger.debug(f"Emitted explain for session {session_id}")
+
+        usage = {
+            "in_token": total_in if total_in > 0 else None,
+            "out_token": total_out if total_out > 0 else None,
+            "model": last_model,
+        }
+
+        return resp, usage
+

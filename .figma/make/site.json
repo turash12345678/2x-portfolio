@@ -1,8 +1,8 @@
 {
-  "title": "2x",
-  "description": "Delivers a mobile-first, skill-focused portfolio with a modern, consistent design that highlights user expertise for professional presentation.",
+  "title": "Turash Ahsan - UI/UX Designer & Product Designer | 2x",
+  "description": "Portfolio of Turash Ahsan, a dedicated UI/UX and Product Designer. Helping businesses grow through intentional product design, web experiences, and branding.",
   "robots": {
-    "index": false
+    "index": true
   },
   "accessibility": {
     "addBypassLinks": false,
