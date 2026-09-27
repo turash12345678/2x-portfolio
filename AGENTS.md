@@ -3,8 +3,8 @@
 React + Vite + Tailwind CSS project running inside Figma Make.
 
 > **CRITICAL INSTRUCTION FOR ALL AI AGENTS:**  
-> Before taking any action or planning changes, **ALWAYS READ `read-agent.md`**.  
-> It contains the complete project identity, owner profile, architecture, tech stack details, living state, and recent progress so you have 100% context even if conversation history was lost or you are working on a new machine.
+> 1. Before taking any action or planning changes, **ALWAYS READ `read-agent.md`**. It contains the complete project identity, owner profile, architecture, tech stack details, living state, and recent progress so you have 100% context even if conversation history was lost or you are working on a new machine.  
+> 2. Whenever the user types `/..`, `/sync`, or asks to update context/memory, immediately run the **`sync-agent-context`** skill: inspect recent git diffs, update Section 8 of `read-agent.md`, verify with `npm run build`, and push to GitHub `main`.
 
 ## Development Server
 

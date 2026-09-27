@@ -133,14 +133,23 @@ When working across multiple machines or fresh AI instances:
 
 ---
 
-## ⏱️ 7. `/schedule` Context Maintenance Workflow
+## ⏱️ 7. Context Synchronization & Living Memory Skill (`/..` or `/sync`)
 
-You can set up or recommend the `/schedule` slash command to keep this context continuously updated:
+We have created an automated skill located at [`.agents/skills/sync-agent-context/SKILL.md`](file:///e:/2x%20%E2%9C%A6%20Portfolio/.agents/skills/sync-agent-context/SKILL.md).
 
-* **Example Schedule Command:**
-  > `/schedule CronExpression="0 */2 * * *" Prompt="Check recent git commits and repository changes, and ensure read-agent.md is updated with the latest progress and next steps."`
-* **One-Shot Update Prompt:**
-  > `"Inspect the current git status and recent diffs, then update the Living State in read-agent.md with our latest progress."`
+### 🚀 Instant Trigger Shortcuts:
+Whenever you finish working, want to sync progress, or want the AI to update this file and push to GitHub, simply type:
+* `/sync`
+* `/..`
+* `/sync-context`
+* or `"sync context"` / `"read-agent update kore push dao"`
+
+### ⚡ What It Does Automatically:
+1. Audits `git status` and recent diffs to capture all work done in the current session.
+2. Updates **Section 8 (Recent Progress & Living State)** in `read-agent.md` with timestamps and new milestones.
+3. Runs `npm run build` to verify that production build compiles with zero errors.
+4. Executes `git add -A`, commits with a descriptive message, and runs `git push origin main`.
+5. Ensures that whenever you log in on another PC or start a new AI session, the AI has 100% up-to-date memory!
 
 ---
 
