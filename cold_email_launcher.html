@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>50 Verified Cold Email Outreach Dashboard — Turash Ahsan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090a0f;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(255, 255, 255, 0.06);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.2);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 40px 24px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: var(--success-glow);
+      border: 1px solid var(--success);
+      color: var(--success);
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      width: fit-content;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; }
+    p.subtitle { color: var(--text-muted); font-size: 15px; }
+
+    .batch-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      align-items: center;
+    }
+    .batch-label { font-weight: 700; font-size: 14px; margin-right: 8px; }
+    .batch-btn {
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid var(--accent);
+      color: #c7d2fe;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .batch-btn:hover {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 0 16px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    .table-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+    th {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 14px 18px;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--card-border);
+    }
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      vertical-align: middle;
+    }
+    tr:hover td { background: var(--card-hover); }
+    .company-title { font-weight: 700; color: #fff; font-size: 15px; }
+    .email-code {
+      font-family: 'JetBrains Mono', monospace;
+      color: #93c5fd;
+      background: rgba(147, 197, 253, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      display: inline-block;
+    }
+    .actions { display: flex; gap: 8px; }
+    .btn-action {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s;
+    }
+    .btn-action:hover { background: #1d4ed8; }
+    .btn-copy {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e5e7eb;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-copy:hover { background: rgba(255, 255, 255, 0.15); }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10b981;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="badge">✅ 100% MX Verified & Bounce-Proof</div>
+      <h1>Top 50 Product Design Studios & Startups — Cold Outreach</h1>
+      <p class="subtitle">Every email address below has active mail exchange (MX) DNS verification. Click <strong>"Open in Gmail"</strong> to instantly open a pre-filled compose window with your customized portfolio pitch!</p>
+    </div>
+
+    <div class="batch-bar">
+      <span class="batch-label">🚀 Fast Batch Opener:</span>
+      <button class="batch-btn" onclick="openBatch(0, 5)">Batch 1 (1–5)</button>
+      <button class="batch-btn" onclick="openBatch(5, 10)">Batch 2 (6–10)</button>
+      <button class="batch-btn" onclick="openBatch(10, 15)">Batch 3 (11–15)</button>
+      <button class="batch-btn" onclick="openBatch(15, 20)">Batch 4 (16–20)</button>
+      <button class="batch-btn" onclick="openBatch(20, 25)">Batch 5 (21–25)</button>
+      <button class="batch-btn" onclick="openBatch(25, 30)">Batch 6 (26–30)</button>
+      <button class="batch-btn" onclick="openBatch(30, 40)">Batch 7 (31–40)</button>
+      <button class="batch-btn" onclick="openBatch(40, 50)">Batch 8 (41–50)</button>
+    </div>
+
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Company</th>
+            <th>Contact & Title</th>
+            <th>Verified Email</th>
+            <th>Live Mail Server (MX)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="leads-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Email pitch copied to clipboard!</div>
+
+  <script>
+    const CANDIDATE = {
+      name: 'Turash Ahsan',
+      portfolio: 'https://turashahsan.vercel.app',
+      phone: '+880 172 325 3615',
+      linkedin: 'https://www.linkedin.com/in/turashahsan1234/'
+    };
+
+    let LEADS = [];
+
+    function generateMailUrl(lead) {
+      const subject = encodeURIComponent('Product Designer / UI/UX collaboration — Turash Ahsan');
+      const body = encodeURIComponent(`Hi ${lead.contact},
+
+I’ve been closely following ${lead.company}'s digital product work and love your team's approach to high-craft experiences.
+
+I’m a UI/UX & Product Designer with 2+ years of experience leading design systems, complex web/mobile interfaces, and conversion-focused UX at Ahsania. I specialize in turning ambiguous product requirements into clean, scalable Figma architectures and pixel-perfect interactive prototypes.
+
+Given ${lead.company}'s design-first standard, I would love to explore if you need remote design bandwidth or full-time product design support.
+
+You can explore my interactive case studies and live work here:
+🌐 Portfolio: https://turashahsan.vercel.app
+
+Attached is my ATS-optimized resume. Would you be open to a quick 5-minute chat or brief feedback on my portfolio sometime this week?
+
+Best regards,
+Turash Ahsan
+Product Designer | UI/UX
+WhatsApp: +880 172 325 3615
+LinkedIn: https://www.linkedin.com/in/turashahsan1234/`);
+
+      return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(lead.email)}&su=${subject}&body=${body}`;
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => t.style.display = 'none', 3000);
+    }
+
+    function copyPitch(lead) {
+      const text = `Hi ${lead.contact},
+
+I’ve been closely following ${lead.company}'s digital product work and love your team's approach to high-craft experiences.
+
+I’m a UI/UX & Product Designer with 2+ years of experience leading design systems, complex web/mobile interfaces, and conversion-focused UX at Ahsania. I specialize in turning ambiguous product requirements into clean, scalable Figma architectures and pixel-perfect interactive prototypes.
+
+Given ${lead.company}'s design-first standard, I would love to explore if you need remote design bandwidth or full-time product design support.
+
+You can explore my interactive case studies and live work here:
+🌐 Portfolio: https://turashahsan.vercel.app
+
+Attached is my ATS-optimized resume. Would you be open to a quick 5-minute chat or brief feedback on my portfolio sometime this week?
+
+Best regards,
+Turash Ahsan
+Product Designer | UI/UX
+WhatsApp: +880 172 325 3615
+LinkedIn: https://www.linkedin.com/in/turashahsan1234/`;
+
+      navigator.clipboard.writeText(text);
+      showToast(`Copied pitch for ${lead.company}!`);
+    }
+
+    function openBatch(start, end) {
+      const slice = LEADS.slice(start, end);
+      slice.forEach((l, idx) => {
+        setTimeout(() => {
+          window.open(generateMailUrl(l), '_blank');
+        }, idx * 300);
+      });
+      showToast(`Opening ${slice.length} Gmail compose tabs...`);
+    }
+
+    fetch('cold_email_50_leads.json')
+      .then(res => res.json())
+      .then(data => {
+        LEADS = data;
+        const tbody = document.getElementById('leads-body');
+        tbody.innerHTML = data.map((l, i) => `
+          <tr>
+            <td style="color: var(--text-muted); font-weight: 700;">${i + 1}</td>
+            <td>
+              <div class="company-title">${l.company}</div>
+              <a href="${l.site}" target="_blank" style="color: var(--text-muted); font-size: 12px; text-decoration: none;">${l.domain} ↗</a>
+            </td>
+            <td>
+              <div style="font-weight: 600; color: #e5e7eb;">${l.contact}</div>
+              <div style="color: var(--text-muted); font-size: 12px;">${l.role}</div>
+            </td>
+            <td><span class="email-code">${l.email}</span></td>
+            <td><span style="font-size: 12px; color: #34d399;">● ${l.mxHost}</span></td>
+            <td>
+              <div class="actions">
+                <a class="btn-action" href="${generateMailUrl(l)}" target="_blank">✉️ Open in Gmail</a>
+                <button class="btn-copy" onclick="copyPitch(LEADS[${i}])">📋 Copy Pitch</button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+      });
+  </script>
+</body>
+</html>

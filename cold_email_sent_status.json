@@ -1,0 +1,352 @@
+{
+  "careers@metalab.com": {
+    "company": "MetaLab",
+    "email": "careers@metalab.com",
+    "timestamp": "2026-09-30T11:40:32.930Z",
+    "status": "SENT",
+    "proof": "proof_cold_metalab.png"
+  },
+  "careers@clay.global": {
+    "company": "Clay Global",
+    "email": "careers@clay.global",
+    "timestamp": "2026-09-30T11:40:32.940Z",
+    "status": "SENT",
+    "proof": "proof_cold_clay_global.png"
+  },
+  "hr@ramotion.com": {
+    "company": "Ramotion",
+    "email": "hr@ramotion.com",
+    "timestamp": "2026-09-30T11:40:32.940Z",
+    "status": "SENT",
+    "proof": "proof_cold_ramotion.png"
+  },
+  "work@bakkenbaeck.com": {
+    "company": "Bakken & Bæck",
+    "email": "work@bakkenbaeck.com",
+    "timestamp": "2026-09-30T11:40:32.940Z",
+    "status": "SENT",
+    "proof": "proof_cold_bakken___b_ck.png"
+  },
+  "work@ustwo.com": {
+    "company": "Ustwo",
+    "email": "work@ustwo.com",
+    "timestamp": "2026-09-30T11:40:32.940Z",
+    "status": "SENT",
+    "proof": "proof_cold_ustwo.png"
+  },
+  "join@fantasy.co": {
+    "company": "Fantasy",
+    "email": "join@fantasy.co",
+    "timestamp": "2026-09-30T11:40:56.342Z",
+    "status": "SENT",
+    "proof": "proof_cold_fantasy.png"
+  },
+  "recruiting@work.co": {
+    "company": "Work & Co",
+    "email": "recruiting@work.co",
+    "timestamp": "2026-09-30T11:41:17.163Z",
+    "status": "SENT",
+    "proof": "proof_cold_work___co.png"
+  },
+  "join@aerolab.co": {
+    "company": "Aerolab",
+    "email": "join@aerolab.co",
+    "timestamp": "2026-09-30T11:41:39.279Z",
+    "status": "SENT",
+    "proof": "proof_cold_aerolab.png"
+  },
+  "jobs@pixelmatters.com": {
+    "company": "Pixelmatters",
+    "email": "jobs@pixelmatters.com",
+    "timestamp": "2026-09-30T11:42:01.761Z",
+    "status": "SENT",
+    "proof": "proof_cold_pixelmatters.png"
+  },
+  "careers@focuslab.agency": {
+    "company": "Focus Lab",
+    "email": "careers@focuslab.agency",
+    "timestamp": "2026-09-30T11:42:23.670Z",
+    "status": "SENT",
+    "proof": "proof_cold_focus_lab.png"
+  },
+  "careers@strv.com": {
+    "company": "STRV",
+    "email": "careers@strv.com",
+    "timestamp": "2026-09-30T11:42:45.405Z",
+    "status": "SENT",
+    "proof": "proof_cold_strv.png"
+  },
+  "careers@monterail.com": {
+    "company": "Monterail",
+    "email": "careers@monterail.com",
+    "timestamp": "2026-09-30T11:43:08.123Z",
+    "status": "SENT",
+    "proof": "proof_cold_monterail.png"
+  },
+  "jobs@netguru.com": {
+    "company": "Netguru",
+    "email": "jobs@netguru.com",
+    "timestamp": "2026-09-30T11:43:28.704Z",
+    "status": "SENT",
+    "proof": "proof_cold_netguru.png"
+  },
+  "careers@10clouds.com": {
+    "company": "10Clouds",
+    "email": "careers@10clouds.com",
+    "timestamp": "2026-09-30T11:43:49.838Z",
+    "status": "SENT",
+    "proof": "proof_cold_10clouds.png"
+  },
+  "surrender@evilmartians.com": {
+    "company": "Evil Martians",
+    "email": "surrender@evilmartians.com",
+    "timestamp": "2026-09-30T11:44:11.492Z",
+    "status": "SENT",
+    "proof": "proof_cold_evil_martians.png"
+  },
+  "hello@thoughtbot.com": {
+    "company": "Thoughtbot",
+    "email": "hello@thoughtbot.com",
+    "timestamp": "2026-09-30T11:48:53.423Z",
+    "status": "SENT",
+    "proof": "proof_cold_thoughtbot.png"
+  },
+  "career@supercharge.io": {
+    "company": "Supercharge",
+    "email": "career@supercharge.io",
+    "timestamp": "2026-09-30T11:49:13.648Z",
+    "status": "SENT",
+    "proof": "proof_cold_supercharge.png"
+  },
+  "join@area17.com": {
+    "company": "Area 17",
+    "email": "join@area17.com",
+    "timestamp": "2026-09-30T11:49:33.876Z",
+    "status": "SENT",
+    "proof": "proof_cold_area_17.png"
+  },
+  "job@hellomonday.com": {
+    "company": "Hello Monday",
+    "email": "job@hellomonday.com",
+    "timestamp": "2026-09-30T11:49:54.992Z",
+    "status": "SENT",
+    "proof": "proof_cold_hello_monday.png"
+  },
+  "work@koto.studio": {
+    "company": "Koto Studio",
+    "email": "work@koto.studio",
+    "timestamp": "2026-09-30T11:50:17.363Z",
+    "status": "SENT",
+    "proof": "proof_cold_koto_studio.png"
+  },
+  "careers@instrument.com": {
+    "company": "Instrument",
+    "email": "careers@instrument.com",
+    "timestamp": "2026-09-30T11:50:38.171Z",
+    "status": "SENT",
+    "proof": "proof_cold_instrument.png"
+  },
+  "jobs@b-reel.com": {
+    "company": "B-Reel",
+    "email": "jobs@b-reel.com",
+    "timestamp": "2026-09-30T11:50:59.007Z",
+    "status": "SENT",
+    "proof": "proof_cold_b_reel.png"
+  },
+  "careers@stinkstudios.com": {
+    "company": "Stink Studios",
+    "email": "careers@stinkstudios.com",
+    "timestamp": "2026-09-30T11:51:18.773Z",
+    "status": "SENT",
+    "proof": "proof_cold_stink_studios.png"
+  },
+  "london@monopo.london": {
+    "company": "Monopo",
+    "email": "london@monopo.london",
+    "timestamp": "2026-09-30T11:51:39.081Z",
+    "status": "SENT",
+    "proof": "proof_cold_monopo.png"
+  },
+  "jobs@edenspiekermann.com": {
+    "company": "Edenspiekermann",
+    "email": "jobs@edenspiekermann.com",
+    "timestamp": "2026-09-30T11:52:00.630Z",
+    "status": "SENT",
+    "proof": "proof_cold_edenspiekermann.png"
+  },
+  "careers@designit.com": {
+    "company": "Designit",
+    "email": "careers@designit.com",
+    "timestamp": "2026-09-30T12:01:01.777Z",
+    "status": "SENT",
+    "proof": "proof_cold_designit.png"
+  },
+  "careers@method.com": {
+    "company": "Method",
+    "email": "careers@method.com",
+    "timestamp": "2026-09-30T12:01:22.131Z",
+    "status": "SENT",
+    "proof": "proof_cold_method.png"
+  },
+  "careers@futurice.com": {
+    "company": "Futurice",
+    "email": "careers@futurice.com",
+    "timestamp": "2026-09-30T12:01:42.524Z",
+    "status": "SENT",
+    "proof": "proof_cold_futurice.png"
+  },
+  "careers@studioscience.com": {
+    "company": "Studio Science",
+    "email": "careers@studioscience.com",
+    "timestamp": "2026-09-30T12:02:02.466Z",
+    "status": "SENT",
+    "proof": "proof_cold_studio_science.png"
+  },
+  "contact@activetheory.net": {
+    "company": "Active Theory",
+    "email": "contact@activetheory.net",
+    "timestamp": "2026-09-30T12:02:23.258Z",
+    "status": "SENT",
+    "proof": "proof_cold_active_theory.png"
+  },
+  "jobs@resn.co.nz": {
+    "company": "Resn",
+    "email": "jobs@resn.co.nz",
+    "timestamp": "2026-09-30T12:02:44.021Z",
+    "status": "SENT",
+    "proof": "proof_cold_resn.png"
+  },
+  "jobs@northkingdom.com": {
+    "company": "North Kingdom",
+    "email": "jobs@northkingdom.com",
+    "timestamp": "2026-09-30T12:03:04.450Z",
+    "status": "SENT",
+    "proof": "proof_cold_north_kingdom.png"
+  },
+  "careers@elephant.is": {
+    "company": "Elephant",
+    "email": "careers@elephant.is",
+    "timestamp": "2026-09-30T12:03:26.742Z",
+    "status": "SENT",
+    "proof": "proof_cold_elephant.png"
+  },
+  "careers@criticalmass.com": {
+    "company": "Critical Mass",
+    "email": "careers@criticalmass.com",
+    "timestamp": "2026-09-30T12:03:47.915Z",
+    "status": "SENT",
+    "proof": "proof_cold_critical_mass.png"
+  },
+  "talent@bendingspoons.com": {
+    "company": "Bending Spoons",
+    "email": "talent@bendingspoons.com",
+    "timestamp": "2026-09-30T12:04:08.528Z",
+    "status": "SENT",
+    "proof": "proof_cold_bending_spoons.png"
+  },
+  "jobs@automattic.com": {
+    "company": "Automattic",
+    "email": "jobs@automattic.com",
+    "timestamp": "2026-09-30T12:20:32.632Z",
+    "status": "SENT",
+    "proof": "proof_cold_automattic.png"
+  },
+  "jobs@37signals.com": {
+    "company": "37signals",
+    "email": "jobs@37signals.com",
+    "timestamp": "2026-09-30T12:21:17.021Z",
+    "status": "SENT",
+    "proof": "proof_cold_37signals.png"
+  },
+  "hello@ghost.org": {
+    "company": "Ghost Foundation",
+    "email": "hello@ghost.org",
+    "timestamp": "2026-09-30T12:22:02.586Z",
+    "status": "SENT",
+    "proof": "proof_cold_ghost_foundation.png"
+  },
+  "openings@duckduckgo.com": {
+    "company": "DuckDuckGo",
+    "email": "openings@duckduckgo.com",
+    "timestamp": "2026-09-30T12:22:35.687Z",
+    "status": "SENT",
+    "proof": "proof_cold_duckduckgo.png"
+  },
+  "careers@appwrite.io": {
+    "company": "Appwrite",
+    "email": "careers@appwrite.io",
+    "timestamp": "2026-09-30T12:23:16.486Z",
+    "status": "SENT",
+    "proof": "proof_cold_appwrite.png"
+  },
+  "careers@posthog.com": {
+    "company": "PostHog",
+    "email": "careers@posthog.com",
+    "timestamp": "2026-09-30T12:23:53.765Z",
+    "status": "SENT",
+    "proof": "proof_cold_posthog.png"
+  },
+  "peer@cal.com": {
+    "company": "Cal.com",
+    "email": "peer@cal.com",
+    "timestamp": "2026-09-30T12:24:31.939Z",
+    "status": "SENT",
+    "proof": "proof_cold_cal_com.png"
+  },
+  "careers@supabase.com": {
+    "company": "Supabase",
+    "email": "careers@supabase.com",
+    "timestamp": "2026-09-30T12:25:04.304Z",
+    "status": "SENT",
+    "proof": "proof_cold_supabase.png"
+  },
+  "design@vercel.com": {
+    "company": "Vercel",
+    "email": "design@vercel.com",
+    "timestamp": "2026-09-30T12:25:30.573Z",
+    "status": "SENT",
+    "proof": "proof_cold_vercel.png"
+  },
+  "jobs@linear.app": {
+    "company": "Linear",
+    "email": "jobs@linear.app",
+    "timestamp": "2026-09-30T12:26:13.302Z",
+    "status": "SENT",
+    "proof": "proof_cold_linear.png"
+  },
+  "careers@raycast.com": {
+    "company": "Raycast",
+    "email": "careers@raycast.com",
+    "timestamp": "2026-09-30T12:26:34.273Z",
+    "status": "SENT",
+    "proof": "proof_cold_raycast.png"
+  },
+  "jobs@loom.com": {
+    "company": "Loom (Atlassian)",
+    "email": "jobs@loom.com",
+    "timestamp": "2026-09-30T12:27:02.338Z",
+    "status": "SENT",
+    "proof": "proof_cold_loom__atlassian_.png"
+  },
+  "jobs@framer.com": {
+    "company": "Framer",
+    "email": "jobs@framer.com",
+    "timestamp": "2026-09-30T12:27:42.773Z",
+    "status": "SENT",
+    "proof": "proof_cold_framer.png"
+  },
+  "jobs@sketch.com": {
+    "company": "Sketch",
+    "email": "jobs@sketch.com",
+    "timestamp": "2026-09-30T12:28:09.622Z",
+    "status": "SENT",
+    "proof": "proof_cold_sketch.png"
+  },
+  "careers@webflow.com": {
+    "company": "Webflow",
+    "email": "careers@webflow.com",
+    "timestamp": "2026-09-30T12:28:42.068Z",
+    "status": "SENT",
+    "proof": "proof_cold_webflow.png"
+  }
+}

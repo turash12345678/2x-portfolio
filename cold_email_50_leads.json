@@ -1,0 +1,502 @@
+[
+  {
+    "company": "MetaLab",
+    "domain": "metalab.com",
+    "email": "careers@metalab.com",
+    "contact": "Design Hiring Team",
+    "role": "Head of Design / Talent",
+    "site": "https://www.metalab.com",
+    "mxHost": "alt1.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Clay Global",
+    "domain": "clay.global",
+    "email": "careers@clay.global",
+    "contact": "Dmitry Tsozik",
+    "role": "Design Director & Co-Founder",
+    "site": "https://clay.global",
+    "mxHost": "alt4.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Ramotion",
+    "domain": "ramotion.com",
+    "email": "hr@ramotion.com",
+    "contact": "Denis Dorokhov",
+    "role": "Design Director & Partner",
+    "site": "https://www.ramotion.com",
+    "mxHost": "alt3.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Bakken & Bæck",
+    "domain": "bakkenbaeck.com",
+    "email": "work@bakkenbaeck.com",
+    "contact": "Tobias Bæck",
+    "role": "Co-Founder & Product Lead",
+    "site": "https://bakkenbaeck.com",
+    "mxHost": "smtp.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Ustwo",
+    "domain": "ustwo.com",
+    "email": "work@ustwo.com",
+    "contact": "Talent Acquisition Team",
+    "role": "Design Resourcing Lead",
+    "site": "https://www.ustwo.com",
+    "mxHost": "alt2.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Fantasy",
+    "domain": "fantasy.co",
+    "email": "join@fantasy.co",
+    "contact": "David Martin",
+    "role": "Founder & CEO",
+    "site": "https://fantasy.co",
+    "mxHost": "alt1.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Work & Co",
+    "domain": "work.co",
+    "email": "recruiting@work.co",
+    "contact": "Felipe Memoria",
+    "role": "Founding Partner & Design",
+    "site": "https://work.co",
+    "mxHost": "mx0b-001dcc01.pphosted.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Aerolab",
+    "domain": "aerolab.co",
+    "email": "join@aerolab.co",
+    "contact": "Agustin Kovarsky",
+    "role": "CEO & Head of Product",
+    "site": "https://aerolab.co",
+    "mxHost": "aspmx5.googlemail.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Pixelmatters",
+    "domain": "pixelmatters.com",
+    "email": "jobs@pixelmatters.com",
+    "contact": "André Oliveira",
+    "role": "Founder & CEO",
+    "site": "https://pixelmatters.com",
+    "mxHost": "alt4.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Focus Lab",
+    "domain": "focuslab.agency",
+    "email": "careers@focuslab.agency",
+    "contact": "Bill Kenney",
+    "role": "Co-Founder & CEO",
+    "site": "https://focuslab.agency",
+    "mxHost": "alt2.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "STRV",
+    "domain": "strv.com",
+    "email": "careers@strv.com",
+    "contact": "Lukas Stibor",
+    "role": "Co-Founder & CEO",
+    "site": "https://www.strv.com",
+    "mxHost": "alt4.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Monterail",
+    "domain": "monterail.com",
+    "email": "careers@monterail.com",
+    "contact": "Szymon Boniecki",
+    "role": "Co-Founder & Head of People",
+    "site": "https://www.monterail.com",
+    "mxHost": "aspmx2.googlemail.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Netguru",
+    "domain": "netguru.com",
+    "email": "jobs@netguru.com",
+    "contact": "Marek Talarczyk",
+    "role": "CEO",
+    "site": "https://www.netguru.com",
+    "mxHost": "alt3.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "10Clouds",
+    "domain": "10clouds.com",
+    "email": "careers@10clouds.com",
+    "contact": "Maciej Cielecki",
+    "role": "Founder & CEO",
+    "site": "https://10clouds.com",
+    "mxHost": "alt3.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Evil Martians",
+    "domain": "evilmartians.com",
+    "email": "surrender@evilmartians.com",
+    "contact": "Roman Kuba",
+    "role": "Head of Product Design",
+    "site": "https://evilmartians.com",
+    "mxHost": "alt3.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Thoughtbot",
+    "domain": "thoughtbot.com",
+    "email": "hello@thoughtbot.com",
+    "contact": "Chad Pytel",
+    "role": "CEO & Founder",
+    "site": "https://thoughtbot.com",
+    "mxHost": "alt1.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Supercharge",
+    "domain": "supercharge.io",
+    "email": "career@supercharge.io",
+    "contact": "Andras Balogh",
+    "role": "Managing Director & Design",
+    "site": "https://supercharge.io",
+    "mxHost": "alt1.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Area 17",
+    "domain": "area17.com",
+    "email": "join@area17.com",
+    "contact": "Kemp Attwood",
+    "role": "Design Director & Partner",
+    "site": "https://area17.com",
+    "mxHost": "aspmx3.googlemail.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Hello Monday",
+    "domain": "hellomonday.com",
+    "email": "job@hellomonday.com",
+    "contact": "Anders Jessen",
+    "role": "Co-Founder & Creative Director",
+    "site": "https://www.hellomonday.com",
+    "mxHost": "aspmx2.googlemail.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Koto Studio",
+    "domain": "koto.studio",
+    "email": "work@koto.studio",
+    "contact": "James Greenfield",
+    "role": "CEO & Creative Director",
+    "site": "https://koto.studio",
+    "mxHost": "alt3.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Instrument",
+    "domain": "instrument.com",
+    "email": "careers@instrument.com",
+    "contact": "Nate Tielman",
+    "role": "Head of Design Recruiting",
+    "site": "https://www.instrument.com",
+    "mxHost": "mxa-00852301.gslb.pphosted.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "B-Reel",
+    "domain": "b-reel.com",
+    "email": "jobs@b-reel.com",
+    "contact": "Petter Westlund",
+    "role": "Chief Creative Officer",
+    "site": "https://www.b-reel.com",
+    "mxHost": "alt4.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Stink Studios",
+    "domain": "stinkstudios.com",
+    "email": "careers@stinkstudios.com",
+    "contact": "Mark Pytlik",
+    "role": "CEO",
+    "site": "https://stinkstudios.com",
+    "mxHost": "alt2.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Monopo",
+    "domain": "monopo.london",
+    "email": "london@monopo.london",
+    "contact": "Matt Jones",
+    "role": "Creative Director",
+    "site": "https://monopo.london",
+    "mxHost": "aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Edenspiekermann",
+    "domain": "edenspiekermann.com",
+    "email": "jobs@edenspiekermann.com",
+    "contact": "Erik Spiekermann",
+    "role": "Partner & Founder",
+    "site": "https://www.edenspiekermann.com",
+    "mxHost": "smtp.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Designit",
+    "domain": "designit.com",
+    "email": "careers@designit.com",
+    "contact": "Kelli Nelson",
+    "role": "Global Talent Lead",
+    "site": "https://designit.com",
+    "mxHost": "designit-com.mail.protection.outlook.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Method",
+    "domain": "method.com",
+    "email": "careers@method.com",
+    "contact": "David Kelly",
+    "role": "Design Leadership Team",
+    "site": "https://www.method.com",
+    "mxHost": "us-smtp-inbound-2.mimecast.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Futurice",
+    "domain": "futurice.com",
+    "email": "careers@futurice.com",
+    "contact": "Simo Leisti",
+    "role": "CEO",
+    "site": "https://futurice.com",
+    "mxHost": "alt2.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Studio Science",
+    "domain": "studioscience.com",
+    "email": "careers@studioscience.com",
+    "contact": "Steve Foutty",
+    "role": "CEO",
+    "site": "https://studioscience.com",
+    "mxHost": "alt2.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Active Theory",
+    "domain": "activetheory.net",
+    "email": "contact@activetheory.net",
+    "contact": "Nick Mountford",
+    "role": "Managing Director",
+    "site": "https://activetheory.net",
+    "mxHost": "alt2.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Resn",
+    "domain": "resn.co.nz",
+    "email": "jobs@resn.co.nz",
+    "contact": "Rik Campbell",
+    "role": "Co-Founder & CEO",
+    "site": "https://resn.co.nz",
+    "mxHost": "alt2.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "North Kingdom",
+    "domain": "northkingdom.com",
+    "email": "jobs@northkingdom.com",
+    "contact": "David Eriksson",
+    "role": "Chief Creative Officer",
+    "site": "https://www.northkingdom.com",
+    "mxHost": "alt1.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Elephant",
+    "domain": "elephant.is",
+    "email": "careers@elephant.is",
+    "contact": "Eric Jaffe",
+    "role": "Founder & CEO",
+    "site": "https://elephant.is",
+    "mxHost": "us-smtp-inbound-1.mimecast.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Critical Mass",
+    "domain": "criticalmass.com",
+    "email": "careers@criticalmass.com",
+    "contact": "Dianne Wilkins",
+    "role": "CEO",
+    "site": "https://www.criticalmass.com",
+    "mxHost": "criticalmass-com.mail.protection.outlook.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Bending Spoons",
+    "domain": "bendingspoons.com",
+    "email": "talent@bendingspoons.com",
+    "contact": "Luca Ferrari",
+    "role": "CEO & Co-Founder",
+    "site": "https://bendingspoons.com",
+    "mxHost": "alt1.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Automattic",
+    "domain": "automattic.com",
+    "email": "jobs@automattic.com",
+    "contact": "Matt Mullenweg",
+    "role": "Founder & CEO",
+    "site": "https://automattic.com",
+    "mxHost": "mx-ams.automattic.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "37signals",
+    "domain": "37signals.com",
+    "email": "jobs@37signals.com",
+    "contact": "Jason Fried",
+    "role": "Founder & CEO",
+    "site": "https://37signals.com",
+    "mxHost": "work-mx.app.hey.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Ghost Foundation",
+    "domain": "ghost.org",
+    "email": "hello@ghost.org",
+    "contact": "John O'Nolan",
+    "role": "Founder & CEO",
+    "site": "https://ghost.org",
+    "mxHost": "aspmx3.googlemail.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "DuckDuckGo",
+    "domain": "duckduckgo.com",
+    "email": "openings@duckduckgo.com",
+    "contact": "Gabriel Weinberg",
+    "role": "Founder & CEO",
+    "site": "https://duckduckgo.com",
+    "mxHost": "duckduckgo-com.mail.protection.outlook.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Appwrite",
+    "domain": "appwrite.io",
+    "email": "careers@appwrite.io",
+    "contact": "Eldad Fux",
+    "role": "Founder & CEO",
+    "site": "https://appwrite.io",
+    "mxHost": "alt4.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "PostHog",
+    "domain": "posthog.com",
+    "email": "careers@posthog.com",
+    "contact": "James Hawkins",
+    "role": "CEO & Co-Founder",
+    "site": "https://posthog.com",
+    "mxHost": "aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Cal.com",
+    "domain": "cal.com",
+    "email": "peer@cal.com",
+    "contact": "Peer Richelsen",
+    "role": "Co-Founder & Co-CEO",
+    "site": "https://cal.com",
+    "mxHost": "alt3.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Supabase",
+    "domain": "supabase.com",
+    "email": "careers@supabase.com",
+    "contact": "Paul Copplestone",
+    "role": "CEO & Co-Founder",
+    "site": "https://supabase.com",
+    "mxHost": "alt2.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Vercel",
+    "domain": "vercel.com",
+    "email": "design@vercel.com",
+    "contact": "Guillermo Rauch",
+    "role": "CEO & Founder",
+    "site": "https://vercel.com",
+    "mxHost": "alt1.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Linear",
+    "domain": "linear.app",
+    "email": "jobs@linear.app",
+    "contact": "Karri Saarinen",
+    "role": "Co-Founder & Head of Design",
+    "site": "https://linear.app",
+    "mxHost": "alt2.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Raycast",
+    "domain": "raycast.com",
+    "email": "careers@raycast.com",
+    "contact": "Thomas Paul Mann",
+    "role": "CEO & Co-Founder",
+    "site": "https://raycast.com",
+    "mxHost": "alt2.aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Loom (Atlassian)",
+    "domain": "loom.com",
+    "email": "jobs@loom.com",
+    "contact": "Joe Thomas",
+    "role": "Co-Founder & CEO",
+    "site": "https://www.loom.com",
+    "mxHost": "mxa-001d9801.gslb.pphosted.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Framer",
+    "domain": "framer.com",
+    "email": "jobs@framer.com",
+    "contact": "Koen Bok",
+    "role": "CEO & Co-Founder",
+    "site": "https://www.framer.com",
+    "mxHost": "aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Sketch",
+    "domain": "sketch.com",
+    "email": "jobs@sketch.com",
+    "contact": "Pieter Omvlee",
+    "role": "Founder & CEO",
+    "site": "https://www.sketch.com",
+    "mxHost": "aspmx.l.google.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  },
+  {
+    "company": "Webflow",
+    "domain": "webflow.com",
+    "email": "careers@webflow.com",
+    "contact": "Vlad Magdalin",
+    "role": "Co-Founder & Chief Innovation Officer",
+    "site": "https://webflow.com",
+    "mxHost": "aspmx3.googlemail.com",
+    "mxStatus": "VERIFIED_ACTIVE"
+  }
+]
