@@ -153,47 +153,46 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
 
 ---
 
-## 📜 8. Recent Progress & Living State (Last Updated: 2026-09-30 19:05)
+## 📜 8. Recent Progress & Living State (Last Updated: 2026-09-30 20:30)
 
 ### ✅ Completed Milestones:
-1. **10MS Live Class Case Study Developed:**
-   - Implemented `src/pages/CaseStudy.tsx` (~880 lines) featuring interactive live classroom demo, tab navigation, quiz submission logic, reaction triggers, exit modal, and deep-dive methodology sections.
-2. **Navigation Integration:**
-   - Connected `CaseStudy.tsx` to `src/App.tsx` page router (`page === 'casestudy'`).
-   - Updated `NavbarV2.tsx`, `Component1/index.tsx`, and `Component1-1/index.tsx` with clickable `Case Story` buttons equipped with green `New` badges.
-3. **Typography & Styling:**
-   - Imported Geist and Geist Mono font weights in `src/index.css` for enhanced editorial typography.
-4. **Job Application Pipeline Milestone — 600 Total Applications Achieved:**
-   - Scaled job pipeline from 500 to **600 verified applications** (`SL #501` to `SL #600`).
-   - Sourced 100 fresh openings across global tech hubs tailored specifically for Junior/Mid-level UI/UX and Product Designers (1–3 years experience).
-   - **Zero Senior/Lead roles:** Filtered out all Senior, Staff, Principal, Lead, and Director roles.
-   - **Zero Duplicates:** 100 unique new companies, strictly deduplicated against the previous 500 records.
-   - **100% Direct ATS Portals:** Ashby HQ, Greenhouse, Lever, Workable, SmartRecruiters, Jobvite, Workday, Join.com, Teamtailor, Personio, Breezy, Pinpoint (no cold emails to eliminate bounce errors).
-   - Both `job_tracker.json` (600 records) and `job_tracker.csv` (601 rows) updated in lockstep.
-   - 100 new proof files (`proof_batch_501_*.png` to `proof_batch_600_*.png`) generated and tracked in workspace root.
-5. **Autonomous Direct Gmail Cold Outreach (50/50 Completed on 2026-09-30):**
-   - **Target Scope:** 50 premier global design agencies and top design-forward tech companies (MetaLab, Clay, Ramotion, Bakken & Bæck, Ustwo, Fantasy, Work & Co, Thoughtbot, Area 17, Koto, Automattic, 37signals, Ghost, DuckDuckGo, PostHog, Cal.com, Supabase, Vercel, Linear, Raycast, Loom, Framer, Sketch, Webflow, etc.).
-   - **Email Verification:** All 50 domains pre-verified with DNS MX record checks.
-   - **Direct Dispatch Method:** Connected autonomously via Chrome CDP session on port 9222 into Turash's active Gmail session (`turashahsan8@gmail.com`).
-   - **Attachment:** Attached `Turash Ahsan Resume.pdf` directly to every single compose window using `DOM.setFileInputFiles`.
-   - **Live Proofs:** Captured 50 full compose/attachment proof screenshots (`proof_cold_*.png`) before clicking Send.
-   - **Status Ledger:** Stored in `cold_email_sent_status.json` and visible in Gmail's live **Sent** folder.
-6. **Context Synchronization Framework:**
-   - Created this `read-agent.md` file and linked it from `AGENTS.md` to ensure multi-device continuity.
+1. **Figma Canvas — Complete 10MS Detailed Case Study Frame (`Desktop - 8`):**
+   - **Dedicated Frame Created:** Generated `Desktop - 8 (10MS Detailed Case Study)` (`node-id=435-26`) at `x: 21344` on canvas (`1440 × 7798px`), strictly preserving the original `Desktop - 7` (`381:64`) 100% untouched.
+   - **Visual Design Patterns Adapted from `Desktop - 5` (`326:4175`):** Modeled high-craft layouts, sidebar jump navigation, monospace badges, pill tags, structured grids, and architectural diagrams.
+   - **9 Comprehensive In-Depth Sections Implemented:**
+     1. *Overview & Problem:* 3-pillar highlights + `10MS Stream Bottleneck Architecture Diagram` (Origin Ingest -> Bottleneck Cluster -> System Failure).
+     2. *Solution Showcase:* High-fidelity dark-mode mobile classroom mockup (`437:607`) with real-time stream viewport, 3-tab controller, formula doubt queue, and Ask AI Copilot cards.
+     3. *Core Flows:* 4 interaction cards with integrated Mini UI Viewport Previews (`Teacher Camera Viewport`, `Interactive Quiz & 12-State Timer`, `360p Low-Bandwidth & Instant Rewind`, `Ask AI Copilot`).
+     4. *Legacy System Audit:* `19 Physical Scanned Audit Sheets Showcase Board` (sheets `02`, `06`, `10`, `14` with red pencil annotations) + 5 heuristic cards.
+     5. *Research & Personas:* Primary student dossiers (Turjo - HSC Aspirant, Zayed - Low-Bandwidth Rural Learner) + `Layout Architecture Decision Matrix` (Floating Overlay vs Drawer vs 3-Tab Controller).
+     6. *Testing & Validation:* Google Form study metrics (78% Layout B preference, 3.2x question triage speedup, 100% whiteboard visibility) + direct student verbatim quotes.
+     7. *Design Decisions:* `Tripartite Live Systems Thinking Architecture Diagram` (WebRTC Ingest, Gateway API, Ask AI Copilot, Student Client) + 3 foundational architectural decisions + psychology principles.
+     8. *Hardware & Network Constraints:* `Editorial Question Callout Box` + ABR vs Fixed 360p fallback comparison cards + `Trade-off Strategic Conclusion Banner`.
+     9. *Reflection:* 3 Senior Takeaway Dossiers with emerald `01`, `02`, `03` badges.
+   - **Sidebar Navigation (`435:48`):** Synchronized all 9 buttons with matching anchor titles.
+2. **Architecture Tree & Case Study Audit:**
+   - Provided complete structural tree, design rationale, and section-by-section audit connecting the visual Figma artifacts with the underlying problem statement.
+3. **Job Application Pipeline Milestone — 600 Total Applications Achieved:**
+   - Scaled job pipeline to **600 verified applications** (`SL #501` to `SL #600`) across direct ATS portals (Ashby HQ, Greenhouse, Lever, Workable, etc.).
+   - Both `job_tracker.json` (600 records) and `job_tracker.csv` (601 rows) updated in lockstep with 100 new proof files (`proof_batch_501_*.png` to `proof_batch_600_*.png`).
+4. **Autonomous Direct Gmail Cold Outreach (50/50 Completed):**
+   - 50 premier global design studios and tech firms contacted directly via Chrome CDP into Turash's active Gmail session (`turashahsan8@gmail.com`) with `Turash Ahsan Resume.pdf` attached.
+   - Captured 50 full compose/attachment proof screenshots (`proof_cold_*.png`) and ledger saved in `cold_email_sent_status.json`.
 
 ### 📌 Current Status:
+- Figma Case Study frame `Desktop - 8` (`node-id=435-26`) complete and published in file `2x ✦ Portfolio`.
+- Original frame `Desktop - 7` (`381:64`) safely preserved without modifications.
 - Job tracker currently at **600 verified applied applications**.
 - Direct Gmail Cold Email Outreach at **50/50 verified sent emails** with resume attached.
 - **Grand Total Outreach:** **650 job applications / studio contacts** dispatched.
-- Application builds cleanly with `npm run build` (0 errors).
-- All tracking files and proof assets generated and pushed to GitHub `main`.
+- Codebase builds cleanly with `npm run build` (0 errors).
 
 ### 🎯 Immediate Next Steps / Multi-PC Transition:
-1. **On Next PC:** Run `git pull origin main` to pull all 650 records, trackers (`job_tracker.json`, `cold_email_sent_status.json`), and proof assets.
-2. Review live preview of the Case Study page on mobile and tablet viewport sizes.
-3. Monitor responses and interview invites from the 600 submitted direct ATS job applications and 50 direct studio cold emails in Turash's Gmail inbox (`turashahsan8@gmail.com`).
-4. Add any custom project screenshots or Figma frames into the Case Study gallery if desired.
-5. Keep `read-agent.md` updated as new features or experiments are added.
+1. **On Next PC:** Run `git pull origin main` to pull all project memory, documentation, trackers, and codebase updates.
+2. **Figma Access:** Open Figma file `2x ✦ Portfolio` (node `435:26` - `Desktop - 8 (10MS Detailed Case Study)`) to review or refine the complete case study visually.
+3. **If developing live code:** When ready to code this into the portfolio website, use `Desktop - 8` as the single source of truth for all components, typography, and section structures.
+4. **Outreach Monitoring:** Check Turash's Gmail inbox (`turashahsan8@gmail.com`) for interview replies and recruiter responses.
+
 
 
 
