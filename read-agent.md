@@ -153,7 +153,7 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
 
 ---
 
-## 📜 8. Recent Progress & Living State (Last Updated: 2026-09-30 20:30)
+## 📜 8. Recent Progress & Living State (Last Updated: 2026-10-04 13:20)
 
 ### ✅ Completed Milestones:
 1. **Figma Canvas — Complete 10MS Detailed Case Study Frame (`Desktop - 8`):**
@@ -178,20 +178,28 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
 4. **Autonomous Direct Gmail Cold Outreach (50/50 Completed):**
    - 50 premier global design studios and tech firms contacted directly via Chrome CDP into Turash's active Gmail session (`turashahsan8@gmail.com`) with `Turash Ahsan Resume.pdf` attached.
    - Captured 50 full compose/attachment proof screenshots (`proof_cold_*.png`) and ledger saved in `cold_email_sent_status.json`.
+5. **Fresh Batch Job Applications Milestone — 620 Total Applications Achieved (2026-10-04):**
+   - Scaled job pipeline from 600 to **620 verified applied applications** (`SL #601` to `SL #620`).
+   - Covered high-priority modern ATS and direct career portals: Taekus, Constructor (AI Agent Tools), AIOS, Pencil, Ondeckglobal, Hyphen Connect, Pod Network, Revpanda Group, Kreeya Agency, Foundey, TaskVerse, Contra, STERRY, ICT Strypes, Quant Memo, EfficientVision, Recruitment Room, YO IT Consulting, WPDeveloper, and BacBon Limited.
+   - **Zero Senior/Lead roles:** Filtered specifically for Junior/Mid-level UI/UX and Product Designers (2+ years exp).
+   - **Zero Duplicates:** Strictly deduplicated against all previous 600 applications and 50 cold emails.
+   - Both `job_tracker.json` (620 records) and `job_tracker.csv` (621 rows) updated in lockstep.
+   - 20 new proof files (`proof_batch_601_*.png` to `proof_batch_620_*.png`) generated and tracked in workspace root.
 
 ### 📌 Current Status:
 - Figma Case Study frame `Desktop - 8` (`node-id=435-26`) complete and published in file `2x ✦ Portfolio`.
 - Original frame `Desktop - 7` (`381:64`) safely preserved without modifications.
-- Job tracker currently at **600 verified applied applications**.
+- Job tracker currently at **620 verified applied applications**.
 - Direct Gmail Cold Email Outreach at **50/50 verified sent emails** with resume attached.
-- **Grand Total Outreach:** **650 job applications / studio contacts** dispatched.
+- **Grand Total Outreach:** **670 job applications / studio contacts** dispatched.
 - Codebase builds cleanly with `npm run build` (0 errors).
 
 ### 🎯 Immediate Next Steps / Multi-PC Transition:
 1. **On Next PC:** Run `git pull origin main` to pull all project memory, documentation, trackers, and codebase updates.
 2. **Figma Access:** Open Figma file `2x ✦ Portfolio` (node `435:26` - `Desktop - 8 (10MS Detailed Case Study)`) to review or refine the complete case study visually.
 3. **If developing live code:** When ready to code this into the portfolio website, use `Desktop - 8` as the single source of truth for all components, typography, and section structures.
-4. **Outreach Monitoring:** Check Turash's Gmail inbox (`turashahsan8@gmail.com`) for interview replies and recruiter responses.
+4. **Outreach Monitoring:** Check Turash's Gmail inbox (`turashahsan8@gmail.com`) for interview replies and recruiter responses from the 670 applied positions.
+
 
 
 
