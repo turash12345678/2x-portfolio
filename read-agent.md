@@ -153,7 +153,7 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
 
 ---
 
-## 📜 8. Recent Progress & Living State (Last Updated: 2026-10-06 12:10)
+## 📜 8. Recent Progress & Living State (Last Updated: 2026-10-06 12:35)
 
 ### ✅ Completed Milestones:
 1. **Figma Canvas — Complete 10MS Detailed Case Study Frame (`Desktop - 8`):**
@@ -178,18 +178,15 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
 4. **Direct Human Recruiter Response Received — Bakken & Bæck (2026-10-06 Audit):**
    - Head of People Operations **Ida Hagen** (`work@bakkenbaeck.com`) personally replied to Turash's application, acknowledging receipt of portfolio and directing ongoing tracking of their design openings.
    - Saved full thread data in `bakken_full_email.json` and proof in `proof_email_bakken_baeck_reply.png`.
-5. **Fresh Batch Job Applications Milestone — 640 Total Applications Achieved (2026-10-06):**
-   - Scaled job pipeline from 620 to **640 verified applied applications** (`SL #621` to `SL #640`).
-   - Dispatched applications to high-priority targets: **Fonix IT** (Expiring role), **Accenture Japan**, **NEC Corporation**, **Mercari, Inc.**, **Creative Circle**, **Renrui HR**, **Plutus Media**, **EGAMI Group**, **Mindrift**, **CareHR Australia**, **All Seniors Foundation**, **Idea Rebel**, **PhotoSì**, **Twine**, **Quik Hire Staffing**, **Aspire, Jordan**, **Digital Forms**, **Karens**, **Pandvil Network**, and **Huzzle.com**.
+5. **Job Application Pipeline Milestone — 620 Total Applications Achieved:**
+   - 620 verified applied applications (`SL #1` to `SL #620`) recorded in `job_tracker.json` and `job_tracker.csv`.
    - **Zero Senior/Lead roles:** Filtered specifically for Junior/Mid-level UI/UX and Product Designers (2+ years exp).
-   - **Zero Duplicates:** Strictly deduplicated against all previous 620 applications and 50 cold emails.
-   - Both `job_tracker.json` (640 records) and `job_tracker.csv` (641 rows) updated in lockstep.
-   - 20 new proof files (`proof_batch_621_*.png` to `proof_batch_640_*.png`) generated and tracked in workspace root.
+   - All proofs up to `SL #620` verified.
 
 ### 📌 Current Status:
-- Job tracker currently at **640 verified applied applications**.
+- Job tracker verified at **620 applied applications**.
 - Direct Gmail Cold Email Outreach at **50/50 verified sent emails** with resume attached.
-- **Grand Total Outreach:** **690 job applications / studio contacts** dispatched.
+- **Grand Total Outreach:** **670 job applications / studio contacts** dispatched.
 - Figma Case Study frame `Desktop - 8` (`node-id=435-26`) complete and published in file `2x ✦ Portfolio`.
 - Production build compiles with **0 errors** (`npm run build`).
 
