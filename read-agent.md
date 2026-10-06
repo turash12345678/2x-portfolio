@@ -153,7 +153,7 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
 
 ---
 
-## 📜 8. Recent Progress & Living State (Last Updated: 2026-10-04 13:20)
+## 📜 8. Recent Progress & Living State (Last Updated: 2026-10-06 12:10)
 
 ### ✅ Completed Milestones:
 1. **Figma Canvas — Complete 10MS Detailed Case Study Frame (`Desktop - 8`):**
@@ -172,33 +172,31 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
    - **Sidebar Navigation (`435:48`):** Synchronized all 9 buttons with matching anchor titles.
 2. **Architecture Tree & Case Study Audit:**
    - Provided complete structural tree, design rationale, and section-by-section audit connecting the visual Figma artifacts with the underlying problem statement.
-3. **Job Application Pipeline Milestone — 600 Total Applications Achieved:**
-   - Scaled job pipeline to **600 verified applications** (`SL #501` to `SL #600`) across direct ATS portals (Ashby HQ, Greenhouse, Lever, Workable, etc.).
-   - Both `job_tracker.json` (600 records) and `job_tracker.csv` (601 rows) updated in lockstep with 100 new proof files (`proof_batch_501_*.png` to `proof_batch_600_*.png`).
-4. **Autonomous Direct Gmail Cold Outreach (50/50 Completed):**
+3. **Autonomous Direct Gmail Cold Outreach (50/50 Completed):**
    - 50 premier global design studios and tech firms contacted directly via Chrome CDP into Turash's active Gmail session (`turashahsan8@gmail.com`) with `Turash Ahsan Resume.pdf` attached.
    - Captured 50 full compose/attachment proof screenshots (`proof_cold_*.png`) and ledger saved in `cold_email_sent_status.json`.
-5. **Fresh Batch Job Applications Milestone — 620 Total Applications Achieved (2026-10-04):**
-   - Scaled job pipeline from 600 to **620 verified applied applications** (`SL #601` to `SL #620`).
-   - Covered high-priority modern ATS and direct career portals: Taekus, Constructor (AI Agent Tools), AIOS, Pencil, Ondeckglobal, Hyphen Connect, Pod Network, Revpanda Group, Kreeya Agency, Foundey, TaskVerse, Contra, STERRY, ICT Strypes, Quant Memo, EfficientVision, Recruitment Room, YO IT Consulting, WPDeveloper, and BacBon Limited.
+4. **Direct Human Recruiter Response Received — Bakken & Bæck (2026-10-06 Audit):**
+   - Head of People Operations **Ida Hagen** (`work@bakkenbaeck.com`) personally replied to Turash's application, acknowledging receipt of portfolio and directing ongoing tracking of their design openings.
+   - Saved full thread data in `bakken_full_email.json` and proof in `proof_email_bakken_baeck_reply.png`.
+5. **Fresh Batch Job Applications Milestone — 640 Total Applications Achieved (2026-10-06):**
+   - Scaled job pipeline from 620 to **640 verified applied applications** (`SL #621` to `SL #640`).
+   - Dispatched applications to high-priority targets: **Fonix IT** (Expiring role), **Accenture Japan**, **NEC Corporation**, **Mercari, Inc.**, **Creative Circle**, **Renrui HR**, **Plutus Media**, **EGAMI Group**, **Mindrift**, **CareHR Australia**, **All Seniors Foundation**, **Idea Rebel**, **PhotoSì**, **Twine**, **Quik Hire Staffing**, **Aspire, Jordan**, **Digital Forms**, **Karens**, **Pandvil Network**, and **Huzzle.com**.
    - **Zero Senior/Lead roles:** Filtered specifically for Junior/Mid-level UI/UX and Product Designers (2+ years exp).
-   - **Zero Duplicates:** Strictly deduplicated against all previous 600 applications and 50 cold emails.
-   - Both `job_tracker.json` (620 records) and `job_tracker.csv` (621 rows) updated in lockstep.
-   - 20 new proof files (`proof_batch_601_*.png` to `proof_batch_620_*.png`) generated and tracked in workspace root.
+   - **Zero Duplicates:** Strictly deduplicated against all previous 620 applications and 50 cold emails.
+   - Both `job_tracker.json` (640 records) and `job_tracker.csv` (641 rows) updated in lockstep.
+   - 20 new proof files (`proof_batch_621_*.png` to `proof_batch_640_*.png`) generated and tracked in workspace root.
 
 ### 📌 Current Status:
-- Figma Case Study frame `Desktop - 8` (`node-id=435-26`) complete and published in file `2x ✦ Portfolio`.
-- Original frame `Desktop - 7` (`381:64`) safely preserved without modifications.
-- Job tracker currently at **620 verified applied applications**.
+- Job tracker currently at **640 verified applied applications**.
 - Direct Gmail Cold Email Outreach at **50/50 verified sent emails** with resume attached.
-- **Grand Total Outreach:** **670 job applications / studio contacts** dispatched.
-- Codebase builds cleanly with `npm run build` (0 errors).
+- **Grand Total Outreach:** **690 job applications / studio contacts** dispatched.
+- Figma Case Study frame `Desktop - 8` (`node-id=435-26`) complete and published in file `2x ✦ Portfolio`.
+- Production build compiles with **0 errors** (`npm run build`).
 
 ### 🎯 Immediate Next Steps / Multi-PC Transition:
 1. **On Next PC:** Run `git pull origin main` to pull all project memory, documentation, trackers, and codebase updates.
-2. **Figma Access:** Open Figma file `2x ✦ Portfolio` (node `435:26` - `Desktop - 8 (10MS Detailed Case Study)`) to review or refine the complete case study visually.
-3. **If developing live code:** When ready to code this into the portfolio website, use `Desktop - 8` as the single source of truth for all components, typography, and section structures.
-4. **Outreach Monitoring:** Check Turash's Gmail inbox (`turashahsan8@gmail.com`) for interview replies and recruiter responses from the 670 applied positions.
+2. **Outreach Monitoring:** Follow up on incoming replies and LinkedIn communications (e.g. Fonix IT, Bakken & Bæck).
+3. **Figma Canvas:** Open Figma file `2x ✦ Portfolio` (node `435:26` - `Desktop - 8 (10MS Detailed Case Study)`) for visual review or implementation.
 
 
 
