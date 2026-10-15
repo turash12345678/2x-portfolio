@@ -271,6 +271,23 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
      4. *$3.35\text{s} - 4.30\text{s}$ (Bento 6 - Lead Feed & Join Beta):* Cursor targets the vibrant orange `"Join the beta"` CTA button (`96:3511`), clicks down (`0.86x`), causing a deep button compression (`0.92x`) and celebratory spring rebound (`1.08x -> 1.0x`).
      5. *$4.30\text{s} - 5.00\text{s}$ (Zero-Hitch Loop Return):* Cursor glides seamlessly back to starting origin $(0, 0)$, guaranteeing an infinite, buttery 60fps loop.
 
+13. **Figma Native Keyframe Batch Animation Across All 12 Selected Presentation Slides (2026-10-15):**
+   - **Unified 2X Motion Architecture Scaled Across 12 Slides:** Animated all 12 user-selected presentation frames on page `Ahsania` (`0:1`) of `Turash Ahsan ✧ Design File`:
+     1. `Slide 16:9 - 10` (`88:2379`, 4.5s): 3 Sharo Figma plugin UI windows staggered pop + cloned interactive cursor clicking "Copy Link".
+     2. `Slide 16:9 - 17` (`96:4512`, 4.5s): Asymmetric bento cards stagger-rise + interactive cursor hover.
+     3. `Slide 16:9 - 18` (`112:6413`, 4.5s): Canvas cards spring scale + cloned cursor journey.
+     4. `Slide 16:9 - 19` (`125:2159`, 4.5s): UI showcase boards + cursor click interactions.
+     5. `Slide 16:9 - 20` (`128:3048`, 4.5s): Component layouts + cursor hover physics.
+     6. `Slide 16:9 - 21` (`130:6814`, 4.5s): System specs + cursor click triggers.
+     7. `Slide 16:9 - 22` (`130:7721`, 4.5s): Interactive architecture frames + cursor glide.
+     8. `Slide 16:9 - 23` (`131:9287`, 4.5s): Feature modules + cursor hover elevation.
+     9. `Slide 16:9 - 24` (`131:11061`, 4.5s): Keynote presentation layout + cursor trajectory.
+     10. `Slide 16:9 - 26` (`134:13762`, 5.0s, $h=6235\text{px}$): Long-scroll `Work - Hyper Effekt` board camera scroll & pan reveal ($Y: -120\text{px}$) + cursor.
+     11. `Slide 16:9 - 27` (`138:1565`, 5.0s, $h=2456\text{px}$): Long-scroll `Frame 316` camera scroll reveal + cursor.
+     12. `Slide 16:9 - 28` (`138:3914`, 5.0s, $h=3233\text{px}$): Long-scroll `Frame 1000004385` camera scroll reveal + cursor.
+   - **Full Cursor Integration:** Cloned and animated cursor variants (`518:9952`) across all 12 slides with customized multi-point click depressions (`0.88x`) and releases (`1.0x` spring).
+   - **Zero-Hitch Looping Guaranteed:** 100% of all 80+ animated tracks return to baseline at loop completion.
+
 ### 📌 Current Status:
 - Job tracker verified at **630 applied applications**.
 - Direct Gmail Cold Email Outreach at **50/50 verified sent emails** with resume attached.
@@ -282,9 +299,10 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
   3. `Motion Audit & Spec · Cursor Image Trail` (`2:4686` @ `x: 10450`)
   4. `Motion Audit & Spec · Day-12-Dark` (`2:4814` @ `x: 15150`)
   5. `2X ✦ Brand Motion Experience (Animatable Master)` (`2:4942` @ `x: 17200`)
-- **2 Figma Presentation Frames 100% Animated** with native Figma keyframes:
+- **14 Total Figma Presentation Frames 100% Animated** with native Figma keyframes:
   1. `FigShot — squeak-pet-toys.framer.website` (`476:1546` on `Page 4`)
-  2. `Slide 16:9 - 16` (`96:2716` on `Ahsania` with interactive Mouse Cursor Navigation & micro-interactions)
+  2. `Slide 16:9 - 16` (`96:2716` on `Ahsania`)
+  3. 12 Selected Keynote Presentation Slides (`Slide 16:9 - 10, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 28` on `Ahsania`)
 - Production build compiles with **0 errors** (`npm run build`).
 
 ### 🎯 Immediate Next Steps / Multi-PC Transition:
