@@ -262,6 +262,15 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
         - FocusOS Sidebar Dock (`96:3913`): Elevated rise $Y: +70\text{px} \rightarrow 0\text{px}$ and floating settle.
    - **Zero-Hitch Looping Guaranteed:** All 21 animated elements return cleanly to resting baseline at $t = 4.50\text{s}$.
 
+12. **Figma Interactive Mouse Cursor Navigation & Micro-Interaction Suite — `Slide 16:9 - 16` (2026-10-15):**
+   - **User Pasted Cursor Integrated:** Captured and animated Node `Cursor` (`518:9952`) inside `Slide 16:9 - 16` (`96:2716`) on page `Ahsania` (`0:1`).
+   - **Timeline Expanded to 5.00s:** Configured full multi-waypoint user journey:
+     1. *$0.50\text{s} - 1.50\text{s}$ (Bento 1 - Share Project Modal):* Cursor glides diagonally to `"Copy link"` pill button (`96:3420`), depresses down (`SCALE_XY: 0.88x`), while the button responds with tactile depression (`0.94x`) and spring rebound pop (`1.06x -> 1.0x`).
+     2. *$1.50\text{s} - 2.50\text{s}$ (Bento 3 - Tab Strip):* Cursor glides across to the `"Board"` tab (`96:3029`), clicks down (`0.88x`), and triggers active tab spring bounce (`0.95x -> 1.06x -> 1.0x`).
+     3. *$2.50\text{s} - 3.35\text{s}$ (Bento 4 - Radar HUD):* Cursor hovers over the spinning radar spark, triggering hover card elevation on Lead Row 1 (`96:2910`, $Y: -4\text{px}$).
+     4. *$3.35\text{s} - 4.30\text{s}$ (Bento 6 - Lead Feed & Join Beta):* Cursor targets the vibrant orange `"Join the beta"` CTA button (`96:3511`), clicks down (`0.86x`), causing a deep button compression (`0.92x`) and celebratory spring rebound (`1.08x -> 1.0x`).
+     5. *$4.30\text{s} - 5.00\text{s}$ (Zero-Hitch Loop Return):* Cursor glides seamlessly back to starting origin $(0, 0)$, guaranteeing an infinite, buttery 60fps loop.
+
 ### 📌 Current Status:
 - Job tracker verified at **630 applied applications**.
 - Direct Gmail Cold Email Outreach at **50/50 verified sent emails** with resume attached.
@@ -275,7 +284,7 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
   5. `2X ✦ Brand Motion Experience (Animatable Master)` (`2:4942` @ `x: 17200`)
 - **2 Figma Presentation Frames 100% Animated** with native Figma keyframes:
   1. `FigShot — squeak-pet-toys.framer.website` (`476:1546` on `Page 4`)
-  2. `Slide 16:9 - 16` (`96:2716` on `Ahsania`)
+  2. `Slide 16:9 - 16` (`96:2716` on `Ahsania` with interactive Mouse Cursor Navigation & micro-interactions)
 - Production build compiles with **0 errors** (`npm run build`).
 
 ### 🎯 Immediate Next Steps / Multi-PC Transition:
