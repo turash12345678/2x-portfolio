@@ -244,6 +244,24 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
         - Right Card `Group 56` (`476:1583`): Rises $Y: +95\text{px} \rightarrow 0\text{px}$, tilt $-8^\circ \rightarrow -19.22^\circ$, and $-11\text{px}$ counter-phase breathing float.
    - **Zero-Hitch Looping Guaranteed:** All positions, rotations, opacities, and scales return cleanly to baseline at $t = 4.00\text{s}$.
 
+11. **Figma Native Keyframe Motion Animation Applied — `Slide 16:9 - 16` (`node-id=96-2716`) (2026-10-15):**
+   - **Target Frame Animated:** Keyframe choreography fully scripted and applied to Node `96:2716` (`1920 × 1080px`) on page `Ahsania` (`0:1`) of Figma file `Turash Ahsan ✧ Design File` (`UIakmdXF7sal4uNvHR9whI`).
+   - **Timeline Duration Configured:** 4.50 seconds (`root.setTimelineDuration('96:2716', 4.5)`).
+   - **21 Nodes Animated across 6 Bento Modules via `applyManualKeyframeTrack`:**
+     1. *Header Elements:* `Frame 16` (logo & breadcrumb), `Aug 2025`, `2 / 23`, and `Vector 123` line glide in with Snappy Decel `(0.22, 1.0, 0.36, 1.0)`.
+     2. *Bento 1 (Top Left `96:4048` - Share Project Modal):* Rises $Y: +40\text{px} \rightarrow 0\text{px}$, spring scale $0.95 \rightarrow 1.0$, and gentle $-6\text{px}$ breathing float.
+     3. *Bento 2 (Bottom Left `96:4189` - Members & Access):* Rises $Y: +45\text{px} \rightarrow 0\text{px}$ with $+5\text{px}$ counter-phase breathing float.
+     4. *Bento 3 (Top Center `96:3572` - 3 Tab Navigation Variants):* Staggered horizontal slide-in ($X: +50\text{px} \rightarrow 0\text{px}$) with 32% Spring Elastic Overshoot `(0.34, 1.32, 0.64, 1.0)` across `Property 1=B` (`96:3093`), `Property 1=A` (`96:3064`), and `Property 1=C` (`96:3019`).
+     5. *Bento 4 (Bottom Center `96:4294` - Searching for Leads):*
+        - Radial Radar Spark `SVG` (`96:2897`): Continuous $360^\circ$ linear rotation (`0° -> 180° -> 360°`) with subtle scale pulsing ($0.9x \leftrightarrow 1.15x$).
+        - 3 Match Lead Rows (`96:2910`, `96:2926`, `96:2942`): Staggered upward cascade entrance.
+     6. *Bento 5 (Top Right `96:3581` - Variants Showcase):* Typography `"3 Different Variant"` (`96:3912`) pops in with spring bounce ($0.80x \rightarrow 1.0x$).
+     7. *Bento 6 (Bottom Right `96:3717` - Lead Feed & FocusOS):*
+        - Email input & button (`96:3506`): Upward entrance + micro attention pulse ($1.0 \rightarrow 1.04x \rightarrow 1.0$).
+        - Floating card `"34 leads found today"` (`96:4005`): Rises $Y: +60\text{px}$, spring scale $0.90 \rightarrow 1.0$, and $-10\text{px}$ floating breath.
+        - FocusOS Sidebar Dock (`96:3913`): Elevated rise $Y: +70\text{px} \rightarrow 0\text{px}$ and floating settle.
+   - **Zero-Hitch Looping Guaranteed:** All 21 animated elements return cleanly to resting baseline at $t = 4.50\text{s}$.
+
 ### 📌 Current Status:
 - Job tracker verified at **630 applied applications**.
 - Direct Gmail Cold Email Outreach at **50/50 verified sent emails** with resume attached.
@@ -255,7 +273,9 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
   3. `Motion Audit & Spec · Cursor Image Trail` (`2:4686` @ `x: 10450`)
   4. `Motion Audit & Spec · Day-12-Dark` (`2:4814` @ `x: 15150`)
   5. `2X ✦ Brand Motion Experience (Animatable Master)` (`2:4942` @ `x: 17200`)
-- **Frame `FigShot — squeak-pet-toys.framer.website` (`476:1546`) 100% Animated** with native Figma keyframes.
+- **2 Figma Presentation Frames 100% Animated** with native Figma keyframes:
+  1. `FigShot — squeak-pet-toys.framer.website` (`476:1546` on `Page 4`)
+  2. `Slide 16:9 - 16` (`96:2716` on `Ahsania`)
 - Production build compiles with **0 errors** (`npm run build`).
 
 ### 🎯 Immediate Next Steps / Multi-PC Transition:
