@@ -41,6 +41,7 @@
 ```text
 e:\2x ✦ Portfolio\
 ├── read-agent.md              <-- YOU ARE HERE: Master living brain for all AI sessions
+├── MOTION_BRAND_PLAYBOOK.md   <-- Master Motion Brand Playbook & Keyframe Automation Recipes
 ├── AGENTS.md                  <-- System rules automatically loaded by Antigravity
 ├── Job Application Agent.md   <-- Instructions, templates & ATS rules for job automation
 ├── job_tracker.json & .csv    <-- 400+ job applications database with statuses & timestamps
@@ -189,17 +190,80 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
    - **Strict Criteria Enforced:** 100% Junior / Mid-level & Web Design focus (1–3 years experience), **zero senior/lead roles**, and **zero duplicates** against all past applications.
    - Both `job_tracker.json` (630 records) and `job_tracker.csv` (631 rows) synchronized.
 
+7. **Figma Native Keyframe Motion Audit & Decode — "Riff · Nothing but net" (2026-10-15):**
+   - **Target Frame Audited:** Analyzed gamified basketball drag-and-drop file upload animation in Frame `Riff · Nothing but net` (`1:675`, `1080 × 1350px`) on `Page 1` of Figma file `Untitled` (`EjXNcJiItBuECQqGvvqreI`).
+   - **Full Motion Architecture Extracted:** Audited all **29 keyframe-animated nodes** across an **8.00-second timeline (480 frames @ 60fps)**:
+     - *Phase 1 (0.00s – 0.40s):* Release & Wave Dissolve (Hand cursor transition, Aim 1–10 sequential opacity wave).
+     - *Phase 2 (0.15s – 1.40s):* Parabolic Projectile Shot (Apex $Y: -590\text{px}$, $-720^\circ$ double spin, scale depth $1.08\times \rightarrow 0.80\times$).
+     - *Phase 3 (0.90s – 1.97s):* Impact Dynamics & Net Physics (Rim $+4\text{px}$ dip, Disney squash & stretch: Net $Y +16.5\text{px}$, Scale $X: 0.88\times$, Scale $Y: 1.22\times \rightarrow$ rebound bulge $1.04\times / 0.94\times$).
+     - *Phase 4 (1.47s – 2.20s):* Celebration & Gamified Reward (Scoreboard pop $1.05\times$, Digit 0 & 1 roll $-32\text{px}$, floating `+1` badge, dropzone orange glow).
+     - *Phase 5 (1.75s – 4.26s):* Upload Card & Progress Morph (Card slide-in, progress width $1 \rightarrow 260\text{px}$, color morph Orange `#FF6B2C` $\rightarrow$ Emerald `#22A06B`, checkmark spring bounce).
+     - *Phase 6 (4.06s – 8.00s):* Sub-frame `HOLD` teleport resets, cursor return $(-330, 380)$, grab micro-dip ($0.90\times$), aim arc reveal, pull-back anticipation $(-70\text{px}, 72\text{px}, -9^\circ)$.
+   - **Living Canvas Documentation Built:** Generated high-craft dark mode spec board `Motion Audit & Spec · Riff Nothing but net` (`1:864`, `1640 × 1776px`) at `x: 1200` on canvas with 4 comprehensive sections (Header/KPIs, 6-Phase Choreography, Master Actor Matrix, Easing Curves & Code Formulas).
+
+8. **Figma Native Keyframe Motion Audit & Spec Suite — 3 New Target Frames (2026-10-15):**
+   - **Target 1: `09 · Assets / Counter — Dark & Light` (`2:2740`):**
+     - Full audit of 31 animated digit tracks rolling at high velocity over a 4.69-second loop with 93 linear trajectory keyframe samples reaching 54,118px cumulative displacement.
+     - Canvas Spec Board created: `Motion Audit & Spec · Counter — Dark & Light` (`2:4572`, `1640 × 1272px`) at `x: 6850, y: 0` using a matching Dark & Light Charcoal monochromatic visual identity.
+   - **Target 2: `cursor-image-trail` (`2:3919`):**
+     - Full audit of 48 cascading image tile instances trailing the mouse cursor over a 7.60-second loop with ~0.08s micro-staggering, scale bloom ($0.55\times \rightarrow 1.0\times$), 0.55s hold dwell, and smooth `easeInOut` decay shrink ($0.82\times$).
+     - Canvas Spec Board created: `Motion Audit & Spec · Cursor Image Trail` (`2:4686`, `1640 × 1285px`) at `x: 10450, y: 0` using a matching Midnight Noir & Electric Violet visual identity.
+   - **Target 3: `Day-12-Dark` (`2:4211`):**
+     - Full audit of kinetic typography typing engine over a 4.00-second loop featuring camera zoom-out entrance ($2.90\times \rightarrow 1.0\times$, pan $1,707.8\text{px} \rightarrow 0$), 12-cycle text cursor blink (`"|"`), $+44.6\text{px}$ word slide staggering, and highlight bar wipe.
+     - Canvas Spec Board created: `Motion Audit & Spec · Day-12-Dark` (`2:4814`, `1640 × 1300px`) at `x: 15150, y: 90` using a matching Deep Forest Emerald Teal & Neon Mint visual identity.
+   - **Auto-Layout Parity:** All 4 canvas documents strictly enforce `FILL` vs `HUG` principles with equalized card row heights, stretchable typography, and zero content clipping.
+
+9. **Figma Animatable Master Brand Canvas Built — `2X ✦ Brand Motion Experience` (2026-10-15):**
+   - **Master Brand Frame Created:** Generated `2X ✦ Brand Motion Experience (Animatable Master)` (`node-id=2:4942`, `1920 × 1080px`) on `Page 1` of Figma file `Untitled` (`EjXNcJiItBuECQqGvvqreI`) at `x: 17200, y: 0`.
+   - **Unified Motion Design System Architecture:** Synthesized all 4 audited motion systems into a production-grade, animatable brand experience frame:
+     1. *Top Navigation Bar:* Monogram `2X ✦`, live status indicator `● 60 FPS NATIVE KEYFRAMES`, and CTA button.
+     2. *Kinetic Typography Hero:* Words isolated into dedicated layers (`Word_1_Crafting`, `Word_2_Unforgettable`, `Word_3_Kinetic`, `Word_4_Digital_Interfaces`) with a dedicated `Blinking_Cursor` layer (`"|"`) ready for 12-cycle typing animation, plus live rolling odometer metric cards (`680+`, `60 FPS`, `1.32x`).
+     3. *Gamified Physics Target Bento:* Draggable projectile token (`Animatable_File_Token`), trajectory arc dots (`Aim_Dot_1` to `Aim_Dot_5`), target hoop (`Rim_Bar`, `Net_Squash_Stretch_Mesh`), and score badge (`SCORE: 01 (+100 XP)`).
+     4. *Cursor Image Trail Sandbox:* 4 layered preview cards (`Trail_Tile_1` to `Trail_Tile_4`) ready for staggered entrance pop and mouse-following decay.
+     5. *Bottom Motion Controller Dock:* Glass floating control bar (`[ ▶ Play ]`, Timeline `0.00s / 8.00s`, Easing `Spring (1.32)`, `FPS: 60`, `Loop: Infinite`).
+    - Ready for scripting and timeline animation using `applyManualKeyframeTrack`.
+
+10. **Figma Native Keyframe Motion Animation Applied — `FigShot — squeak-pet-toys.framer.website` (2026-10-15):**
+   - **Target Frame Animated:** Keyframe choreography fully scripted and applied to Node `476:1546` (`1852 × 2098px`) on `Page 4` of Figma file `Turash Ahsan ✧ Design File` (`UIakmdXF7sal4uNvHR9whI`).
+   - **Timeline Duration Configured:** 4.00 seconds (`root.setTimelineDuration('476:1546', 4.0)`).
+   - **14 Nodes Animated via `applyManualKeyframeTrack`:**
+     1. *Navigation (`476:1548`):* Downward slide $Y: -24\text{px} \rightarrow 0\text{px}$ + opacity fade ($0.00\text{s} - 0.60\text{s}$) with Snappy Decel `(0.22, 1.0, 0.36, 1.0)`.
+     2. *Headline `Heading 1` (`476:1606`):* Upward slide $Y: +36\text{px} \rightarrow 0\text{px}$ + opacity fade ($0.15\text{s} - 0.85\text{s}$).
+     3. *7 Floating Sticker Badges `Image:transform` (`476:1608`, `1613`, `1618`, `1621`, `1624`, `1627`, `1630`):*
+        - Staggered entry ($0.28\text{s} - 1.25\text{s}$) with 0.08s delta.
+        - 32% Spring Elastic Overshoot `(0.34, 1.32, 0.64, 1.0)`: `SCALE_XY: 0.0 -> 1.0`.
+        - Dynamic rotational settlement: initial tilts ($-20^\circ$ to $+18^\circ$) dampening to $0^\circ$.
+        - Living sinusoidal breathing float ($Y: \pm 6\text{px}$) from $1.4\text{s} \rightarrow 4.0\text{s}$ returning cleanly to rest.
+     4. *Hero Description `Paragraph` (`476:1633`):* Upward slide $Y: +24\text{px} \rightarrow 0\text{px}$ ($0.35\text{s} - 0.95\text{s}$).
+     5. *Hero CTA Button `Link` (`476:1635` - `"Shop Now"`):*
+        - Kinetic upward pop $Y: +28\text{px} \rightarrow 0\text{px}$ and `SCALE_XY: 0.85 -> 1.0` with spring overshoot.
+        - Subtle interactive attention pulse ($2.40\text{s} - 2.85\text{s}$): `1.0 -> 1.05x -> 1.0`.
+     6. *3 Product Toy Cards Showcase (`476:1582`):*
+        - Center Hero Card `Group 55` (`476:1598`): Rises $Y: +80\text{px} \rightarrow 0\text{px}$, spring scale $0.88 \rightarrow 1.0$, and gentle $-14\text{px}$ breathing crest at $2.65\text{s}$.
+        - Left Card `Group 54` (`476:1591`): Rises $Y: +95\text{px} \rightarrow 0\text{px}$, tilt $5^\circ \rightarrow 13.82^\circ$, and $+10\text{px}$ counter-phase breathing float.
+        - Right Card `Group 56` (`476:1583`): Rises $Y: +95\text{px} \rightarrow 0\text{px}$, tilt $-8^\circ \rightarrow -19.22^\circ$, and $-11\text{px}$ counter-phase breathing float.
+   - **Zero-Hitch Looping Guaranteed:** All positions, rotations, opacities, and scales return cleanly to baseline at $t = 4.00\text{s}$.
+
 ### 📌 Current Status:
 - Job tracker verified at **630 applied applications**.
 - Direct Gmail Cold Email Outreach at **50/50 verified sent emails** with resume attached.
 - **Grand Total Outreach:** **680 job applications / studio contacts** dispatched.
 - Figma Case Study frame `Desktop - 8` (`node-id=435-26`) complete and published in file `2x ✦ Portfolio`.
+- **4 Figma Motion Audit Spec Boards + 1 Master Brand Frame Live on Canvas** in `EjXNcJiItBuECQqGvvqreI`:
+  1. `Motion Audit & Spec · Riff Nothing but net` (`1:864` @ `x: 1200`)
+  2. `Motion Audit & Spec · Counter — Dark & Light` (`2:4572` @ `x: 6850`)
+  3. `Motion Audit & Spec · Cursor Image Trail` (`2:4686` @ `x: 10450`)
+  4. `Motion Audit & Spec · Day-12-Dark` (`2:4814` @ `x: 15150`)
+  5. `2X ✦ Brand Motion Experience (Animatable Master)` (`2:4942` @ `x: 17200`)
+- **Frame `FigShot — squeak-pet-toys.framer.website` (`476:1546`) 100% Animated** with native Figma keyframes.
 - Production build compiles with **0 errors** (`npm run build`).
 
 ### 🎯 Immediate Next Steps / Multi-PC Transition:
 1. **On Next PC:** Run `git pull origin main` to pull all project memory, documentation, trackers, and codebase updates.
 2. **Outreach Monitoring:** Follow up on incoming replies and LinkedIn communications (e.g. Fonix IT, Bakken & Bæck).
-3. **Figma Canvas:** Open Figma file `2x ✦ Portfolio` (node `435:26` - `Desktop - 8 (10MS Detailed Case Study)`) for visual review or implementation.
+3. **Figma Motion Animation:** Script and apply native keyframe timeline tracks (`applyManualKeyframeTrack`) to the master brand frame layers (`2:4942`).
+
+
 
 
 
