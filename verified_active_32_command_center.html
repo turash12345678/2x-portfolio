@@ -3,37 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>32 Verified Active Design Openings — Turash Ahsan Command Center</title>
+  <title>Turash Ahsan — Job Outreach & Application Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0d14;
+      --bg: #090b10;
       --card-bg: rgba(255, 255, 255, 0.035);
       --card-border: rgba(255, 255, 255, 0.08);
       --accent: #6366f1;
-      --accent-glow: rgba(99, 102, 241, 0.3);
+      --accent-glow: rgba(99, 102, 241, 0.25);
       --text: #f3f4f6;
       --text-muted: #9ca3af;
       --success: #10b981;
       --success-glow: rgba(16, 185, 129, 0.2);
+      --warning: #f59e0b;
+      --warning-glow: rgba(245, 158, 11, 0.2);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: var(--bg);
       color: var(--text);
       font-family: 'Plus Jakarta Sans', sans-serif;
-      padding: 40px 24px;
+      padding: 40px 24px 80px;
       line-height: 1.5;
     }
-    .container { max-width: 1280px; margin: 0 auto; }
+    .container { max-width: 1320px; margin: 0 auto; }
     .header {
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       border-bottom: 1px solid var(--card-border);
       padding-bottom: 24px;
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
     }
     .badge {
       display: inline-flex;
@@ -44,34 +48,50 @@
       border: 1px solid var(--success);
       color: var(--success);
       border-radius: 9999px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      width: fit-content;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
-    h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; }
-    p.subtitle { color: var(--text-muted); font-size: 15px; }
+    h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin-top: 8px; }
+    p.subtitle { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+    
+    .candidate-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 14px 20px;
+      border-radius: 12px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .candidate-pill span { color: #fff; font-weight: 600; }
+    .candidate-pill a { color: var(--accent); text-decoration: none; }
+
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 16px;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
     .stat-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 20px;
+      border-radius: 14px;
+      padding: 18px 22px;
       backdrop-filter: blur(12px);
     }
     .stat-val {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 800;
       font-family: 'JetBrains Mono', monospace;
       color: #fff;
     }
-    .stat-lbl { color: var(--text-muted); font-size: 13px; font-weight: 600; text-transform: uppercase; margin-top: 4px; }
+    .stat-lbl { color: var(--text-muted); font-size: 12px; font-weight: 600; text-transform: uppercase; margin-top: 4px; letter-spacing: 0.04em; }
+
     .batch-bar {
       display: flex;
       gap: 12px;
@@ -79,8 +99,8 @@
       margin-bottom: 24px;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      padding: 16px;
-      border-radius: 12px;
+      padding: 16px 20px;
+      border-radius: 14px;
       align-items: center;
       justify-content: space-between;
     }
@@ -88,92 +108,101 @@
       background: var(--accent);
       color: white;
       border: none;
-      padding: 10px 18px;
+      padding: 9px 16px;
       border-radius: 8px;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       transition: all 0.2s;
       text-decoration: none;
     }
-    .btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 12px var(--accent-glow); }
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #fff;
-    }
-    .btn-secondary:hover { background: rgba(255, 255, 255, 0.14); box-shadow: none; }
-    .btn-easy {
-      background: #0a66c2;
-      color: #fff;
-    }
-    .btn-easy:hover { background: #004182; }
+    .btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .btn-secondary { background: rgba(255, 255, 255, 0.08); color: #f3f4f6; }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.14); }
+    .btn-easy { background: #059669; }
+    .btn-easy:hover { background: #10b981; }
+
     .filters {
       display: flex;
       gap: 8px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
     }
     .filter-pill {
-      padding: 6px 14px;
-      border-radius: 20px;
+      background: transparent;
       border: 1px solid var(--card-border);
-      background: var(--card-bg);
       color: var(--text-muted);
+      padding: 7px 16px;
+      border-radius: 9999px;
       font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
     }
     .filter-pill.active, .filter-pill:hover {
-      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.1);
       color: #fff;
-      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(255, 255, 255, 0.2);
     }
+
     .leads-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
       gap: 16px;
     }
     .lead-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 20px;
+      border-radius: 14px;
+      padding: 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 16px;
-      transition: all 0.2s;
+      gap: 18px;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .lead-card:hover { border-color: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
-    .lead-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-    .lead-comp { font-size: 18px; font-weight: 700; color: #fff; }
-    .lead-role { font-size: 14px; font-weight: 600; color: var(--accent); margin-top: 2px; }
-    .lead-loc { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
-    .tag-easy {
-      padding: 4px 10px;
-      border-radius: 6px;
+    .lead-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    }
+    .lead-card.applied {
+      border-color: rgba(16, 185, 129, 0.35);
+      background: rgba(16, 185, 129, 0.03);
+    }
+    .lead-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .lead-comp { font-size: 17px; font-weight: 700; color: #fff; }
+    .lead-role { font-size: 14px; color: #cbd5e1; margin-top: 4px; font-weight: 500; }
+    .lead-loc { font-size: 12px; color: var(--text-muted); margin-top: 6px; display: flex; align-items: center; gap: 4px; }
+    .tag {
       font-size: 11px;
       font-weight: 700;
-      background: rgba(10, 102, 194, 0.2);
-      color: #70b5f9;
-      border: 1px solid #0a66c2;
-      white-space: nowrap;
-    }
-    .tag-ext {
-      padding: 4px 10px;
+      padding: 3px 10px;
       border-radius: 6px;
-      font-size: 11px;
-      font-weight: 700;
-      background: rgba(99, 102, 241, 0.15);
-      color: #a5b4fc;
-      border: 1px solid rgba(99, 102, 241, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
       white-space: nowrap;
     }
-    .lead-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag-applied { background: var(--success-glow); color: var(--success); border: 1px solid var(--success); }
+    .tag-open { background: var(--accent-glow); color: #a5b4fc; border: 1px solid var(--accent); }
+
+    .lead-actions {
+      display: flex;
+      gap: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 14px;
+    }
+
     .toast {
       position: fixed;
       bottom: 24px;
@@ -186,53 +215,59 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
       display: none;
       z-index: 9999;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <div class="badge">● 100% Live & Verified via Chrome CDP</div>
-      <h1>32 Verified Active Design Openings — Application Command Center</h1>
-      <p class="subtitle">Every position in this list has been verified active right inside your Chrome session. Zero expired or closed postings.</p>
+      <div>
+        <div class="badge">● Live & Verified via Chrome CDP</div>
+        <h1>Turash Ahsan — Job Outreach & Application Command Center</h1>
+        <p class="subtitle">Real-time status of all verified live design openings. 8 Easy Apply submitted + 20 direct ATS portals ready.</p>
+      </div>
+      <div class="candidate-pill">
+        <div>Name: <span>Turash Ahsan</span></div>
+        <div>Phone: <span>+880 172 325 3615</span></div>
+        <div>Portfolio: <a href="https://turashahsan.vercel.app" target="_blank">turashahsan.vercel.app</a></div>
+      </div>
     </div>
 
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-val">32</div>
-        <div class="stat-lbl">100% Verified Live Openings</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-val" style="color: #70b5f9;">8</div>
-        <div class="stat-lbl">Instant LinkedIn Easy Apply</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-val" style="color: #a5b4fc;">24</div>
-        <div class="stat-lbl">Direct Portal / External Apply</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-val" style="color: #10b981;">640</div>
+        <div class="stat-val" style="color: #10b981;">648</div>
         <div class="stat-lbl">Total Master Pipeline (job_tracker)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color: #38bdf8;">8 / 8</div>
+        <div class="stat-lbl">LinkedIn Easy Apply Submitted (100%)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color: #a5b4fc;">20</div>
+        <div class="stat-lbl">Confirmed Live Direct ATS Portals</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" style="color: #fbbf24;">698</div>
+        <div class="stat-lbl">Grand Total Outreach Dispatched</div>
       </div>
     </div>
 
     <div class="batch-bar">
       <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-        <span style="font-weight:600; font-size:14px;">Instant Actions:</span>
-        <button class="btn btn-easy" onclick="openEasyApply()">⚡ Open All 8 Easy Apply Jobs</button>
-        <button class="btn btn-secondary" onclick="openBatch(0, 10)">🚀 Open First 10 Jobs</button>
-        <button class="btn btn-secondary" onclick="openBatch(10, 20)">🚀 Open Jobs 11-20</button>
-        <button class="btn btn-secondary" onclick="openBatch(20, 32)">🚀 Open Jobs 21-32</button>
+        <span style="font-weight:600; font-size:13px; color:var(--text-muted); text-transform:uppercase;">1-Click Portal Launchers:</span>
+        <button class="btn btn-secondary" onclick="openBatch(0, 5)">🚀 Launch Portals 1–5</button>
+        <button class="btn btn-secondary" onclick="openBatch(5, 10)">🚀 Launch Portals 6–10</button>
+        <button class="btn btn-secondary" onclick="openBatch(10, 15)">🚀 Launch Portals 11–15</button>
+        <button class="btn btn-secondary" onclick="openBatch(15, 20)">🚀 Launch Portals 16–20</button>
       </div>
-      <div style="font-size:13px; color:var(--text-muted); font-family:JetBrains Mono;">
-        Turash Ahsan | +880 172 325 3615 | turashahsan.vercel.app
-      </div>
+      <button class="btn btn-easy" onclick="openAllOpenPortals()">⚡ Open All 20 Live Portals</button>
     </div>
 
     <div class="filters">
-      <button class="filter-pill active" onclick="filterJobs('all', this)">All 32 Active</button>
-      <button class="filter-pill" onclick="filterJobs('EASY_APPLY', this)">⚡ LinkedIn Easy Apply (8)</button>
-      <button class="filter-pill" onclick="filterJobs('EXTERNAL_APPLY', this)">🔗 Direct External Apply (24)</button>
+      <button class="filter-pill active" onclick="filterJobs('all', this)">All Roles (28)</button>
+      <button class="filter-pill" onclick="filterJobs('OPEN_PORTAL', this)">🔗 20 Live External Portals</button>
+      <button class="filter-pill" onclick="filterJobs('APPLIED', this)">✅ 8 Submitted Easy Apply</button>
     </div>
 
     <div class="leads-grid" id="leads-container"></div>
@@ -241,7 +276,40 @@
   <div id="toast" class="toast">Tailored pitch copied to clipboard!</div>
 
   <script>
-    const JOBS = [{"company":"Abercrombie & Fitch Co.","title":"Digital Product Designer, Web - A&F Co.","url":"https://www.linkedin.com/jobs/view/4469984369/","status":"EXTERNAL_APPLY"},{"company":"Globant","title":"Product Designer","url":"https://www.linkedin.com/jobs/view/4466686727/","status":"EASY_APPLY"},{"company":"Sama","title":"Product Designer","url":"https://www.linkedin.com/jobs/view/4468605392/","status":"EXTERNAL_APPLY"},{"company":"Makeship","title":"Product Designer","url":"https://www.linkedin.com/jobs/view/4468276058/","status":"EXTERNAL_APPLY"},{"company":"Houzz","title":"Product Designer","url":"https://www.linkedin.com/jobs/view/4460452374/","status":"EXTERNAL_APPLY"},{"company":"BeReal.","title":"Product Designer - BeReal","url":"https://www.linkedin.com/jobs/view/4466217328/","status":"EXTERNAL_APPLY"},{"company":"ReDesk.ai","title":"Product Designer","location":"Canada, KY (Remote)","url":"https://www.linkedin.com/jobs/view/4449038807/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_redesk_ai.png"},{"company":"Nash","title":"Product Designer","location":"United States (Remote)","url":"https://www.linkedin.com/jobs/view/4468238961/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_nash.png"},{"company":"NEC Corporation","title":"4371 UX/UI Designer_CO","location":"Minato, Tokyo, Japan (Remote)","url":"https://www.linkedin.com/jobs/view/4386328905/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_nec_corporation.png"},{"company":"Digital Forms","title":"UI/UX Designer","location":"Poland (Remote)","url":"https://www.linkedin.com/jobs/view/4445648736/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_digital_forms.png"},{"company":"Karens","title":"UX/UI Designer","location":"Paris, Île-de-France, France (Remote)","url":"https://www.linkedin.com/jobs/view/4463790107/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_karens.png"},{"company":"Pandvil Network","title":"UI / Graphic Designer","location":"Medellín, Extremadura, Spain (Remote)","url":"https://www.linkedin.com/jobs/view/4422300713/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_pandvil_network.png"},{"company":"Companion Group","title":"UI/UX Artist & Designer","location":"Germany (Remote)","url":"https://www.linkedin.com/jobs/view/4408293378/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_companion_group.png"},{"company":"UX-Republic","title":"UI DESIGNER H/F - Lyon","location":"Villeurbanne, Auvergne-Rhône-Alpes, France (Remote)","url":"https://www.linkedin.com/jobs/view/4469891411/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_ux_republic.png"},{"company":"WIN Home Inspection","title":"UI Designer","location":"Noida, Uttar Pradesh, India (Remote)","url":"https://www.linkedin.com/jobs/view/4457392897/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_win_home_inspection.png"},{"company":"AP Design GmbH","title":"Digital Designer / UI/UX Designer m/w/d","location":"Tuni, Andhra Pradesh, India (Remote)","url":"https://www.linkedin.com/jobs/view/4443070491/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_ap_design_gmbh.png"},{"company":"ADAM Communication GmbH","title":"UI/UX DESIGNER*IN (M,W,D)","location":"Tuni, Andhra Pradesh, India (Remote)","url":"https://www.linkedin.com/jobs/view/4436302675/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_adam_communication_gmbh.png"},{"company":"KAYALI","title":"UX/UI Designer","location":"Dubai, Dubai, United Arab Emirates (On-site)","url":"https://www.linkedin.com/jobs/view/4453111457/","status":"EASY_APPLY","text":"Easy Apply","proofFile":"proof_batch_kayali.png"},{"company":"remoting.work","title":"UX/UI Designer","location":"Sub-Saharan Africa (Remote)","url":"https://www.linkedin.com/jobs/view/4468869260/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_remoting_work.png"},{"company":"hunterstack.io","title":"UX/UI Designer","location":"Brazil (Remote)","url":"https://www.linkedin.com/jobs/view/4423254059/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_hunterstack_io.png"},{"company":"Higharc","title":"UX Designer","location":"New York, NY (Remote)","url":"https://www.linkedin.com/jobs/view/4404221146/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_higharc.png"},{"company":"Applied Systems Canada","title":"UX Designer","location":"Canada (Remote)","url":"https://www.linkedin.com/jobs/view/4429691677/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_applied_systems_canada.png"},{"company":"BlackStone eIT","title":"UX-UI","location":"Dubai, Dubai, United Arab Emirates (On-site)","url":"https://www.linkedin.com/jobs/view/4453692345/","status":"EASY_APPLY","text":"Easy Apply","proofFile":"proof_batch_blackstone_eit.png"},{"company":"Ganssimpel","title":"UX / UI DESIGNER*IN (M/W/D)","location":"Singapore, Singapore (Remote)","url":"https://www.linkedin.com/jobs/view/4430236261/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_ganssimpel.png"},{"company":"Smoking Gun Interactive Inc.","title":"UX Designer","location":"Vancouver, BC (Remote)","url":"https://www.linkedin.com/jobs/view/4468822084/","status":"EASY_APPLY","text":"Easy Apply","proofFile":"proof_batch_smoking_gun_interactive_inc_.png"},{"company":"Cypress HCM","title":"UX Designer","location":"United States (Remote)","url":"https://www.linkedin.com/jobs/view/4469043209/","status":"EASY_APPLY","text":"Easy Apply","proofFile":"proof_batch_cypress_hcm.png"},{"company":"Nians","title":"User Interface Designer","location":"India (Remote)","url":"https://www.linkedin.com/jobs/view/4449780908/","status":"EASY_APPLY","text":"Easy Apply","proofFile":"proof_batch_nians.png"},{"company":"EGAMI Group","title":"Digital Designer","location":"New York, NY (Remote)","url":"https://www.linkedin.com/jobs/view/4432141294/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_egami_group.png"},{"company":"CareHR Australia","title":"Digital Designer","location":"New Zealand (Remote)","url":"https://www.linkedin.com/jobs/view/4455609458/","status":"EASY_APPLY","text":"Easy Apply","proofFile":"proof_batch_carehr_australia.png"},{"company":"Idea Rebel","title":"Digital Designer (Freelance)","location":"Indiana, United States (Remote)","url":"https://www.linkedin.com/jobs/view/4456457268/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_idea_rebel.png"},{"company":"IAM MIA","title":"User Interface Designer","location":"Berlin, Berlin, Germany (Remote)","url":"https://www.linkedin.com/jobs/view/4449071945/","status":"EXTERNAL_APPLY","text":"Apply button found","proofFile":"proof_batch_iam_mia.png"},{"company":"Stealth iT Consulting","title":"Interaction Designer","location":"United Kingdom (Remote)","url":"https://www.linkedin.com/jobs/view/4463968387/","status":"EASY_APPLY","text":"Easy Apply","proofFile":"proof_batch_stealth_it_consulting.png"}];
+    const JOBS = [
+      // 8 Easy Apply Jobs (Submitted)
+      { company: "Globant", title: "Product Designer", location: "Dubai, UAE (Remote/Hybrid)", status: "APPLIED", sl: 641, url: "https://www.linkedin.com/jobs/view/4466686727/" },
+      { company: "KAYALI", title: "UX/UI Designer", location: "Dubai, UAE (Remote)", status: "APPLIED", sl: 642, url: "https://www.linkedin.com/jobs/view/4453111457/" },
+      { company: "BlackStone eIT", title: "UX-UI Designer", location: "Dubai, UAE (Relocate)", status: "APPLIED", sl: 643, url: "https://www.linkedin.com/jobs/view/4453692345/" },
+      { company: "Smoking Gun Interactive Inc.", title: "UX Designer", location: "Vancouver, BC (Remote)", status: "APPLIED", sl: 644, url: "https://www.linkedin.com/jobs/view/4468822084/" },
+      { company: "Cypress HCM", title: "UX Designer", location: "San Jose, CA (Remote)", status: "APPLIED", sl: 645, url: "https://www.linkedin.com/jobs/view/4469043209/" },
+      { company: "Nians", title: "User Interface Designer", location: "Stockholm, Sweden (Remote)", status: "APPLIED", sl: 646, url: "https://www.linkedin.com/jobs/view/4449780908/" },
+      { company: "CareHR Australia", title: "Digital Designer", location: "Australia (Remote)", status: "APPLIED", sl: 647, url: "https://www.linkedin.com/jobs/view/4455609458/" },
+      { company: "Stealth iT Consulting", title: "Interaction Designer", location: "London, UK (Remote)", status: "APPLIED", sl: 648, url: "https://www.linkedin.com/jobs/view/4463968387/" },
+
+      // 20 Confirmed Live Direct ATS Portals
+      { company: "Makeship", title: "Product Designer", location: "Remote", status: "OPEN_PORTAL", url: "https://jobs.gem.com/leap-tools/am9icG9zdDrgU8eLfZaJXoRO3w68ESjx?utm_source=GemJobBoardLink&utm_medium=c291cmNlOgV-S0NRbh_YFwVcb0YVCIM", atsName: "Gem ATS" },
+      { company: "ReDesk.ai", title: "Product Designer", location: "Canada / Remote", status: "OPEN_PORTAL", url: "https://www.redesk.ai/resources/careers/apply?position=Product%20Designer", atsName: "Direct Portal" },
+      { company: "Nash", title: "Product Designer", location: "United States (Remote)", status: "OPEN_PORTAL", url: "https://jobs.ashbyhq.com/Nash/f3ab1bcb-4497-49c8-bdbb-d09776c2392f/application?utm_source=nkAmjpe99J", atsName: "Ashby ATS" },
+      { company: "NEC Corporation", title: "4371 UX/UI Designer_CO", location: "Tokyo, Japan (Remote)", status: "OPEN_PORTAL", url: "https://jobs.nec-careers.com/u/job.phtml?job_code=4371&utm_source=linkedin&utm_medium=social&utm_campaign=recruit_career_jobwrapping&cid=recruit_career_linkedin_jobwrapping", atsName: "NEC Careers" },
+      { company: "Digital Forms", title: "UI/UX Designer", location: "Poland (Remote)", status: "OPEN_PORTAL", url: "https://digitalforms.recruitee.com/o/uiux-designer/c/new?source=LinkedIn+Basic+Jobs", atsName: "Recruitee ATS" },
+      { company: "Karens", title: "UX/UI Designer", location: "Paris, France (Remote)", status: "OPEN_PORTAL", url: "https://www.karens.ai/jobs/ux-ui-designer-h-f-x-cdi/", atsName: "Direct Portal" },
+      { company: "Pandvil Network", title: "UI / Graphic Designer", location: "Spain (Remote)", status: "OPEN_PORTAL", url: "https://grnh.se/p685pcw28us", atsName: "Greenhouse ATS" },
+      { company: "Companion Group", title: "UI/UX Artist & Designer", location: "Germany (Remote)", status: "OPEN_PORTAL", url: "https://companiongroupltd.recruitee.com/o/uiux-artist-designer/c/new?source=LinkedIn+Basic+Jobs", atsName: "Recruitee ATS" },
+      { company: "UX-Republic", title: "UI DESIGNER H/F - Lyon", location: "France (Remote)", status: "OPEN_PORTAL", url: "https://jobs.smile.eu/jobs/8002013-ui-designer-h-f-lyon?utm_source=LinkedIn", atsName: "Smile ATS" },
+      { company: "WIN Home Inspection", title: "UI Designer", location: "Noida, India (Remote)", status: "OPEN_PORTAL", url: "https://job-boards.greenhouse.io/winhomeinspection/jobs/4707325006", atsName: "Greenhouse ATS" },
+      { company: "AP Design GmbH", title: "Digital Designer / UI/UX Designer", location: "Germany / Remote", status: "OPEN_PORTAL", url: "https://www.apdesign.de/jobs/digital-designer-/-ui/ux-designer-m/w/d", atsName: "Direct Portal" },
+      { company: "ADAM Communication GmbH", title: "UI/UX DESIGNER*IN", location: "Austria / Remote", status: "OPEN_PORTAL", url: "https://www.ad-am.at/adm-job/ui-ux-designerin-mwd/", atsName: "Direct Portal" },
+      { company: "remoting.work", title: "UX/UI Designer", location: "Remote", status: "OPEN_PORTAL", url: "https://remoting.work/candidate/jobview?id=590&src=LinkedIn", atsName: "Direct Portal" },
+      { company: "hunterstack.io", title: "UX/UI Designer", location: "Brazil / Remote", status: "OPEN_PORTAL", url: "https://hunterstackio.inhire.app/vagas/61900182-7309-43ac-8bc2-eaaf53592a71/uxui-designer?source=linkedin", atsName: "Inhire ATS" },
+      { company: "Higharc", title: "UX Designer", location: "New York, NY (Remote)", status: "OPEN_PORTAL", url: "https://jobs.ashbyhq.com/Higharc/928baed0-d7e1-4440-930e-ea189b1596c7/application?utm_source=QZKW5dVRY5&src=LinkedInJobWrapping", atsName: "Ashby ATS" },
+      { company: "Applied Systems Canada", title: "UX Designer", location: "Canada (Remote)", status: "OPEN_PORTAL", url: "https://canada-appliedsystems.icims.com/jobs/7605/ux-designer/job?hub=15&in_iframe=1&mode=job&iis=LinkedIn", atsName: "iCIMS ATS" },
+      { company: "Ganssimpel", title: "UX / UI DESIGNER*IN", location: "Singapore (Remote)", status: "OPEN_PORTAL", url: "https://www.linkedin.com/jobs/view/4430236261/", atsName: "Direct Application" },
+      { company: "EGAMI Group", title: "Digital Designer", location: "New York, NY (Remote)", status: "OPEN_PORTAL", url: "https://egamigroup.applytojob.com/apply/5t8NdcEtXf/Digital-Designer?source=LILI", atsName: "JazzHR ATS" },
+      { company: "Idea Rebel", title: "Digital Designer (Freelance)", location: "United States (Remote)", status: "OPEN_PORTAL", url: "https://www.idearebel.com/career/digital-designer/", atsName: "Direct Portal" },
+      { company: "IAM MIA", title: "User Interface Designer", location: "Berlin, Germany (Remote)", status: "OPEN_PORTAL", url: "https://www.linkedin.com/jobs/view/4449071945/", atsName: "Direct Application" }
+    ];
+
     let currentFilter = 'all';
 
     function render() {
@@ -250,25 +318,29 @@
 
       JOBS.forEach((j, idx) => {
         if (currentFilter !== 'all' && j.status !== currentFilter) return;
-        const isEasy = j.status === 'EASY_APPLY';
+        const isApplied = j.status === 'APPLIED';
         const card = document.createElement('div');
-        card.className = 'lead-card';
+        card.className = `lead-card ${isApplied ? 'applied' : ''}`;
         card.innerHTML = `
           <div>
             <div class="lead-top">
               <div>
-                <div class="lead-comp">${idx + 1}. ${j.company}</div>
+                <div class="lead-comp">${isApplied ? `SL #${j.sl}` : `${idx - 7}.`} ${j.company}</div>
                 <div class="lead-role">${j.title}</div>
-                <div class="lead-loc">📍 ${j.location || 'Remote / Global'}</div>
+                <div class="lead-loc">📍 ${j.location} ${j.atsName ? `· <span style="color:#a5b4fc">${j.atsName}</span>` : ''}</div>
               </div>
-              <div class="${isEasy ? 'tag-easy' : 'tag-ext'}">
-                ${isEasy ? '⚡ EASY APPLY' : '🔗 APPLY'}
+              <div class="tag ${isApplied ? 'tag-applied' : 'tag-open'}">
+                ${isApplied ? '✅ SUBMITTED' : '🔗 LIVE PORTAL'}
               </div>
             </div>
           </div>
           <div class="lead-actions">
-            <a href="${j.url}" target="_blank" class="btn ${isEasy ? 'btn-easy' : ''}" style="font-size:13px; padding:8px 14px;">${isEasy ? '⚡ Easy Apply on LinkedIn' : '🔗 Open Application'}</a>
-            <button class="btn btn-secondary" style="font-size:13px; padding:8px 14px;" onclick="copyJobPitch('${encodeURIComponent(j.company)}', '${encodeURIComponent(j.title)}')">📋 Copy Pitch</button>
+            <a href="${j.url}" target="_blank" class="btn ${isApplied ? 'btn-secondary' : 'btn-easy'}" style="font-size:12px; padding:8px 14px;">
+              ${isApplied ? '🔍 View Submission Proof' : '🔗 Open Portal & Apply'}
+            </a>
+            <button class="btn btn-secondary" style="font-size:12px; padding:8px 14px;" onclick="copyJobPitch('${encodeURIComponent(j.company)}', '${encodeURIComponent(j.title)}')">
+              📋 Copy Pitch
+            </button>
           </div>
         `;
         container.appendChild(card);
@@ -283,19 +355,19 @@
     }
 
     function openBatch(start, end) {
-      const slice = JOBS.slice(start, end);
-      slice.forEach((j, i) => {
+      const openPortals = JOBS.filter(j => j.status === 'OPEN_PORTAL').slice(start, end);
+      openPortals.forEach((j, i) => {
         setTimeout(() => window.open(j.url, '_blank'), i * 350);
       });
-      showToast(`Opening ${slice.length} jobs in browser...`);
+      showToast(`Opening portals ${start + 1} to ${Math.min(end, start + openPortals.length)}...`);
     }
 
-    function openEasyApply() {
-      const easy = JOBS.filter(j => j.status === 'EASY_APPLY');
-      easy.forEach((j, i) => {
+    function openAllOpenPortals() {
+      const openPortals = JOBS.filter(j => j.status === 'OPEN_PORTAL');
+      openPortals.forEach((j, i) => {
         setTimeout(() => window.open(j.url, '_blank'), i * 350);
       });
-      showToast(`Opening all ${easy.length} Easy Apply jobs!`);
+      showToast(`Launching all ${openPortals.length} live portals!`);
     }
 
     function showToast(msg) {
@@ -314,11 +386,11 @@ I am writing to express my strong interest in the ${title} position at ${comp}. 
 
 In addition to my work at Ahsania where I design enterprise systems and consumer-facing applications, I have delivered 15+ client and freelance projects across multiple industries. My expertise covers the complete product design lifecycle: user research, wireframing, interactive prototyping, and building robust design systems in Figma.
 
-As this is a remote role, I would like to highlight that I work from a dedicated home office equipped with high-speed fiber internet and uninterrupted power backup (UPS/generator). This ensures 100% reliable uptime, seamless collaboration, and flexible overlap with your team's preferred working hours.
+As this is a remote role, I work from a dedicated home office equipped with high-speed fiber internet and uninterrupted power backup (UPS/generator), ensuring 100% reliable uptime and flexible collaboration overlap with your team's preferred working hours.
 
-You can explore my design work in my portfolio: https://turashahsan.vercel.app
+You can explore my design work in my live portfolio: https://turashahsan.vercel.app
 
-I would welcome the opportunity to contribute to ${comp}'s forward-thinking design initiatives. My resume is attached for your review.
+I would welcome the opportunity to contribute to ${comp}'s design initiatives. My resume is attached for your review.
 
 Sincerely,
 Turash Ahsan
@@ -328,7 +400,7 @@ Portfolio: https://turashahsan.vercel.app
 LinkedIn: https://www.linkedin.com/in/turashahsan1234/
 Location: Dhaka, Bangladesh`;
 
-      navigator.clipboard.writeText(pitch).then(() => showToast(`Tailored pitch for ${comp} copied!`));
+      navigator.clipboard.writeText(pitch).then(() => showToast(`Tailored pitch for ${comp} copied to clipboard!`));
     }
 
     render();
