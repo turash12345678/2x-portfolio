@@ -150,48 +150,25 @@ export default function App() {
   return (
     <div className="min-h-full bg-[#fefefe]" style={{ fontFamily: "Inter, sans-serif" }}>
 
-      {/* Mobile nav */}
-      <div className="md:hidden fixed bottom-6 left-4 right-4 z-50">
-        <Component1_1 />
-      </div>
-
-      {/* Desktop nav */}
-      <div className="hidden md:block">
-        <AnimatePresence mode="sync">
-          {!scrolled ? (
-            <motion.div
-              key="nav-top"
-              initial={{ opacity: 0, y: -24 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -24 }}
-              transition={{ type: "spring", stiffness: 420, damping: 38 }}
-              className="fixed top-0 left-0 right-0 z-50"
-            >
-              {NAVBAR_VERSION === 2 ? (
-                <div className="w-full h-[56px] relative top-[14px] flex items-center px-[24px]">
-                  <NavbarV2 />
-                </div>
-              ) : (
-                <Component property1="nev - dark" className="w-full h-[56px] relative top-[14px]" />
-              )}
-            </motion.div>
+      {/* Full-width responsive top navbar across ALL screens */}
+      <header
+        className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-[#fefefe]/88 backdrop-blur-md border-b border-black/[0.06] shadow-xs py-2.5 sm:py-3.5"
+            : "bg-[#fefefe]/40 backdrop-blur-xs py-3.5 sm:py-5"
+        }`}
+      >
+        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex items-center">
+          {NAVBAR_VERSION === 2 ? (
+            <NavbarV2 />
           ) : (
-            <motion.div
-              key="nav-pill"
-              initial={{ opacity: 0, y: 48, x: "-50%" }}
-              animate={{ opacity: 1, y: 0, x: "-50%" }}
-              exit={{ opacity: 0, y: 48, x: "-50%" }}
-              transition={{ type: "spring", stiffness: 380, damping: 34, mass: 0.85 }}
-              className="fixed bottom-6 left-1/2 z-50"
-            >
-              <Component property1="nev (Scroll down)" />
-            </motion.div>
+            <Component property1="nev - dark" className="w-full" />
           )}
-        </AnimatePresence>
-      </div>
+        </div>
+      </header>
 
       {/* Hero */}
-      <section className="relative pt-[64px] flex items-center justify-center overflow-hidden min-h-[520px] md:min-h-[680px]">
+      <section className="relative pt-[88px] sm:pt-[96px] md:pt-[110px] pb-10 sm:pb-14 md:pb-18 flex items-center justify-center overflow-hidden min-h-[500px] md:min-h-[640px] w-full">
         <div className="absolute inset-0">
           <DotGrid
             dotSize={4} gap={10} baseColor="#fbfbfb" activeColor="#a29eb3"
@@ -204,7 +181,7 @@ export default function App() {
           style={{ background: "radial-gradient(ellipse 55% 65% at 50% 50%, rgba(254,254,254,0.82) 0%, rgba(254,254,254,0.55) 40%, rgba(254,254,254,0.15) 70%, rgba(254,254,254,0) 100%)" }}
         />
 
-        <div className="relative z-10 flex flex-col items-center text-center px-6 pt-[42px] pb-[42px] md:pt-20 md:pb-20 w-full max-w-[640px] mx-auto gap-x-[28px] gap-y-[23px] md:gap-10">
+        <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 pt-6 pb-6 md:pt-12 md:pb-12 w-full max-w-[760px] mx-auto gap-5 sm:gap-6 md:gap-8">
 
           {/* Avatar — click to open PIN modal */}
           <div className="flex flex-col items-center gap-[10px] anime-reveal">
@@ -330,7 +307,7 @@ export default function App() {
       </section>
 
       {/* Cards section */}
-      <section className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-11 pb-16 md:pb-24">
+      <section id="playground" className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pb-16 md:pb-24">
         <div className="flex items-center justify-between mb-5 md:mb-7 anime-reveal">
           <div className="bg-[rgba(132,132,132,0.08)] p-1 rounded-full flex items-center gap-0.5">
             <button
@@ -381,7 +358,7 @@ export default function App() {
         </div>
 
         {activeTab === "shorts" ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 w-full">
             {displayVideos.map((v, i) => (
               <motion.div
                 key={i}

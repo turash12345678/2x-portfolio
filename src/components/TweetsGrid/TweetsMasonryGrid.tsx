@@ -19,7 +19,7 @@ export default function TweetsMasonryGrid({ tweets, onSelectTweet }: TweetsMason
   return (
     <div className="w-full">
       {/* Responsive Pinterest Masonry Columns Matrix */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 md:gap-5 [column-fill:_balance]">
+      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-5 lg:gap-6 [column-fill:_balance] w-full">
         {tweets.map((tweet, index) => (
           <TweetCard
             key={tweet.id || index}

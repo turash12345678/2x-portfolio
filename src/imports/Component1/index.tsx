@@ -13,26 +13,38 @@ export default function Component({ className, property1 = "nev - dark" }: Compo
     <div
       className={
         className ||
-        `h-[56px] relative rounded-[32px] ${isNevDark ? "w-full" : "bg-[#262729] w-[500px]"}`
+        `h-[52px] sm:h-[56px] relative rounded-[32px] transition-all ${
+          isNevDark
+            ? "w-full"
+            : "bg-[#262729]/95 backdrop-blur-md w-full max-w-[500px] mx-auto shadow-2xl border border-white/10 pointer-events-auto"
+        }`
       }
     >
       <div className="flex flex-row items-center h-full w-full">
-        <div className="flex items-center justify-between pl-[24px] pr-[8px] py-[8px] h-full w-full">
-          <div className="flex flex-1 gap-[80px] items-center min-w-0">
-            <p
-              className={`font-bold text-[29.388px] text-center tracking-[-1.1755px] leading-none shrink-0 w-[46px] ${
+        <div className="flex items-center justify-between px-3.5 sm:pl-[24px] sm:pr-[8px] py-[6px] sm:py-[8px] h-full w-full gap-2">
+          <div className="flex flex-1 gap-3 sm:gap-6 md:gap-[48px] lg:gap-[80px] items-center min-w-0">
+            <a
+              href="#"
+              className={`font-bold text-[22px] sm:text-[29.388px] text-center tracking-[-1.1755px] leading-none shrink-0 ${
                 isNevDark ? "text-black" : "text-white"
               }`}
               style={{ fontFamily: "'Inclusive Sans', sans-serif" }}
             >
               <span>2x</span>
               <span className="text-[#ff5100]">.</span>
-            </p>
+            </a>
             <div
-              className="flex gap-[16px] items-center shrink-0 text-[18.388px] tracking-[-0.5516px] whitespace-nowrap"
+              className="flex gap-2.5 sm:gap-[16px] items-center shrink-0 text-[13.5px] sm:text-[18.388px] tracking-[-0.5516px] whitespace-nowrap"
               style={{ fontFamily: "Inter, sans-serif", fontWeight: 500 }}
             >
-              <p className={`shrink-0 ${isNevDark ? "text-black" : "text-white"}`}>Playground</p>
+              <a
+                href="#playground"
+                className={`shrink-0 transition-colors ${
+                  isNevDark ? "text-black hover:text-[#ff5100]" : "text-white hover:text-[#ff5100]"
+                }`}
+              >
+                Playground
+              </a>
 
               {/* Case Story with tooltip */}
               <div
@@ -40,45 +52,75 @@ export default function Component({ className, property1 = "nev - dark" }: Compo
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
               >
-                <p className="shrink-0 text-[#b3b3b3] cursor-default">Case Story</p>
+                <button
+                  type="button"
+                  onClick={() => setShowTooltip((prev) => !prev)}
+                  className="shrink-0 text-[#b3b3b3] hover:text-[#888] cursor-pointer transition-colors"
+                >
+                  Case Story
+                </button>
 
                 {/* Tooltip — opens downward for top nav, upward for bottom pill */}
                 <div
-                  className={`absolute left-1/2 -translate-x-1/2 transition-all duration-200 pointer-events-none ${
+                  className={`absolute left-1/2 -translate-x-1/2 transition-all duration-200 z-50 ${
                     isNevDark ? "top-[calc(100%+10px)]" : "bottom-[calc(100%+10px)]"
-                  } ${showTooltip ? "opacity-100 translate-y-0" : isNevDark ? "opacity-0 -translate-y-1" : "opacity-0 translate-y-1"}`}
+                  } ${
+                    showTooltip
+                      ? "opacity-100 translate-y-0 pointer-events-auto"
+                      : isNevDark
+                      ? "opacity-0 -translate-y-1 pointer-events-none"
+                      : "opacity-0 translate-y-1 pointer-events-none"
+                  }`}
                 >
-                  <div className="bg-[#1a1a1a] text-white rounded-[12px] px-4 py-2.5 whitespace-nowrap shadow-lg">
-                    <p className="text-[13px] tracking-[-0.02em] leading-snug" style={{ fontFamily: "Inter, sans-serif", fontWeight: 400 }}>
+                  <div className="bg-[#1a1a1a] text-white rounded-[12px] px-3.5 py-2 sm:px-4 sm:py-2.5 whitespace-nowrap shadow-xl border border-white/10">
+                    <p
+                      className="text-[12px] sm:text-[13px] tracking-[-0.02em] leading-snug"
+                      style={{ fontFamily: "Inter, sans-serif", fontWeight: 400 }}
+                    >
                       My business story is coming soon.{" "}
-                      <span className="text-[#b3b3b3]">Stay tuned</span> ✦
+                      <span className="text-[#b3b3b3]">Stay tuned</span> ✨
                     </p>
                   </div>
                   {/* Caret — points up when below nav, points down when above pill */}
                   {isNevDark ? (
-                    <div className="absolute left-1/2 -translate-x-1/2 bottom-full w-0 h-0" style={{ borderLeft: "6px solid transparent", borderRight: "6px solid transparent", borderBottom: "6px solid #1a1a1a" }} />
+                    <div
+                      className="absolute left-1/2 -translate-x-1/2 bottom-full w-0 h-0"
+                      style={{
+                        borderLeft: "6px solid transparent",
+                        borderRight: "6px solid transparent",
+                        borderBottom: "6px solid #1a1a1a",
+                      }}
+                    />
                   ) : (
-                    <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0" style={{ borderLeft: "6px solid transparent", borderRight: "6px solid transparent", borderTop: "6px solid #1a1a1a" }} />
+                    <div
+                      className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0"
+                      style={{
+                        borderLeft: "6px solid transparent",
+                        borderRight: "6px solid transparent",
+                        borderTop: "6px solid #1a1a1a",
+                      }}
+                    />
                   )}
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-[3px] items-start p-[2px] rounded-[16px] shrink-0">
-            <div
-              className={`flex items-center justify-center px-[16px] py-[8px] rounded-[9999px] shrink-0 ${
-                isNevDark ? "bg-[#1a1a1a]" : "bg-white"
+          <div className="flex items-center shrink-0">
+            <a
+              href="mailto:turashahsan8@gmail.com"
+              className={`flex items-center justify-center px-3 sm:px-[16px] py-1.5 sm:py-[8px] rounded-[9999px] shrink-0 transition-all active:scale-95 shadow-sm ${
+                isNevDark ? "bg-[#1a1a1a] hover:bg-black" : "bg-white hover:bg-[#f0f0f0]"
               }`}
             >
               <p
-                className={`shrink-0 text-[18.388px] tracking-[-0.5516px] whitespace-nowrap ${
+                className={`shrink-0 text-[13px] sm:text-[18.388px] tracking-[-0.5516px] whitespace-nowrap font-medium ${
                   isNevDark ? "text-white" : "text-[#1a1a1a]"
                 }`}
-                style={{ fontFamily: "Inter, sans-serif", fontWeight: 500 }}
+                style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Contact
               </p>
-            </div>
+            </a>
           </div>
         </div>
       </div>

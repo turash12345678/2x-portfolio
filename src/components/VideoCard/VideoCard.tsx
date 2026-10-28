@@ -155,19 +155,19 @@ export default function VideoCard({
   };
 
   return (
-    <div className="bg-[#f4f4f4] rounded-[20px] overflow-hidden p-[10px] flex flex-col gap-3 transition-transform hover:-translate-y-0.5">
+    <div className="w-full bg-[#f4f4f4] rounded-[20px] overflow-hidden p-2.5 sm:p-3.5 flex flex-col gap-3 transition-transform hover:-translate-y-0.5 shadow-xs hover:shadow-md">
 
       {/* Title + Status + Clean Single Action Icon */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex flex-col gap-0.5 flex-1 min-w-0">
           <p
-            className="text-[#0e141a] text-[15px] leading-6 tracking-[-0.02em] truncate font-medium"
+            className="text-[#0e141a] text-[15px] sm:text-[16px] leading-6 tracking-[-0.02em] font-medium line-clamp-1"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             {title}
           </p>
           <p
-            className="text-[#888] text-[14px] leading-5 tracking-[-0.02em] truncate"
+            className="text-[#888] text-[13px] sm:text-[14px] leading-5 tracking-[-0.02em] line-clamp-1"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             {status}
