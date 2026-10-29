@@ -1,53 +1,7 @@
 [
   {
     "queueIndex": 1,
-    "sl": 687,
-    "company": "Higharc",
-    "title": "UX Designer",
-    "location": "New York, NY (Remote)",
-    "channel": "Direct ATS (Ashby ATS)",
-    "url": "https://jobs.ashbyhq.com/Higharc/928baed0-d7e1-4440-930e-ea189b1596c7/application?utm_source=QZKW5dVRY5&src=LinkedInJobWrapping",
-    "atsType": "Ashby ATS",
-    "isEasyApply": false,
-    "requiresLogin": false,
-    "candidatePrefill": {
-      "name": "Turash Ahsan",
-      "email": "turashahsan8@gmail.com",
-      "phone": "+880 172 325 3615",
-      "portfolio": "https://turashahsan.vercel.app",
-      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
-      "github": "https://github.com/turash12345678/2x-portfolio",
-      "location": "Dhaka, Bangladesh",
-      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
-      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
-    }
-  },
-  {
-    "queueIndex": 2,
-    "sl": 688,
-    "company": "Pandvil Network",
-    "title": "UI / Graphic Designer",
-    "location": "Medellín, Extremadura, Spain (Remote)",
-    "channel": "Direct ATS (Greenhouse ATS)",
-    "url": "https://grnh.se/p685pcw28us",
-    "atsType": "Greenhouse ATS",
-    "isEasyApply": false,
-    "requiresLogin": false,
-    "candidatePrefill": {
-      "name": "Turash Ahsan",
-      "email": "turashahsan8@gmail.com",
-      "phone": "+880 172 325 3615",
-      "portfolio": "https://turashahsan.vercel.app",
-      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
-      "github": "https://github.com/turash12345678/2x-portfolio",
-      "location": "Dhaka, Bangladesh",
-      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
-      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
-    }
-  },
-  {
-    "queueIndex": 3,
-    "sl": 689,
+    "sl": 693,
     "company": "WIN Home Inspection",
     "title": "UI Designer",
     "location": "Noida, Uttar Pradesh, India (Remote)",
@@ -69,77 +23,8 @@
     }
   },
   {
-    "queueIndex": 4,
-    "sl": 690,
-    "company": "Digital Forms",
-    "title": "UI/UX Designer",
-    "location": "Poland (Remote)",
-    "channel": "Direct ATS (Recruitee ATS)",
-    "url": "https://digitalforms.recruitee.com/o/uiux-designer/c/new?source=LinkedIn+Basic+Jobs",
-    "atsType": "Recruitee ATS",
-    "isEasyApply": false,
-    "requiresLogin": false,
-    "candidatePrefill": {
-      "name": "Turash Ahsan",
-      "email": "turashahsan8@gmail.com",
-      "phone": "+880 172 325 3615",
-      "portfolio": "https://turashahsan.vercel.app",
-      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
-      "github": "https://github.com/turash12345678/2x-portfolio",
-      "location": "Dhaka, Bangladesh",
-      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
-      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
-    }
-  },
-  {
-    "queueIndex": 5,
-    "sl": 691,
-    "company": "Companion Group",
-    "title": "UI/UX Artist & Designer",
-    "location": "Germany (Remote)",
-    "channel": "Direct ATS (Recruitee ATS)",
-    "url": "https://companiongroupltd.recruitee.com/o/uiux-artist-designer/c/new?source=LinkedIn+Basic+Jobs",
-    "atsType": "Recruitee ATS",
-    "isEasyApply": false,
-    "requiresLogin": false,
-    "candidatePrefill": {
-      "name": "Turash Ahsan",
-      "email": "turashahsan8@gmail.com",
-      "phone": "+880 172 325 3615",
-      "portfolio": "https://turashahsan.vercel.app",
-      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
-      "github": "https://github.com/turash12345678/2x-portfolio",
-      "location": "Dhaka, Bangladesh",
-      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
-      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
-    }
-  },
-  {
-    "queueIndex": 6,
-    "sl": 692,
-    "company": "Makeship",
-    "title": "Product Designer",
-    "location": "Remote",
-    "channel": "Direct ATS (Gem ATS)",
-    "url": "https://jobs.gem.com/leap-tools/am9icG9zdDrgU8eLfZaJXoRO3w68ESjx?utm_source=GemJobBoardLink&utm_medium=c291cmNlOgV-S0NRbh_YFwVcb0YVCIM",
-    "atsType": "Gem ATS",
-    "isEasyApply": false,
-    "requiresLogin": false,
-    "candidatePrefill": {
-      "name": "Turash Ahsan",
-      "email": "turashahsan8@gmail.com",
-      "phone": "+880 172 325 3615",
-      "portfolio": "https://turashahsan.vercel.app",
-      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
-      "github": "https://github.com/turash12345678/2x-portfolio",
-      "location": "Dhaka, Bangladesh",
-      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
-      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
-    }
-  },
-  {
-    "queueIndex": 7,
-    "sl": 693,
+    "queueIndex": 2,
+    "sl": 694,
     "company": "hunterstack.io",
     "title": "UX/UI Designer",
     "location": "Brazil (Remote)",
@@ -161,30 +46,7 @@
     }
   },
   {
-    "queueIndex": 8,
-    "sl": 694,
-    "company": "EGAMI Group",
-    "title": "Digital Designer",
-    "location": "New York, NY (Remote)",
-    "channel": "Direct ATS (JazzHR ATS)",
-    "url": "https://egamigroup.applytojob.com/apply/5t8NdcEtXf/Digital-Designer?source=LILI",
-    "atsType": "JazzHR ATS",
-    "isEasyApply": false,
-    "requiresLogin": false,
-    "candidatePrefill": {
-      "name": "Turash Ahsan",
-      "email": "turashahsan8@gmail.com",
-      "phone": "+880 172 325 3615",
-      "portfolio": "https://turashahsan.vercel.app",
-      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
-      "github": "https://github.com/turash12345678/2x-portfolio",
-      "location": "Dhaka, Bangladesh",
-      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
-      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
-    }
-  },
-  {
-    "queueIndex": 9,
+    "queueIndex": 3,
     "sl": 695,
     "company": "24 Seven Talent",
     "title": "Graphic Designer",
@@ -207,7 +69,7 @@
     }
   },
   {
-    "queueIndex": 10,
+    "queueIndex": 4,
     "sl": 696,
     "company": "UrsaNav®",
     "title": "Multimedia Designer",
@@ -230,7 +92,7 @@
     }
   },
   {
-    "queueIndex": 11,
+    "queueIndex": 5,
     "sl": 697,
     "company": "Best Lawyers",
     "title": "Product Designer",
@@ -253,7 +115,7 @@
     }
   },
   {
-    "queueIndex": 12,
+    "queueIndex": 6,
     "sl": 698,
     "company": "BCforward",
     "title": "UX Content Specialist",
@@ -276,7 +138,7 @@
     }
   },
   {
-    "queueIndex": 13,
+    "queueIndex": 7,
     "sl": 699,
     "company": "Iterative Health",
     "title": "Graphic Designer - Contract",
@@ -299,7 +161,7 @@
     }
   },
   {
-    "queueIndex": 14,
+    "queueIndex": 8,
     "sl": 700,
     "company": "Synthires",
     "title": "Visual Designer (Remote | $50–$60/hr)",
@@ -322,7 +184,7 @@
     }
   },
   {
-    "queueIndex": 15,
+    "queueIndex": 9,
     "sl": 701,
     "company": "Creative Cove Inc.",
     "title": "Graphic Designer",
@@ -345,7 +207,7 @@
     }
   },
   {
-    "queueIndex": 16,
+    "queueIndex": 10,
     "sl": 702,
     "company": "City Lifestyle",
     "title": "Layout Designer",
@@ -368,7 +230,7 @@
     }
   },
   {
-    "queueIndex": 17,
+    "queueIndex": 11,
     "sl": 703,
     "company": "Midas AI",
     "title": "Multimedia Designer",
@@ -391,7 +253,7 @@
     }
   },
   {
-    "queueIndex": 18,
+    "queueIndex": 12,
     "sl": 704,
     "company": "Ragan Communications",
     "title": "Digital Designer",
@@ -414,7 +276,7 @@
     }
   },
   {
-    "queueIndex": 19,
+    "queueIndex": 13,
     "sl": 705,
     "company": "Valtech",
     "title": "Jr. AI Native Experience Designer",
@@ -437,7 +299,7 @@
     }
   },
   {
-    "queueIndex": 20,
+    "queueIndex": 14,
     "sl": 706,
     "company": "Wiraa",
     "title": "Product Designer",
@@ -460,7 +322,7 @@
     }
   },
   {
-    "queueIndex": 21,
+    "queueIndex": 15,
     "sl": 707,
     "company": "Crewlia",
     "title": "Contract UX Designer (Remote)",
@@ -483,7 +345,7 @@
     }
   },
   {
-    "queueIndex": 22,
+    "queueIndex": 16,
     "sl": 708,
     "company": "Warp",
     "title": "Product Designer",
@@ -506,7 +368,7 @@
     }
   },
   {
-    "queueIndex": 23,
+    "queueIndex": 17,
     "sl": 709,
     "company": "Community Choice Financial Family of Brands",
     "title": "Graphic Designer",
@@ -529,7 +391,7 @@
     }
   },
   {
-    "queueIndex": 24,
+    "queueIndex": 18,
     "sl": 710,
     "company": "The Cadmus Group",
     "title": "UX Researcher",
@@ -552,7 +414,7 @@
     }
   },
   {
-    "queueIndex": 25,
+    "queueIndex": 19,
     "sl": 711,
     "company": "AgileGrid Solutions",
     "title": "Web Designer",
@@ -575,7 +437,7 @@
     }
   },
   {
-    "queueIndex": 26,
+    "queueIndex": 20,
     "sl": 712,
     "company": "Rythm",
     "title": "Web Designer",
@@ -598,7 +460,7 @@
     }
   },
   {
-    "queueIndex": 27,
+    "queueIndex": 21,
     "sl": 713,
     "company": "N4 Studio®",
     "title": "Digital Designer (Freelance/Contract)",
@@ -621,7 +483,7 @@
     }
   },
   {
-    "queueIndex": 28,
+    "queueIndex": 22,
     "sl": 714,
     "company": "Thatch",
     "title": "Brand Designer",
@@ -644,7 +506,7 @@
     }
   },
   {
-    "queueIndex": 29,
+    "queueIndex": 23,
     "sl": 715,
     "company": "Kentro",
     "title": "Proposal Graphic Designer",
@@ -667,7 +529,7 @@
     }
   },
   {
-    "queueIndex": 30,
+    "queueIndex": 24,
     "sl": 716,
     "company": "Yahoo",
     "title": "Brand Designer",
@@ -690,7 +552,7 @@
     }
   },
   {
-    "queueIndex": 31,
+    "queueIndex": 25,
     "sl": 717,
     "company": "AfterQuery",
     "title": "Graphic Designer Expert",
@@ -713,7 +575,7 @@
     }
   },
   {
-    "queueIndex": 32,
+    "queueIndex": 26,
     "sl": 718,
     "company": "Ganssimpel",
     "title": "UX / UI DESIGNER*IN (M/W/D)",
@@ -736,7 +598,7 @@
     }
   },
   {
-    "queueIndex": 33,
+    "queueIndex": 27,
     "sl": 719,
     "company": "IAM MIA",
     "title": "User Interface Designer",
@@ -759,7 +621,7 @@
     }
   },
   {
-    "queueIndex": 34,
+    "queueIndex": 28,
     "sl": 720,
     "company": "ReDesk.ai",
     "title": "Product Designer",
@@ -782,7 +644,7 @@
     }
   },
   {
-    "queueIndex": 35,
+    "queueIndex": 29,
     "sl": 721,
     "company": "Karens",
     "title": "UX/UI Designer",
@@ -805,7 +667,7 @@
     }
   },
   {
-    "queueIndex": 36,
+    "queueIndex": 30,
     "sl": 722,
     "company": "UX-Republic",
     "title": "UI DESIGNER H/F - Lyon",
@@ -828,7 +690,7 @@
     }
   },
   {
-    "queueIndex": 37,
+    "queueIndex": 31,
     "sl": 723,
     "company": "AP Design GmbH",
     "title": "Digital Designer / UI/UX Designer m/w/d",
@@ -851,7 +713,7 @@
     }
   },
   {
-    "queueIndex": 38,
+    "queueIndex": 32,
     "sl": 724,
     "company": "ADAM Communication GmbH",
     "title": "UI/UX DESIGNER*IN (M,W,D)",
@@ -874,7 +736,7 @@
     }
   },
   {
-    "queueIndex": 39,
+    "queueIndex": 33,
     "sl": 725,
     "company": "Idea Rebel",
     "title": "Digital Designer (Freelance)",
@@ -897,7 +759,7 @@
     }
   },
   {
-    "queueIndex": 40,
+    "queueIndex": 34,
     "sl": 726,
     "company": "AllFeams",
     "title": "Web & Digital Designer",
@@ -919,7 +781,7 @@
     }
   },
   {
-    "queueIndex": 41,
+    "queueIndex": 35,
     "sl": 727,
     "company": "Contrast UX",
     "title": "Product Design Builder",
@@ -941,7 +803,7 @@
     }
   },
   {
-    "queueIndex": 42,
+    "queueIndex": 36,
     "sl": 728,
     "company": "Ihsan",
     "title": "Product Designer — Mobile UX/UI & Motion",
@@ -963,7 +825,7 @@
     }
   },
   {
-    "queueIndex": 43,
+    "queueIndex": 37,
     "sl": 729,
     "company": "Roboto Studio",
     "title": "Digital Brand Designer",
@@ -985,7 +847,7 @@
     }
   },
   {
-    "queueIndex": 44,
+    "queueIndex": 38,
     "sl": 730,
     "company": "Atomic Glue",
     "title": "Web Designer",
@@ -1007,7 +869,7 @@
     }
   },
   {
-    "queueIndex": 45,
+    "queueIndex": 39,
     "sl": 731,
     "company": "Pirxe",
     "title": "Forward Deployed Designer",
@@ -1029,7 +891,7 @@
     }
   },
   {
-    "queueIndex": 46,
+    "queueIndex": 40,
     "sl": 732,
     "company": "Naked Nutrition",
     "title": "Ecommerce Designer",
@@ -1051,7 +913,7 @@
     }
   },
   {
-    "queueIndex": 47,
+    "queueIndex": 41,
     "sl": 733,
     "company": "Palerto Studio",
     "title": "UX UI Designer",
@@ -1073,7 +935,7 @@
     }
   },
   {
-    "queueIndex": 48,
+    "queueIndex": 42,
     "sl": 734,
     "company": "MLabs",
     "title": "Product Designer",
@@ -1095,7 +957,7 @@
     }
   },
   {
-    "queueIndex": 49,
+    "queueIndex": 43,
     "sl": 735,
     "company": "Spate",
     "title": "Product Designer",
@@ -1117,7 +979,7 @@
     }
   },
   {
-    "queueIndex": 50,
+    "queueIndex": 44,
     "sl": 736,
     "company": "Apollo GraphQL",
     "title": "Product Designer",
@@ -1139,7 +1001,7 @@
     }
   },
   {
-    "queueIndex": 51,
+    "queueIndex": 45,
     "sl": 737,
     "company": "Moyasar",
     "title": "UI/UX Designer",
@@ -1161,7 +1023,7 @@
     }
   },
   {
-    "queueIndex": 52,
+    "queueIndex": 46,
     "sl": 738,
     "company": "P2P.org",
     "title": "Product Designer",
@@ -1183,7 +1045,7 @@
     }
   },
   {
-    "queueIndex": 53,
+    "queueIndex": 47,
     "sl": 739,
     "company": "ShippyPro",
     "title": "Junior Product Designer",
@@ -1205,7 +1067,7 @@
     }
   },
   {
-    "queueIndex": 54,
+    "queueIndex": 48,
     "sl": 740,
     "company": "Costello Medical",
     "title": "Digital Designer",
@@ -1227,7 +1089,7 @@
     }
   },
   {
-    "queueIndex": 55,
+    "queueIndex": 49,
     "sl": 741,
     "company": "HappyDance",
     "title": "Product Designer — Design Systems (Figma)",
@@ -1249,7 +1111,7 @@
     }
   },
   {
-    "queueIndex": 56,
+    "queueIndex": 50,
     "sl": 742,
     "company": "Kleros",
     "title": "Ethereum Dapp UX/UI Designer",
@@ -1271,7 +1133,7 @@
     }
   },
   {
-    "queueIndex": 57,
+    "queueIndex": 51,
     "sl": 743,
     "company": "Kongi",
     "title": "Product Designer",
@@ -1293,7 +1155,7 @@
     }
   },
   {
-    "queueIndex": 58,
+    "queueIndex": 52,
     "sl": 744,
     "company": "givingjoy.de",
     "title": "Product Designer (UX/UI)",
@@ -1315,7 +1177,7 @@
     }
   },
   {
-    "queueIndex": 59,
+    "queueIndex": 53,
     "sl": 745,
     "company": "PeakTew",
     "title": "UX Researcher and Designer",
@@ -1337,7 +1199,7 @@
     }
   },
   {
-    "queueIndex": 60,
+    "queueIndex": 54,
     "sl": 746,
     "company": "NEC Corporation",
     "title": "4371 UX/UI Designer_CO",
@@ -1360,7 +1222,7 @@
     }
   },
   {
-    "queueIndex": 61,
+    "queueIndex": 55,
     "sl": 747,
     "company": "remoting.work",
     "title": "UX/UI Designer",
@@ -1383,7 +1245,7 @@
     }
   },
   {
-    "queueIndex": 62,
+    "queueIndex": 56,
     "sl": 748,
     "company": "Applied Systems Canada",
     "title": "UX Designer",
