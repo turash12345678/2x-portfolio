@@ -55,6 +55,7 @@ function addCandidate(job) {
   const comboKey = `${companyKey}|${titleKey}`;
 
   // Duplicate checks
+  if (companyKey.includes('win home inspection')) return false; // Verified closed
   if (appliedUrls.has(normUrl) || (job.url && appliedUrls.has(job.url.toLowerCase().trim()))) return false;
   if (job.jobId && appliedJobIds.has(job.jobId)) return false;
   if (appliedCompanies.has(companyKey)) return false; // Strict 1 job per company rule
@@ -130,9 +131,9 @@ if (fs.existsSync('discovered_web_jobs.json')) {
       company: j.company,
       title: j.title,
       location: j.location,
-      channel: j.source ? `${j.source} (${j.applyType || 'Direct'})` : 'Web Radar',
-      url: j.applyUrl || j.targetUrl || j.url,
-      atsType: j.platformType || j.source || 'Web Radar',
+      channel: j.channel || (j.source ? `${j.source} (Direct)` : 'Web Radar'),
+      url: j.target || j.applyUrl || j.targetUrl || j.url,
+      atsType: j.channel || j.platformType || j.source || 'Web Radar',
       requiresLogin: false
     });
   });

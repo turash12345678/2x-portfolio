@@ -398,7 +398,7 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
     - **Candidate Onboarding Completed & Activated:**
       - **WeWorkRemotely:** Step 1 (profile, title, Mid-level experience, resume upload) and Step 2 (global regions, timezones, visa status) filled and submitted via CDP (`proof_wwr_step1_complete.png`, `proof_wwr_step2_filled.png`).
       - **Wellfound (AngelList):** Step 1 (Profile with 2 YOE, Ahsania, portfolio/LinkedIn), Step 2 (Preferences: open to offers, $50k salary, remote), Step 3 (Culture: work environment, growth priorities, criteria text), and Step 4 (Resume: `Turash_Ahsan_Resume.pdf` uploaded, 37 resume parsed items reviewed & merged into live profile). Account is 100% active, searchable, and set to "Open to offers" (`proof_wellfound_profile_fully_saved.png`).
-    - **Applications Executed & Verified (`SL #686` to `SL #692`):**
+    - **Applications Executed & Verified (`SL #686` to `SL #694`):**
       - `SL #686`: **Nash** — *Product Designer* (Ashby ATS) | `proof_batch_686_Nash_submitted.png`
       - `SL #687`: **Higharc** — *UX Designer* (Ashby ATS) | `proof_batch_687_Higharc_submitted.png`
       - `SL #688`: **Pandvil Network** — *UI / Graphic Designer* (Greenhouse ATS) | `proof_batch_688_Pandvil_Network_submitted.png`
@@ -406,20 +406,30 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
       - `SL #690`: **Companion Group** — *UI/UX Artist & Designer* (Recruitee ATS) | `proof_batch_690_Companion_Group_submitted.png`
       - `SL #691`: **EGAMI Group** — *Digital Designer* (JazzHR ATS) | `proof_batch_691_EGAMI_Group_submitted.png`
       - `SL #692`: **Makeship (Leap Tools)** — *UI/UX Designer* (Direct Gmail Outreach & ATS) | `proof_batch_692_Makeship__Leap_Tools__sent.png`
-    - **Pipeline Scaled to 692 Applications:** Synchronized across `job_tracker.json` (692 records) and `job_tracker.csv`.
-    - **Grand Total Outreach Reached 742 Contacts:** 692 job applications + 50 studio cold emails.
+      - `SL #693`: **P2P.org** — *Product Designer (new product)* (Ashby ATS) | `proof_batch_693_P2P_org_submitted.png`
+      - `SL #694`: **MLabs** — *Product Designer* (Workable ATS) | `proof_batch_694_MLabs_submitted.png`
+    - **Pipeline Scaled to 694 Applications:** Synchronized across `job_tracker.json` (694 records) and `job_tracker.csv` (695 rows).
+    - **Grand Total Outreach Reached 744 Contacts:** 694 job applications + 50 studio cold emails.
 
 ### 📌 Current Status:
-- Job tracker verified at **692 applied applications** (SL #1 to SL #692).
+- Job tracker verified at **694 applied applications** (SL #1 to SL #694).
 - Direct Gmail Cold Email Outreach at **50/50 verified sent emails** with resume attached.
-- **Grand Total Outreach:** **742 job applications / studio contacts** dispatched.
-- **Unified Master Execution Queue:** 56 remaining verified deduplicated targets ready in `unified_master_queue.json`.
+- **Grand Total Outreach:** **744 job applications / studio contacts** dispatched.
+- **Unified Master Execution Queue:** 53 remaining verified deduplicated targets ready in `unified_master_queue.json`.
 - **Clean ATS Resume Active:** Available at `C:\Users\User\Turash_Ahsan_Resume.pdf` and project root.
 - Production build compiles with **0 errors** (`npm run build`).
 
 ### 🎯 Immediate Next Steps / Multi-PC Transition:
 1. **On Next PC:** Run `git pull origin main` to pull all project memory, documentation, trackers, and codebase updates.
-2. **Sequential Execution:** Continue Turbo execution for Target 8 onwards (24 Seven Talent `SL #693`, UrsaNav® `SL #694`, Best Lawyers `SL #695`, BCforward `SL #696`).
+2. **Sequential Execution:** Continue Turbo execution for Target 4 onwards:
+   - `SL #695`: **Spate** — *Product Designer* (Workable ATS: `https://jobs.workable.com/view/ubGrBTgDigJbW6QCnJf84J`)
+   - `SL #696`: **Moyasar** — *UI/UX Designer* (Workable ATS: `https://jobs.workable.com/view/jTmzYDBKBhf8mtrUemHK87/remote-ui%2Fux-designer-in-lebanon-at-moyasar-financial-company`)
+   - `SL #697`: **Ihsan** — *Product Designer — Mobile UX/UI & Motion* (Direct email to `vincent@ihsan.com` with portfolio and resume)
+   - `SL #698`: **hunterstack.io** — *UX/UI Designer* (InHire ATS: `https://hunterstackio.inhire.app/vagas/61900182-7309-43ac-8bc2-eaaf53592a71/uxui-designer?source=linkedin`)
+   - `SL #699`: **ShippyPro** — *Junior Product Designer* (Join.com ATS: `https://join.com/companies/shippypro953/16844274-junior-product-designer`)
+   - `SL #700`: **AllFeams** — *Web & Digital Designer* (Google Form: `https://forms.gle/3wtWDkWSP7vCsAug9`)
+   - `SL #701`: **24 Seven Talent** — *Graphic Designer* (LinkedIn Easy Apply with Gmail outreach follow-up)
+   - `SL #702`: **UrsaNav®** — *Multimedia Designer* (LinkedIn Easy Apply with Gmail outreach follow-up)
 3. **Outreach Monitoring:** Follow up on incoming replies and LinkedIn communications (e.g. Fonix IT, Bakken & Bæck).
 4. **Figma Motion Animation:** Script and apply native keyframe timeline tracks (`applyManualKeyframeTrack`) to the master brand frame layers (`2:4942`).
 
