@@ -9588,5 +9588,47 @@
     "proof": "proof_batch_685_Tews_Company.png (Application submitted)",
     "cv": "Yes (Turash Ahsan Resume (ATS Under 2MB).pdf)",
     "notes": "Applied via live LinkedIn Easy Apply with verified ATS resume and contact credentials. Confirmed submitted."
+  },
+  {
+    "sl": 686,
+    "id": 686,
+    "company": "Nash",
+    "job_title": "Product Designer",
+    "location": "United States (Remote)",
+    "channel": "Direct ATS (Ashby ATS)",
+    "target": "https://jobs.ashbyhq.com/Nash/f3ab1bcb-4497-49c8-bdbb-d09776c2392f/application?utm_source=nkAmjpe99J",
+    "status": "APPLIED",
+    "date": "2026-10-29",
+    "proof": "proof_batch_686_Nash.png (Submitted)",
+    "cv": "Yes (Turash Ahsan Resume (ATS Under 2MB).pdf)",
+    "notes": "Applied via direct Ashby ATS with candidate profile, portfolio links, and ATS resume attached. Confirmed submitted."
+  },
+  {
+    "sl": 687,
+    "id": 687,
+    "company": "Higharc",
+    "job_title": "UX Designer",
+    "location": "New York, NY (Remote)",
+    "channel": "Direct ATS (Ashby ATS)",
+    "target": "https://jobs.ashbyhq.com/Higharc/928baed0-d7e1-4440-930e-ea189b1596c7/application?utm_source=QZKW5dVRY5&src=LinkedInJobWrapping",
+    "status": "APPLIED",
+    "date": "2026-10-29",
+    "proof": "proof_batch_687_Higharc.png (Submitted)",
+    "cv": "Yes (Turash Ahsan Resume (ATS Under 2MB).pdf)",
+    "notes": "Applied via direct Ashby ATS with candidate profile, portfolio links, and ATS resume attached. Confirmed submitted."
+  },
+  {
+    "sl": 688,
+    "id": 688,
+    "company": "Pandvil Network",
+    "job_title": "UI / Graphic Designer",
+    "location": "Medellín, Extremadura, Spain (Remote)",
+    "channel": "Direct ATS (Greenhouse ATS)",
+    "target": "https://grnh.se/p685pcw28us",
+    "status": "APPLIED",
+    "date": "2026-10-29",
+    "proof": "proof_batch_688_Pandvil_Network.png (Submitted)",
+    "cv": "Yes (Turash Ahsan Resume (ATS Under 2MB).pdf)",
+    "notes": "Applied via direct Greenhouse ATS with candidate profile, portfolio links, and ATS resume attached. Confirmed submitted."
   }
 ]
