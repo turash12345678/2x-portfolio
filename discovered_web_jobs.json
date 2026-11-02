@@ -164,26 +164,6 @@
   },
   {
     "id": 9,
-    "company": "MLabs",
-    "title": "Product Designer",
-    "location": "Remote (UK / Spain / Europe)",
-    "source": "UI/UX Jobs Board",
-    "channel": "Workable ATS",
-    "target": "https://jobs.workable.com/view/d2CREJv3br49SyphsURZaj/remote-product-designer-in-spain-at-mlabs",
-    "source_url": "https://uiuxjobsboard.com/job/1655726-remote-united-kingdom-product-designer",
-    "type": "Full-time / Remote",
-    "experience_level": "Mid-Level",
-    "skills": [
-      "Product Design",
-      "UX Research",
-      "Figma",
-      "SaaS Systems"
-    ],
-    "notes": "Fintech and blockchain consultancy hiring remote Product Designer via Workable ATS.",
-    "discovered_date": "2026-10-29"
-  },
-  {
-    "id": 10,
     "company": "Spate",
     "title": "Product Designer",
     "location": "Remote (Europe / UK)",
@@ -203,7 +183,7 @@
     "discovered_date": "2026-10-29"
   },
   {
-    "id": 11,
+    "id": 10,
     "company": "Apollo GraphQL",
     "title": "Product Designer",
     "location": "Remote (North America)",
@@ -223,7 +203,7 @@
     "discovered_date": "2026-10-29"
   },
   {
-    "id": 12,
+    "id": 11,
     "company": "Moyasar",
     "title": "UI/UX Designer",
     "location": "Remote (MENA / Global)",
@@ -243,27 +223,7 @@
     "discovered_date": "2026-10-29"
   },
   {
-    "id": 13,
-    "company": "P2P.org",
-    "title": "Product Designer",
-    "location": "Remote (Europe / Global)",
-    "source": "UI/UX Jobs Board",
-    "channel": "Ashby ATS",
-    "target": "https://jobs.ashbyhq.com/p2p.org/dad5d6d3-6032-4336-b6bd-72ccda7311af",
-    "source_url": "https://uiuxjobsboard.com/job/1656826-remote-europe-product-designer",
-    "type": "Full-time / Remote",
-    "experience_level": "Mid-Level",
-    "skills": [
-      "Product Design",
-      "Web3 UI/UX",
-      "User Research",
-      "Figma Prototyping"
-    ],
-    "notes": "Institutional staking and infrastructure platform hiring Product Designer via Ashby ATS.",
-    "discovered_date": "2026-10-29"
-  },
-  {
-    "id": 14,
+    "id": 12,
     "company": "ShippyPro",
     "title": "Junior Product Designer",
     "location": "Remote / Hybrid (Florence, Italy / Europe)",
@@ -283,7 +243,7 @@
     "discovered_date": "2026-10-29"
   },
   {
-    "id": 15,
+    "id": 13,
     "company": "Costello Medical",
     "title": "Digital Designer",
     "location": "Remote / Hybrid (Cambridge, UK)",
@@ -303,7 +263,7 @@
     "discovered_date": "2026-10-29"
   },
   {
-    "id": 16,
+    "id": 14,
     "company": "HappyDance",
     "title": "Product Designer — Design Systems (Figma)",
     "location": "Remote only (Everywhere)",
@@ -323,7 +283,7 @@
     "discovered_date": "2026-10-29"
   },
   {
-    "id": 17,
+    "id": 15,
     "company": "Kleros",
     "title": "Ethereum Dapp UX/UI Designer",
     "location": "Remote / Earth",
@@ -343,7 +303,7 @@
     "discovered_date": "2026-10-29"
   },
   {
-    "id": 18,
+    "id": 16,
     "company": "Kongi",
     "title": "Product Designer",
     "location": "Remote (United States / Global)",
@@ -363,7 +323,7 @@
     "discovered_date": "2026-10-29"
   },
   {
-    "id": 19,
+    "id": 17,
     "company": "givingjoy.de",
     "title": "Product Designer (UX/UI)",
     "location": "Remote (Europe)",
@@ -383,7 +343,7 @@
     "discovered_date": "2026-10-29"
   },
   {
-    "id": 20,
+    "id": 18,
     "company": "PeakTew",
     "title": "UX Researcher and Designer",
     "location": "Remote only (Everywhere)",
@@ -401,5 +361,234 @@
     ],
     "notes": "Fast-responding startup seeking UX Researcher & Designer for core platform interfaces.",
     "discovered_date": "2026-10-29"
+  },
+  {
+    "company": "Prelim",
+    "title": "Product Designer",
+    "location": "Remote (US / Global)",
+    "source": "Startup / Ashby ATS",
+    "channel": "Ashby ATS (Direct Apply)",
+    "target": "https://jobs.ashbyhq.com/prelim/86e1b82b-4cd3-47dd-93d8-c1cd6e1e0f07",
+    "source_url": "https://jobs.ashbyhq.com/prelim/86e1b82b-4cd3-47dd-93d8-c1cd6e1e0f07",
+    "type": "Full-time / Remote",
+    "experience_level": "Mid-Level",
+    "skills": [
+      "Product Design",
+      "Fintech Onboarding",
+      "Design Systems",
+      "Prototyping",
+      "Figma"
+    ],
+    "notes": "Banking & onboarding digital platform startup. User-centered design, usability, design systems.",
+    "id": 19,
+    "discovered_date": "2026-11-02"
+  },
+  {
+    "company": "StellarTech",
+    "title": "Product Designer-Builder",
+    "location": "Remote (Europe / Global)",
+    "source": "Startup / Ashby ATS",
+    "channel": "Ashby ATS (Direct Apply)",
+    "target": "https://jobs.ashbyhq.com/hirehire/348181a6-cb98-4401-86cb-a1ca508b9e3c",
+    "source_url": "https://jobs.ashbyhq.com/hirehire/348181a6-cb98-4401-86cb-a1ca508b9e3c",
+    "type": "Full-time / Remote",
+    "experience_level": "Mid-Level",
+    "skills": [
+      "Mobile UI/UX",
+      "Product Design",
+      "A/B Testing",
+      "Figma",
+      "User Flows"
+    ],
+    "notes": "Consumer mobile application (Smartimi app) design pairing closely with PMs and engineers.",
+    "id": 20,
+    "discovered_date": "2026-11-02"
+  },
+  {
+    "company": "Tiny Health",
+    "title": "Product Designer",
+    "location": "Remote (US / Canada / Global)",
+    "source": "Startup / Ashby ATS",
+    "channel": "Ashby ATS (Direct Apply)",
+    "target": "https://jobs.ashbyhq.com/tiny-health/3aeffd07-e93d-4ae3-9ab5-6ce584768612",
+    "source_url": "https://jobs.ashbyhq.com/tiny-health/3aeffd07-e93d-4ae3-9ab5-6ce584768612",
+    "type": "Full-time / Remote",
+    "experience_level": "Mid-Level",
+    "skills": [
+      "Product Design",
+      "Healthcare UI",
+      "Data Visualization",
+      "Figma",
+      "UX Research"
+    ],
+    "notes": "Precision microbiome science digital platform. Translating complex health insights into consumer interfaces.",
+    "id": 21,
+    "discovered_date": "2026-11-02"
+  },
+  {
+    "company": "Neon One",
+    "title": "Product Designer",
+    "location": "Remote (United States / Global)",
+    "source": "UI/UX Jobs Board",
+    "channel": "Ashby ATS (HighlightTA)",
+    "target": "https://jobs.ashbyhq.com/HighlightTA/e7a3a849-06f4-4328-9b6c-0d7d343da535",
+    "source_url": "https://uiuxjobsboard.com/job/1657426-remote-united-states-product-designer",
+    "type": "Full-time / Remote",
+    "experience_level": "Mid-Level",
+    "skills": [
+      "Product Design",
+      "SaaS UI",
+      "User Research",
+      "Design Systems",
+      "Figma"
+    ],
+    "notes": "Modern SaaS platform interfaces for mission-driven non-profit organizations.",
+    "id": 22,
+    "discovered_date": "2026-11-02"
+  },
+  {
+    "company": "Shadow (Darkroom)",
+    "title": "Product Designer",
+    "location": "Remote (Brazil / Global)",
+    "source": "UI/UX Jobs Board",
+    "channel": "Ashby ATS (Direct Apply)",
+    "target": "https://jobs.ashbyhq.com/darkroom/7f7a024f-1eb7-4900-99d9-052f1141c6ef",
+    "source_url": "https://uiuxjobsboard.com/job/1657726-remote-brazil-product-designer",
+    "type": "Full-time / Remote",
+    "experience_level": "Mid-Level",
+    "skills": [
+      "Product Design",
+      "Design Systems",
+      "Web & Mobile UI",
+      "Figma"
+    ],
+    "notes": "Digital product design consultancy creating high-conversion consumer interfaces.",
+    "id": 23,
+    "discovered_date": "2026-11-02"
+  },
+  {
+    "company": "Finvari",
+    "title": "Product UX Designer",
+    "location": "Remote (United States / Global)",
+    "source": "UI/UX Jobs Board",
+    "channel": "Ashby ATS (Direct Apply)",
+    "target": "https://jobs.ashbyhq.com/finvari/0484dd98-c84b-4b17-8d90-3f7f573194c5",
+    "source_url": "https://uiuxjobsboard.com/job/1657326-product-ux-designer-seattle-wa-united-states",
+    "type": "Full-time / Remote",
+    "experience_level": "Mid-Level",
+    "skills": [
+      "Fintech UI/UX",
+      "Product Design",
+      "Expense Management UI",
+      "Figma",
+      "Design Tokens"
+    ],
+    "notes": "Modern corporate spend and financial management SaaS platform.",
+    "id": 24,
+    "discovered_date": "2026-11-02"
+  },
+  {
+    "company": "Kernel",
+    "title": "Founding Product Designer",
+    "location": "Remote (UK / London / Global)",
+    "source": "UI/UX Jobs Board",
+    "channel": "Ashby ATS (Direct Apply)",
+    "target": "https://jobs.ashbyhq.com/kernel/030c447d-f81f-4bc6-9fa6-78352a772adb",
+    "source_url": "https://uiuxjobsboard.com/job/1656926-founding-product-designer-london-united-kingdom",
+    "type": "Full-time / Remote",
+    "experience_level": "Mid-Level / Founding Designer",
+    "skills": [
+      "Product Design",
+      "AI Interfaces",
+      "Neurotech Workflows",
+      "Figma Prototyping"
+    ],
+    "notes": "Cutting-edge neuroscience and brain-interface data applications.",
+    "id": 25,
+    "discovered_date": "2026-11-02"
+  },
+  {
+    "company": "Agoda",
+    "title": "Product Designer",
+    "location": "Remote / Hybrid (Global)",
+    "source": "UI/UX Jobs Board",
+    "channel": "Greenhouse ATS (Direct Apply)",
+    "target": "https://job-boards.greenhouse.io/agoda/jobs/8248603",
+    "source_url": "https://uiuxjobsboard.com/job/1658426-product-designer-bangkok-thailand",
+    "type": "Full-time / Remote",
+    "experience_level": "Mid-Level",
+    "skills": [
+      "Product Design",
+      "Travel Booking UI",
+      "Mobile App UX",
+      "Figma",
+      "Experimentation"
+    ],
+    "notes": "Global consumer travel platform optimizing multi-market checkout and search experiences.",
+    "id": 26,
+    "discovered_date": "2026-11-02"
+  },
+  {
+    "company": "Thatch",
+    "title": "Brand Designer",
+    "location": "Remote (Anywhere in the World)",
+    "source": "WeWorkRemotely Design",
+    "channel": "WeWorkRemotely / Direct Careers",
+    "target": "https://weworkremotely.com/remote-jobs/thatch-brand-designer",
+    "source_url": "https://weworkremotely.com/remote-jobs/thatch-brand-designer",
+    "type": "Full-time / Remote",
+    "experience_level": "Mid-Level (3-5 years)",
+    "skills": [
+      "Brand Systems",
+      "Web Design",
+      "Framer",
+      "Figma",
+      "HTML/CSS"
+    ],
+    "notes": "Healthcare budget platform. Visual identity, website launch experiences, digital storytelling.",
+    "id": 27,
+    "discovered_date": "2026-11-02"
+  },
+  {
+    "company": "MeridianLink",
+    "title": "UX Designer",
+    "location": "Remote (US / Global)",
+    "source": "Startup / Ashby ATS",
+    "channel": "Ashby ATS (Direct Apply)",
+    "target": "https://jobs.ashbyhq.com/meridianlink/3a46e21b-4985-451e-ac17-27607cadb644",
+    "source_url": "https://jobs.ashbyhq.com/meridianlink/3a46e21b-4985-451e-ac17-27607cadb644",
+    "type": "Full-time / Remote",
+    "experience_level": "Mid-Level",
+    "skills": [
+      "UX Design",
+      "Fintech Software",
+      "Enterprise SaaS",
+      "Figma",
+      "Wireframing"
+    ],
+    "notes": "Digital lending workflows, consumer loan applications, enterprise software UX ($84K – $133K).",
+    "id": 28,
+    "discovered_date": "2026-11-02"
+  },
+  {
+    "company": "Novel",
+    "title": "Product Designer",
+    "location": "Remote (US / Global)",
+    "source": "Web3 / Ashby ATS",
+    "channel": "Ashby ATS (Direct Apply)",
+    "target": "https://jobs.ashbyhq.com/novel/a7ea4480-e75d-4b7b-bfe2-11434d7b9572",
+    "source_url": "https://jobs.ashbyhq.com/novel/a7ea4480-e75d-4b7b-bfe2-11434d7b9572",
+    "type": "Full-time / Remote",
+    "experience_level": "Mid-Level",
+    "skills": [
+      "Product Design",
+      "Web3 E-commerce",
+      "Shopify Plugins",
+      "No-code UI",
+      "Figma"
+    ],
+    "notes": "Web3 e-commerce platform and Shopify integration tools for creator commerce.",
+    "id": 29,
+    "discovered_date": "2026-11-02"
   }
 ]
