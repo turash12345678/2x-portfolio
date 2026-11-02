@@ -581,22 +581,40 @@ async function applyOneGreenhouse(cdp, target) {
 async function runTargets() {
   const candidateTargets = [
     {
-      company: 'Patreon',
-      title: 'Product Designer',
-      location: 'Remote (United States / Global)',
-      url: 'https://jobs.ashbyhq.com/patreon/da2d339e-a2db-446c-a507-98da926c279c'
+      company: 'Hex',
+      title: 'Web Designer',
+      location: 'Remote - US',
+      url: 'https://jobs.ashbyhq.com/hex/954a640c-47f8-4186-b6cc-79f1c6ebe255'
     },
     {
-      company: 'Joko',
-      title: 'Product Designer',
-      location: 'Remote (Europe / US / Global)',
-      url: 'https://jobs.ashbyhq.com/joko/f257f4d4-b700-4b44-915e-1e8e20f56aa8'
+      company: 'Deepgram',
+      title: 'Product Designer II',
+      location: 'USA - Remote',
+      url: 'https://jobs.ashbyhq.com/deepgram/790f9a3f-82e8-4c55-995b-8ccb95d6eff9'
     },
     {
-      company: 'Praxent',
-      title: 'Associate Product Designer',
-      location: 'Remote (United States / Global)',
-      url: 'https://job-boards.greenhouse.io/praxent/jobs/7728015003'
+      company: 'Langchain',
+      title: 'Product Designer',
+      location: 'San Francisco, CA (Remote)',
+      url: 'https://jobs.ashbyhq.com/langchain/28aba38e-de19-4ae5-9316-08575a11ae4d'
+    },
+    {
+      company: 'Glide',
+      title: 'Founding Product Designer',
+      location: 'New York City (Remote)',
+      url: 'https://jobs.ashbyhq.com/glide/8320c48e-959f-44d2-b991-4c81331a3935'
+    },
+    {
+      company: 'Lovable',
+      title: 'Product Designer',
+      location: 'London / Remote Friendly',
+      url: 'https://jobs.ashbyhq.com/lovable/cf78be5e-41ca-478a-b480-0d0839c24543'
+    },
+    {
+      company: 'Fireworks',
+      title: 'Product Designer',
+      location: 'San Mateo, CA',
+      url: 'https://jobs.ashbyhq.com/fireworks/17a81efc-93db-457d-b92b-996722a0f64d'
     }
   ];
 

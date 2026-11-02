@@ -1,7 +1,7 @@
 [
   {
     "queueIndex": 1,
-    "sl": 718,
+    "sl": 724,
     "company": "Apollo GraphQL",
     "title": "Product Designer",
     "location": "Remote (North America)",
@@ -24,7 +24,168 @@
   },
   {
     "queueIndex": 2,
-    "sl": 719,
+    "sl": 725,
+    "company": "Affirm",
+    "title": "Visual Designer II",
+    "location": "Remote Canada / Americas",
+    "channel": "Direct ATS (Greenhouse ATS)",
+    "url": "https://job-boards.greenhouse.io/affirm/jobs/7966043003",
+    "atsType": "Greenhouse ATS",
+    "isEasyApply": false,
+    "requiresLogin": false,
+    "candidatePrefill": {
+      "name": "Turash Ahsan",
+      "email": "turashahsan8@gmail.com",
+      "phone": "+880 172 325 3615",
+      "portfolio": "https://turashahsan.vercel.app",
+      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
+      "github": "https://github.com/turash12345678/2x-portfolio",
+      "location": "Dhaka, Bangladesh",
+      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
+      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
+    }
+  },
+  {
+    "queueIndex": 3,
+    "sl": 726,
+    "company": "Robinhood",
+    "title": "Product Designer, International",
+    "location": "Remote / Menlo Park / NY",
+    "channel": "Direct ATS (Greenhouse ATS)",
+    "url": "https://job-boards.greenhouse.io/robinhood/jobs/8240638",
+    "atsType": "Greenhouse ATS",
+    "isEasyApply": false,
+    "requiresLogin": false,
+    "candidatePrefill": {
+      "name": "Turash Ahsan",
+      "email": "turashahsan8@gmail.com",
+      "phone": "+880 172 325 3615",
+      "portfolio": "https://turashahsan.vercel.app",
+      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
+      "github": "https://github.com/turash12345678/2x-portfolio",
+      "location": "Dhaka, Bangladesh",
+      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
+      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
+    }
+  },
+  {
+    "queueIndex": 4,
+    "sl": 727,
+    "company": "Asana",
+    "title": "Product Designer",
+    "location": "Vancouver, BC (Remote)",
+    "channel": "Direct ATS (Greenhouse ATS)",
+    "url": "https://job-boards.greenhouse.io/asana/jobs/8024052",
+    "atsType": "Greenhouse ATS",
+    "isEasyApply": false,
+    "requiresLogin": false,
+    "candidatePrefill": {
+      "name": "Turash Ahsan",
+      "email": "turashahsan8@gmail.com",
+      "phone": "+880 172 325 3615",
+      "portfolio": "https://turashahsan.vercel.app",
+      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
+      "github": "https://github.com/turash12345678/2x-portfolio",
+      "location": "Dhaka, Bangladesh",
+      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
+      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
+    }
+  },
+  {
+    "queueIndex": 5,
+    "sl": 728,
+    "company": "Planetscale",
+    "title": "Brand Designer",
+    "location": "Remote - USA",
+    "channel": "Direct ATS (Greenhouse ATS)",
+    "url": "https://job-boards.greenhouse.io/planetscale/jobs/4396843009",
+    "atsType": "Greenhouse ATS",
+    "isEasyApply": false,
+    "requiresLogin": false,
+    "candidatePrefill": {
+      "name": "Turash Ahsan",
+      "email": "turashahsan8@gmail.com",
+      "phone": "+880 172 325 3615",
+      "portfolio": "https://turashahsan.vercel.app",
+      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
+      "github": "https://github.com/turash12345678/2x-portfolio",
+      "location": "Dhaka, Bangladesh",
+      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
+      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
+    }
+  },
+  {
+    "queueIndex": 6,
+    "sl": 729,
+    "company": "LearnWorlds",
+    "title": "Product Designer - Mid level",
+    "location": "Remote (Europe / EMEA)",
+    "channel": "Direct ATS (Workable ATS)",
+    "url": "https://apply.workable.com/learnworlds/j/034627EE5D",
+    "atsType": "Workable ATS",
+    "isEasyApply": false,
+    "requiresLogin": false,
+    "candidatePrefill": {
+      "name": "Turash Ahsan",
+      "email": "turashahsan8@gmail.com",
+      "phone": "+880 172 325 3615",
+      "portfolio": "https://turashahsan.vercel.app",
+      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
+      "github": "https://github.com/turash12345678/2x-portfolio",
+      "location": "Dhaka, Bangladesh",
+      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
+      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
+    }
+  },
+  {
+    "queueIndex": 7,
+    "sl": 730,
+    "company": "Ajaia",
+    "title": "Digital Product Designer",
+    "location": "Remote",
+    "channel": "Direct ATS (Workable ATS)",
+    "url": "https://apply.workable.com/ajaia/j/1E857BF0C1",
+    "atsType": "Workable ATS",
+    "isEasyApply": false,
+    "requiresLogin": false,
+    "candidatePrefill": {
+      "name": "Turash Ahsan",
+      "email": "turashahsan8@gmail.com",
+      "phone": "+880 172 325 3615",
+      "portfolio": "https://turashahsan.vercel.app",
+      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
+      "github": "https://github.com/turash12345678/2x-portfolio",
+      "location": "Dhaka, Bangladesh",
+      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
+      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
+    }
+  },
+  {
+    "queueIndex": 8,
+    "sl": 731,
+    "company": "Mint Group",
+    "title": "UI/UX Designer (or Product Designer)",
+    "location": "Remote / Worldwide",
+    "channel": "Direct ATS (Workable ATS)",
+    "url": "https://apply.workable.com/mint-group/j/36D52CBA9C",
+    "atsType": "Workable ATS",
+    "isEasyApply": false,
+    "requiresLogin": false,
+    "candidatePrefill": {
+      "name": "Turash Ahsan",
+      "email": "turashahsan8@gmail.com",
+      "phone": "+880 172 325 3615",
+      "portfolio": "https://turashahsan.vercel.app",
+      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
+      "github": "https://github.com/turash12345678/2x-portfolio",
+      "location": "Dhaka, Bangladesh",
+      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
+      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
+    }
+  },
+  {
+    "queueIndex": 9,
+    "sl": 732,
     "company": "Spate",
     "title": "Product Designer",
     "location": "Remote (Europe / UK)",
@@ -46,8 +207,8 @@
     }
   },
   {
-    "queueIndex": 3,
-    "sl": 720,
+    "queueIndex": 10,
+    "sl": 733,
     "company": "Moyasar",
     "title": "UI/UX Designer",
     "location": "Remote (MENA / Global)",
@@ -69,8 +230,8 @@
     }
   },
   {
-    "queueIndex": 4,
-    "sl": 721,
+    "queueIndex": 11,
+    "sl": 734,
     "company": "hunterstack.io",
     "title": "UX/UI Designer",
     "location": "Brazil (Remote)",
@@ -92,8 +253,8 @@
     }
   },
   {
-    "queueIndex": 5,
-    "sl": 722,
+    "queueIndex": 12,
+    "sl": 735,
     "company": "ShippyPro",
     "title": "Junior Product Designer",
     "location": "Remote / Hybrid (Florence, Italy / Europe)",
@@ -115,8 +276,8 @@
     }
   },
   {
-    "queueIndex": 6,
-    "sl": 723,
+    "queueIndex": 13,
+    "sl": 736,
     "company": "24 Seven Talent",
     "title": "Graphic Designer",
     "location": "United States (Remote)",
@@ -138,8 +299,8 @@
     }
   },
   {
-    "queueIndex": 7,
-    "sl": 724,
+    "queueIndex": 14,
+    "sl": 737,
     "company": "UrsaNav®",
     "title": "Multimedia Designer",
     "location": "Virginia, United States (Remote)",
@@ -161,8 +322,8 @@
     }
   },
   {
-    "queueIndex": 8,
-    "sl": 725,
+    "queueIndex": 15,
+    "sl": 738,
     "company": "Best Lawyers",
     "title": "Product Designer",
     "location": "Florida, United States (Remote)",
@@ -184,8 +345,8 @@
     }
   },
   {
-    "queueIndex": 9,
-    "sl": 726,
+    "queueIndex": 16,
+    "sl": 739,
     "company": "BCforward",
     "title": "UX Content Specialist",
     "location": "Remote",
@@ -207,8 +368,8 @@
     }
   },
   {
-    "queueIndex": 10,
-    "sl": 727,
+    "queueIndex": 17,
+    "sl": 740,
     "company": "Iterative Health",
     "title": "Graphic Designer - Contract",
     "location": "Remote",
@@ -230,8 +391,8 @@
     }
   },
   {
-    "queueIndex": 11,
-    "sl": 728,
+    "queueIndex": 18,
+    "sl": 741,
     "company": "Synthires",
     "title": "Visual Designer (Remote | $50–$60/hr)",
     "location": "Remote",
@@ -253,8 +414,8 @@
     }
   },
   {
-    "queueIndex": 12,
-    "sl": 729,
+    "queueIndex": 19,
+    "sl": 742,
     "company": "Creative Cove Inc.",
     "title": "Graphic Designer",
     "location": "Remote",
@@ -276,8 +437,8 @@
     }
   },
   {
-    "queueIndex": 13,
-    "sl": 730,
+    "queueIndex": 20,
+    "sl": 743,
     "company": "City Lifestyle",
     "title": "Layout Designer",
     "location": "Remote",
@@ -299,8 +460,8 @@
     }
   },
   {
-    "queueIndex": 14,
-    "sl": 731,
+    "queueIndex": 21,
+    "sl": 744,
     "company": "Midas AI",
     "title": "Multimedia Designer",
     "location": "Remote",
@@ -322,8 +483,8 @@
     }
   },
   {
-    "queueIndex": 15,
-    "sl": 732,
+    "queueIndex": 22,
+    "sl": 745,
     "company": "Ragan Communications",
     "title": "Digital Designer",
     "location": "Remote",
@@ -345,8 +506,8 @@
     }
   },
   {
-    "queueIndex": 16,
-    "sl": 733,
+    "queueIndex": 23,
+    "sl": 746,
     "company": "Valtech",
     "title": "Jr. AI Native Experience Designer",
     "location": "United States (Remote)",
@@ -368,8 +529,8 @@
     }
   },
   {
-    "queueIndex": 17,
-    "sl": 734,
+    "queueIndex": 24,
+    "sl": 747,
     "company": "Wiraa",
     "title": "Product Designer",
     "location": "United States (Remote)",
@@ -391,8 +552,8 @@
     }
   },
   {
-    "queueIndex": 18,
-    "sl": 735,
+    "queueIndex": 25,
+    "sl": 748,
     "company": "Crewlia",
     "title": "Contract UX Designer (Remote)",
     "location": "United States (Remote)",
@@ -414,8 +575,8 @@
     }
   },
   {
-    "queueIndex": 19,
-    "sl": 736,
+    "queueIndex": 26,
+    "sl": 749,
     "company": "Community Choice Financial Family of Brands",
     "title": "Graphic Designer",
     "location": "United States (Remote)",
@@ -437,8 +598,8 @@
     }
   },
   {
-    "queueIndex": 20,
-    "sl": 737,
+    "queueIndex": 27,
+    "sl": 750,
     "company": "The Cadmus Group",
     "title": "UX Researcher",
     "location": "United States (Remote)",
@@ -460,8 +621,8 @@
     }
   },
   {
-    "queueIndex": 21,
-    "sl": 738,
+    "queueIndex": 28,
+    "sl": 751,
     "company": "AgileGrid Solutions",
     "title": "Web Designer",
     "location": "United States (Remote)",
@@ -483,8 +644,8 @@
     }
   },
   {
-    "queueIndex": 22,
-    "sl": 739,
+    "queueIndex": 29,
+    "sl": 752,
     "company": "Rythm",
     "title": "Web Designer",
     "location": "United States (Remote)",
@@ -506,8 +667,8 @@
     }
   },
   {
-    "queueIndex": 23,
-    "sl": 740,
+    "queueIndex": 30,
+    "sl": 753,
     "company": "N4 Studio®",
     "title": "Digital Designer (Freelance/Contract)",
     "location": "San Francisco, CA (Remote)",
@@ -529,8 +690,8 @@
     }
   },
   {
-    "queueIndex": 24,
-    "sl": 741,
+    "queueIndex": 31,
+    "sl": 754,
     "company": "Kentro",
     "title": "Proposal Graphic Designer",
     "location": "United States (Remote)",
@@ -552,8 +713,8 @@
     }
   },
   {
-    "queueIndex": 25,
-    "sl": 742,
+    "queueIndex": 32,
+    "sl": 755,
     "company": "Yahoo",
     "title": "Brand Designer",
     "location": "United States (Remote)",
@@ -575,8 +736,8 @@
     }
   },
   {
-    "queueIndex": 26,
-    "sl": 743,
+    "queueIndex": 33,
+    "sl": 756,
     "company": "AfterQuery",
     "title": "Graphic Designer Expert",
     "location": "United States (Remote)",
@@ -598,8 +759,8 @@
     }
   },
   {
-    "queueIndex": 27,
-    "sl": 744,
+    "queueIndex": 34,
+    "sl": 757,
     "company": "Paramount+",
     "title": "Product Designer",
     "location": "New York, NY (Remote)",
@@ -621,8 +782,8 @@
     }
   },
   {
-    "queueIndex": 28,
-    "sl": 745,
+    "queueIndex": 35,
+    "sl": 758,
     "company": "Whatnot",
     "title": "Product Designer",
     "location": "San Francisco, CA (Remote)",
@@ -644,8 +805,8 @@
     }
   },
   {
-    "queueIndex": 29,
-    "sl": 746,
+    "queueIndex": 36,
+    "sl": 759,
     "company": "Fearless",
     "title": "Product Designer, (Consultant, Experience & Design)",
     "location": "Baltimore, MD (Remote)",
@@ -667,8 +828,8 @@
     }
   },
   {
-    "queueIndex": 30,
-    "sl": 747,
+    "queueIndex": 37,
+    "sl": 760,
     "company": "Light",
     "title": "Product Designer",
     "location": "Austin, TX (Remote)",
@@ -690,8 +851,8 @@
     }
   },
   {
-    "queueIndex": 31,
-    "sl": 748,
+    "queueIndex": 38,
+    "sl": 761,
     "company": "Amazon Web Services (AWS)",
     "title": "User Experience Designer III, AI at Work",
     "location": "Austin, TX (Remote)",
@@ -713,8 +874,8 @@
     }
   },
   {
-    "queueIndex": 32,
-    "sl": 749,
+    "queueIndex": 39,
+    "sl": 762,
     "company": "SharkNinja",
     "title": "Designer, UX - Mobile Apps",
     "location": "Needham, MA (Remote)",
@@ -736,8 +897,8 @@
     }
   },
   {
-    "queueIndex": 33,
-    "sl": 750,
+    "queueIndex": 40,
+    "sl": 763,
     "company": "Steampunk, Inc.",
     "title": "UX/UI Designer",
     "location": "McLean, VA (Remote)",
@@ -759,8 +920,8 @@
     }
   },
   {
-    "queueIndex": 34,
-    "sl": 751,
+    "queueIndex": 41,
+    "sl": 764,
     "company": "Applied Intuition",
     "title": "System Designer",
     "location": "Sunnyvale, CA (Remote)",
@@ -782,8 +943,8 @@
     }
   },
   {
-    "queueIndex": 35,
-    "sl": 752,
+    "queueIndex": 42,
+    "sl": 765,
     "company": "Applied Materials",
     "title": "AR/VR Interaction Designer",
     "location": "Austin, TX (Remote)",
@@ -805,8 +966,8 @@
     }
   },
   {
-    "queueIndex": 36,
-    "sl": 753,
+    "queueIndex": 43,
+    "sl": 766,
     "company": "Scubyt Inc",
     "title": "UI/UX Designer",
     "location": "Tallahassee, FL (Remote)",
@@ -828,8 +989,8 @@
     }
   },
   {
-    "queueIndex": 37,
-    "sl": 754,
+    "queueIndex": 44,
+    "sl": 767,
     "company": "WorkinVirtual",
     "title": "Graphic Designer",
     "location": "United States (Remote)",
@@ -851,8 +1012,8 @@
     }
   },
   {
-    "queueIndex": 38,
-    "sl": 755,
+    "queueIndex": 45,
+    "sl": 768,
     "company": "Trava Health",
     "title": "Visual Designer",
     "location": "The Woodlands, TX (Remote)",
@@ -874,8 +1035,8 @@
     }
   },
   {
-    "queueIndex": 39,
-    "sl": 756,
+    "queueIndex": 46,
+    "sl": 769,
     "company": "NALLEY CONSULTING",
     "title": "Graphic Designer - Mid with Security Clearance",
     "location": "Riverdale, MD (Remote)",
@@ -897,8 +1058,8 @@
     }
   },
   {
-    "queueIndex": 40,
-    "sl": 757,
+    "queueIndex": 47,
+    "sl": 770,
     "company": "Stampli",
     "title": "Multimedia Designer",
     "location": "Mountain View, CA (Remote)",
@@ -920,8 +1081,8 @@
     }
   },
   {
-    "queueIndex": 41,
-    "sl": 758,
+    "queueIndex": 48,
+    "sl": 771,
     "company": "Sinclair Inc.",
     "title": "Multimedia Graphic Designer",
     "location": "Santa Monica, CA (Remote)",
@@ -943,8 +1104,8 @@
     }
   },
   {
-    "queueIndex": 42,
-    "sl": 759,
+    "queueIndex": 49,
+    "sl": 772,
     "company": "State of Arkansas",
     "title": "Graphic Designer",
     "location": "Little Rock, AR (Remote)",
@@ -966,8 +1127,8 @@
     }
   },
   {
-    "queueIndex": 43,
-    "sl": 760,
+    "queueIndex": 50,
+    "sl": 773,
     "company": "Starz",
     "title": "Designer",
     "location": "Santa Monica, CA (Remote)",
@@ -989,8 +1150,8 @@
     }
   },
   {
-    "queueIndex": 44,
-    "sl": 761,
+    "queueIndex": 51,
+    "sl": 774,
     "company": "HubRecruits",
     "title": "Graphic Designer | Entry Level",
     "location": "San Antonio, TX (Remote)",
@@ -1012,8 +1173,8 @@
     }
   },
   {
-    "queueIndex": 45,
-    "sl": 762,
+    "queueIndex": 52,
+    "sl": 775,
     "company": "PUMA Group",
     "title": "Graphic Designer Creative Services - TEMP",
     "location": "Somerville, MA (Remote)",
@@ -1035,8 +1196,8 @@
     }
   },
   {
-    "queueIndex": 46,
-    "sl": 763,
+    "queueIndex": 53,
+    "sl": 776,
     "company": "Mohawk Industries",
     "title": "Graphic Designer",
     "location": "Calhoun, GA (Remote)",
@@ -1058,8 +1219,8 @@
     }
   },
   {
-    "queueIndex": 47,
-    "sl": 764,
+    "queueIndex": 54,
+    "sl": 777,
     "company": "ORON SOLUTIONS",
     "title": "Graphic Designer",
     "location": "Graphic, AR (Remote)",
@@ -1081,8 +1242,8 @@
     }
   },
   {
-    "queueIndex": 48,
-    "sl": 765,
+    "queueIndex": 55,
+    "sl": 778,
     "company": "Stream Companies",
     "title": "Motion Graphic Designer",
     "location": "West Chester, PA (Remote)",
@@ -1104,8 +1265,8 @@
     }
   },
   {
-    "queueIndex": 49,
-    "sl": 766,
+    "queueIndex": 56,
+    "sl": 779,
     "company": "Impressions In Ink",
     "title": "Design Specialist",
     "location": "Portland, OR (Remote)",
@@ -1127,8 +1288,8 @@
     }
   },
   {
-    "queueIndex": 50,
-    "sl": 767,
+    "queueIndex": 57,
+    "sl": 780,
     "company": "Prudent Technologies and Consulting, Inc.",
     "title": "UI/UX Designer | 100% Remote | EST-Based Candidates Preferred",
     "location": "United States (Remote)",
@@ -1150,8 +1311,8 @@
     }
   },
   {
-    "queueIndex": 51,
-    "sl": 768,
+    "queueIndex": 58,
+    "sl": 781,
     "company": "Ganssimpel",
     "title": "UX / UI DESIGNER*IN (M/W/D)",
     "location": "Singapore, Singapore (Remote)",
@@ -1173,8 +1334,8 @@
     }
   },
   {
-    "queueIndex": 52,
-    "sl": 769,
+    "queueIndex": 59,
+    "sl": 782,
     "company": "IAM MIA",
     "title": "User Interface Designer",
     "location": "Berlin, Berlin, Germany (Remote)",
@@ -1196,8 +1357,8 @@
     }
   },
   {
-    "queueIndex": 53,
-    "sl": 770,
+    "queueIndex": 60,
+    "sl": 783,
     "company": "ReDesk.ai",
     "title": "Product Designer",
     "location": "Canada, KY (Remote)",
@@ -1219,8 +1380,8 @@
     }
   },
   {
-    "queueIndex": 54,
-    "sl": 771,
+    "queueIndex": 61,
+    "sl": 784,
     "company": "Karens",
     "title": "UX/UI Designer",
     "location": "Paris, Île-de-France, France (Remote)",
@@ -1242,8 +1403,8 @@
     }
   },
   {
-    "queueIndex": 55,
-    "sl": 772,
+    "queueIndex": 62,
+    "sl": 785,
     "company": "UX-Republic",
     "title": "UI DESIGNER H/F - Lyon",
     "location": "Villeurbanne, Auvergne-Rhône-Alpes, France (Remote)",
@@ -1265,8 +1426,8 @@
     }
   },
   {
-    "queueIndex": 56,
-    "sl": 773,
+    "queueIndex": 63,
+    "sl": 786,
     "company": "AP Design GmbH",
     "title": "Digital Designer / UI/UX Designer m/w/d",
     "location": "Tuni, Andhra Pradesh, India (Remote)",
@@ -1288,8 +1449,8 @@
     }
   },
   {
-    "queueIndex": 57,
-    "sl": 774,
+    "queueIndex": 64,
+    "sl": 787,
     "company": "ADAM Communication GmbH",
     "title": "UI/UX DESIGNER*IN (M,W,D)",
     "location": "Tuni, Andhra Pradesh, India (Remote)",
@@ -1311,8 +1472,8 @@
     }
   },
   {
-    "queueIndex": 58,
-    "sl": 775,
+    "queueIndex": 65,
+    "sl": 788,
     "company": "Idea Rebel",
     "title": "Digital Designer (Freelance)",
     "location": "Indiana, United States (Remote)",
@@ -1334,8 +1495,31 @@
     }
   },
   {
-    "queueIndex": 59,
-    "sl": 776,
+    "queueIndex": 66,
+    "sl": 789,
+    "company": "Shakacode",
+    "title": "Product Designer with Product Management expertise",
+    "location": "Remote (Global / Americas)",
+    "channel": "Direct ATS (Lever ATS)",
+    "url": "https://jobs.lever.co/shakacode/5e1d4093-aa3e-4683-ab61-7cc6a8978930",
+    "atsType": "Lever ATS",
+    "isEasyApply": false,
+    "requiresLogin": false,
+    "candidatePrefill": {
+      "name": "Turash Ahsan",
+      "email": "turashahsan8@gmail.com",
+      "phone": "+880 172 325 3615",
+      "portfolio": "https://turashahsan.vercel.app",
+      "linkedin": "https://www.linkedin.com/in/turashahsan1234/",
+      "github": "https://github.com/turash12345678/2x-portfolio",
+      "location": "Dhaka, Bangladesh",
+      "experience": "2+ Years (Ahsania UI/UX & Product Designer)",
+      "resume": "Turash Ahsan Resume (ATS Under 2MB).pdf"
+    }
+  },
+  {
+    "queueIndex": 67,
+    "sl": 790,
     "company": "AllFeams",
     "title": "Web & Digital Designer",
     "location": "Remote / Worldwide",
@@ -1357,8 +1541,8 @@
     }
   },
   {
-    "queueIndex": 60,
-    "sl": 777,
+    "queueIndex": 68,
+    "sl": 791,
     "company": "Contrast UX",
     "title": "Product Design Builder",
     "location": "Remote / Global",
@@ -1380,8 +1564,8 @@
     }
   },
   {
-    "queueIndex": 61,
-    "sl": 778,
+    "queueIndex": 69,
+    "sl": 792,
     "company": "Ihsan",
     "title": "Product Designer — Mobile UX/UI & Motion",
     "location": "Remote / Global",
@@ -1403,8 +1587,8 @@
     }
   },
   {
-    "queueIndex": 62,
-    "sl": 779,
+    "queueIndex": 70,
+    "sl": 793,
     "company": "Roboto Studio",
     "title": "Digital Brand Designer",
     "location": "Remote / Global",
@@ -1426,8 +1610,8 @@
     }
   },
   {
-    "queueIndex": 63,
-    "sl": 780,
+    "queueIndex": 71,
+    "sl": 794,
     "company": "Atomic Glue",
     "title": "Web Designer",
     "location": "Remote / Hybrid (Milwaukee, WI)",
@@ -1449,8 +1633,8 @@
     }
   },
   {
-    "queueIndex": 64,
-    "sl": 781,
+    "queueIndex": 72,
+    "sl": 795,
     "company": "Pirxe",
     "title": "Forward Deployed Designer",
     "location": "Remote / Poland",
@@ -1472,8 +1656,8 @@
     }
   },
   {
-    "queueIndex": 65,
-    "sl": 782,
+    "queueIndex": 73,
+    "sl": 796,
     "company": "Naked Nutrition",
     "title": "Ecommerce Designer",
     "location": "Remote / Global",
@@ -1495,8 +1679,8 @@
     }
   },
   {
-    "queueIndex": 66,
-    "sl": 783,
+    "queueIndex": 74,
+    "sl": 797,
     "company": "Palerto Studio",
     "title": "UX UI Designer",
     "location": "Remote / Global",
@@ -1518,8 +1702,8 @@
     }
   },
   {
-    "queueIndex": 67,
-    "sl": 784,
+    "queueIndex": 75,
+    "sl": 798,
     "company": "Costello Medical",
     "title": "Digital Designer",
     "location": "Remote / Hybrid (Cambridge, UK)",
@@ -1541,8 +1725,8 @@
     }
   },
   {
-    "queueIndex": 68,
-    "sl": 785,
+    "queueIndex": 76,
+    "sl": 799,
     "company": "HappyDance",
     "title": "Product Designer — Design Systems (Figma)",
     "location": "Remote only (Everywhere)",
@@ -1564,8 +1748,8 @@
     }
   },
   {
-    "queueIndex": 69,
-    "sl": 786,
+    "queueIndex": 77,
+    "sl": 800,
     "company": "Kleros",
     "title": "Ethereum Dapp UX/UI Designer",
     "location": "Remote / Earth",
@@ -1587,8 +1771,8 @@
     }
   },
   {
-    "queueIndex": 70,
-    "sl": 787,
+    "queueIndex": 78,
+    "sl": 801,
     "company": "Kongi",
     "title": "Product Designer",
     "location": "Remote (United States / Global)",
@@ -1610,8 +1794,8 @@
     }
   },
   {
-    "queueIndex": 71,
-    "sl": 788,
+    "queueIndex": 79,
+    "sl": 802,
     "company": "givingjoy.de",
     "title": "Product Designer (UX/UI)",
     "location": "Remote (Europe)",
@@ -1633,8 +1817,8 @@
     }
   },
   {
-    "queueIndex": 72,
-    "sl": 789,
+    "queueIndex": 80,
+    "sl": 803,
     "company": "PeakTew",
     "title": "UX Researcher and Designer",
     "location": "Remote only (Everywhere)",
@@ -1656,8 +1840,8 @@
     }
   },
   {
-    "queueIndex": 73,
-    "sl": 790,
+    "queueIndex": 81,
+    "sl": 804,
     "company": "Kalmus",
     "title": "Product Designer (UX/UI) - Founding Team",
     "location": "Remote (Everywhere)",
@@ -1679,8 +1863,8 @@
     }
   },
   {
-    "queueIndex": 74,
-    "sl": 791,
+    "queueIndex": 82,
+    "sl": 805,
     "company": "Sudowrite",
     "title": "Product Designer (Contract)",
     "location": "Remote (United States / Global)",
@@ -1702,8 +1886,8 @@
     }
   },
   {
-    "queueIndex": 75,
-    "sl": 792,
+    "queueIndex": 83,
+    "sl": 806,
     "company": "Web0.Pro",
     "title": "UI/UX Designer",
     "location": "Remote (Everywhere)",
@@ -1725,8 +1909,8 @@
     }
   },
   {
-    "queueIndex": 76,
-    "sl": 793,
+    "queueIndex": 84,
+    "sl": 807,
     "company": "Appricot",
     "title": "Product Designer (Mid-Level)",
     "location": "Remote (Austin, TX / Global)",
@@ -1748,8 +1932,8 @@
     }
   },
   {
-    "queueIndex": 77,
-    "sl": 794,
+    "queueIndex": 85,
+    "sl": 808,
     "company": "NEC Corporation",
     "title": "4371 UX/UI Designer_CO",
     "location": "Minato, Tokyo, Japan (Remote)",
@@ -1771,8 +1955,8 @@
     }
   },
   {
-    "queueIndex": 78,
-    "sl": 795,
+    "queueIndex": 86,
+    "sl": 809,
     "company": "remoting.work",
     "title": "UX/UI Designer",
     "location": "Sub-Saharan Africa (Remote)",
@@ -1794,8 +1978,8 @@
     }
   },
   {
-    "queueIndex": 79,
-    "sl": 796,
+    "queueIndex": 87,
+    "sl": 810,
     "company": "Applied Systems Canada",
     "title": "UX Designer",
     "location": "Canada (Remote)",
