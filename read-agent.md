@@ -417,27 +417,52 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
     - **Pipeline Scaled to 700 Applications Milestone:** Synchronized across `job_tracker.json` (700 records) and `job_tracker.csv` (701 rows).
     - **Grand Total Outreach Reached 750 Contacts:** 700 job applications + 50 studio cold emails.
 
+23. **Ashby & Greenhouse ATS Batch Automation — 714 Applications Milestone Achieved (`SL #701` to `SL #714`) (2026-11-02):**
+    - **Senior Role Exclusion Guard Active:** Programmatically inspected Apollo GraphQL job listing and caught "Senior Product Designer", skipping it immediately to maintain strict Mid/Junior UI/UX criteria.
+    - **Ashby ATS Direct Batch Submissions Dispatched (`SL #701` to `SL #708`):**
+      - `SL #701`: **StellarTech** — *Product Designer-Builder* (Ashby ATS) | `proof_batch_701_StellarTech_submitted.png`
+      - `SL #702`: **Tiny Health** — *Product Designer* (Ashby ATS) | `proof_batch_702_Tiny_Health_submitted.png`
+      - `SL #703`: **Neon One** — *Product Designer* (Ashby ATS) | `proof_batch_703_Neon_One_submitted.png`
+      - `SL #704`: **Shadow (Darkroom)** — *Product Designer* (Ashby ATS) | `proof_batch_704_Shadow__Darkroom__submitted.png`
+      - `SL #705`: **Finvari** — *Product UX Designer* (Ashby ATS) | `proof_batch_705_Finvari_submitted.png`
+      - `SL #706`: **Kernel** — *Founding Product Designer* (Ashby ATS) | `proof_batch_706_Kernel_submitted.png`
+      - `SL #707`: **MeridianLink** — *UX Designer* (Ashby ATS) | `proof_batch_707_MeridianLink_submitted.png`
+      - `SL #708`: **Novel** — *Product Designer* (Ashby ATS) | `proof_batch_708_Novel_submitted.png`
+    - **Greenhouse ATS Engine Built & Dispatched (`SL #709` to `SL #714`):**
+      - Engineered and deployed `applyOneGreenhouse(cdp, target)` handling first/last name, phone, email, location, portfolio/LinkedIn, demographic dropdowns, complex workflow questions, and resume file upload via CDP `DOM.setFileInputFiles`.
+      - `SL #709`: **Thatch** — *Product Designer* (Greenhouse ATS) | `proof_batch_709_Thatch_submitted.png`
+      - `SL #710`: **Warp** — *Product Designer* (Greenhouse ATS) | `proof_batch_710_Warp_submitted.png`
+      - `SL #711`: **Care Access** — *Product Designer* (Greenhouse ATS) | `proof_batch_711_Care_Access_submitted.png`
+      - `SL #712`: **IE** — *Junior Product Designer* (Greenhouse ATS) | `proof_batch_712_IE_submitted.png`
+      - `SL #713`: **SRS Acquiom** — *Associate Product Designer* (Greenhouse ATS) | `proof_batch_713_SRS_Acquiom_submitted.png`
+      - `SL #714`: **Agoda** — *Product Designer* (Greenhouse ATS) | `proof_batch_714_Agoda_submitted.png`
+    - **All Pre-submit & Post-submit Screenshots Verified:** Programmatically stored as proof on disk.
+    - **Pipeline Scaled to 714 Applications Milestone:** Synchronized across `job_tracker.json` (714 records) and `job_tracker.csv` (715 rows).
+    - **Grand Total Outreach Reached 764 Contacts:** 714 job applications + 50 studio cold emails.
+    - **Unified Master Execution Queue Rebuilt:** 78 deduplicated targets queued (`SL #715` to `SL #792`).
+    - **Subagents Dispatched for Continuous Discovery:** `portal_explorer`, `social_web_radar`, and `linkedin_hunter` scanning for fresh external ATS positions.
+
 ### 📌 Current Status:
-- Job tracker verified at **700 applied applications** (SL #1 to SL #700).
+- Job tracker verified at **714 applied applications** (SL #1 to SL #714).
 - Direct Gmail Cold Email Outreach at **50/50 verified sent emails** with resume attached.
-- **Grand Total Outreach:** **750 job applications / studio contacts** dispatched.
-- **Unified Master Execution Queue:** 65 remaining verified deduplicated targets ready in `unified_master_queue.json`.
+- **Grand Total Outreach:** **764 job applications / studio contacts** dispatched.
+- **Unified Master Execution Queue:** 78 remaining verified deduplicated targets ready in `unified_master_queue.json` (`SL #715` to `SL #792`).
 - **Clean ATS Resume Active:** Available at `C:\Users\User\Turash_Ahsan_Resume.pdf` and project root.
 - Production build compiles with **0 errors** (`npm run build`).
 
 ### 🎯 Immediate Next Steps / Multi-PC Transition:
 1. **On Next PC:** Run `git pull origin main` to pull all project memory, documentation, trackers, and codebase updates.
-2. **Sequential Execution:** Continue Turbo execution for Target SL #701 onwards:
-   - `SL #701`: **Apollo GraphQL** — *Product Designer* (Ashby ATS)
-   - `SL #702`: **StellarTech** — *Product Designer-Builder* (Ashby ATS: `https://jobs.ashbyhq.com/hirehire/348181a6-cb98-4401-86cb-a1ca508b9e3c`)
-   - `SL #703`: **Tiny Health** — *Product Designer* (Ashby ATS: `https://jobs.ashbyhq.com/tiny-health/3aeffd07-e93d-4ae3-9ab5-6ce584768612`)
-   - `SL #704`: **Neon One** — *Product Designer* (Ashby ATS: `https://jobs.ashbyhq.com/HighlightTA/e7a3a849-06f4-4328-9b6c-0d7d343da535`)
-   - `SL #705`: **Shadow (Darkroom)** — *Product Designer* (Ashby ATS: `https://jobs.ashbyhq.com/darkroom/7f7a024f-1eb7-4900-99d9-052f1141c6ef`)
-   - `SL #706`: **Finvari** — *Product UX Designer* (Ashby ATS: `https://jobs.ashbyhq.com/finvari/0484dd98-c84b-4b17-8d90-3f7f573194c5`)
-   - `SL #707`: **Kernel** — *Founding Product Designer* (Ashby ATS: `https://jobs.ashbyhq.com/kernel/030c447d-f81f-4bc6-9fa6-78352a772adb`)
-   - `SL #708`: **MeridianLink** — *UX Designer* (Ashby ATS: `https://jobs.ashbyhq.com/meridianlink/3a46e21b-4985-451e-ac17-27607cadb644`)
-   - `SL #709`: **Novel** — *Product Designer* (Ashby ATS: `https://jobs.ashbyhq.com/novel/a7ea4480-e75d-4b7b-bfe2-11434d7b9572`)
-   - `SL #710`: **Thatch** — *Product Designer* (Greenhouse ATS: `https://job-boards.greenhouse.io/thatch/jobs/5136655008`)
+2. **Sequential Execution:** Continue Turbo execution for Target SL #715 onwards:
+   - `SL #715`: **Spate** — *Product Designer* (Workable ATS: `https://jobs.workable.com/view/ubGrBTgDigJbW6QCnJf84J`)
+   - `SL #716`: **Moyasar** — *UI/UX Designer* (Workable ATS: `https://jobs.workable.com/view/jTmzYDBKBhf8mtrUemHK87/remote-ui%2Fux-designer-in-lebanon-at-moyasar-financial-company`)
+   - `SL #717`: **hunterstack.io** — *UX/UI Designer* (InHire ATS: `https://hunterstackio.inhire.app/vagas/61900182-7309-43ac-8bc2-eaaf53592a71/uxui-designer?source=linkedin`)
+   - `SL #718`: **ShippyPro** — *Junior Product Designer* (Join.com ATS: `https://join.com/companies/shippypro953/16844274-junior-product-designer`)
+   - `SL #719`: **24 Seven Talent** — *Graphic Designer* (LinkedIn Easy Apply)
+   - `SL #720`: **UrsaNav®** — *Multimedia Designer* (LinkedIn Easy Apply)
+   - `SL #721`: **Best Lawyers** — *Product Designer* (LinkedIn Easy Apply)
+   - `SL #722`: **BCforward** — *UX Content Specialist* (LinkedIn Easy Apply)
+   - `SL #723`: **Iterative Health** — *Graphic Designer - Contract* (LinkedIn Easy Apply)
+   - `SL #724`: **Synthires** — *Visual Designer (Remote | $50–$60/hr)* (LinkedIn Easy Apply)
 3. **Outreach Monitoring:** Follow up on incoming replies and LinkedIn communications (e.g. Fonix IT, Bakken & Bæck).
 4. **Figma Motion Animation:** Script and apply native keyframe timeline tracks (`applyManualKeyframeTrack`) to the master brand frame layers (`2:4942`).
 

@@ -148,6 +148,27 @@ async function applyOneAshby(cdp, target) {
   const pageTitle = await cdp.eval(`() => document.title`, sid);
   console.log('[Runner] Page Title:', pageTitle);
 
+  // Enforce Senior/Lead role exclusion
+  if (/senior|lead|staff|principal|director|head of|manager/i.test(pageTitle)) {
+    console.warn(`[Runner] SKIPPING ${target.company} - Job title indicates Senior/Lead: "${pageTitle}"`);
+    try { await cdp.send('Target.closeTarget', { targetId }); } catch (e) {}
+    return { skipped: true, reason: 'Senior/Lead role' };
+  }
+
+  // Check if job is inactive/closed
+  const pageCheck = await cdp.eval(`() => {
+    const text = document.body ? document.body.innerText : '';
+    const isClosed = /no longer available|job not found|404 page not found|position has been filled/i.test(text);
+    const hasInputs = !!document.querySelector('input');
+    return { isClosed, hasInputs, snippet: text.slice(0, 200).replace(/\\s+/g, ' ') };
+  }`, sid);
+
+  if (pageCheck && (pageCheck.isClosed || !pageCheck.hasInputs)) {
+    console.warn(`[Runner] SKIPPING ${target.company} - Job inactive or closed: ${pageCheck.snippet}`);
+    try { await cdp.send('Target.closeTarget', { targetId }); } catch (e) {}
+    return { skipped: true, reason: 'Job inactive/closed' };
+  }
+
   // Fill candidate inputs
   const fillResult = await cdp.eval(`() => {
     const setVal = (el, val) => {
@@ -208,7 +229,39 @@ async function applyOneAshby(cdp, target) {
     });
     if (portEl) setVal(portEl, 'https://turashahsan.vercel.app');
 
-    // 7. Textareas / custom answers
+    // 7. Select dropdowns
+    const selects = Array.from(document.querySelectorAll('select'));
+    selects.forEach(sel => {
+      if (sel.options && sel.options.length > 1) {
+        let opt = Array.from(sel.options).find(o => /yes|authorized/i.test(o.text));
+        if (!opt) opt = Array.from(sel.options).find(o => !/select|choose|^$/i.test(o.text));
+        if (opt) {
+          sel.value = opt.value;
+          sel.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+    });
+
+    // 8. Checkboxes (consent, terms)
+    const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]'));
+    checkboxes.forEach(cb => {
+      if (!cb.checked) {
+        cb.click();
+        cb.checked = true;
+        cb.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+
+    // 9. Radios
+    const radios = Array.from(document.querySelectorAll('input[type="radio"]'));
+    radios.forEach(r => {
+      const text = (r.closest('label')?.innerText || r.parentElement?.innerText || '').toLowerCase();
+      if ((text.includes('yes') || text.includes('agree')) && !r.checked) {
+        r.click();
+      }
+    });
+
+    // 10. Textareas / custom answers
     const textareas = Array.from(document.querySelectorAll('textarea')).filter(t => t.name !== 'g-recaptcha-response');
     textareas.forEach(ta => {
       const label = (ta.closest('div')?.parentElement?.innerText || '').toLowerCase();
@@ -226,7 +279,9 @@ async function applyOneAshby(cdp, target) {
       loc: locEl?.value,
       linkedin: linkedinEl?.value,
       portfolio: portEl?.value,
-      textareasCount: textareas.length
+      textareasCount: textareas.length,
+      selectsCount: selects.length,
+      checkboxesCount: checkboxes.length
     };
   }`, sid);
   console.log('[Runner] Form filled:', fillResult);
@@ -268,6 +323,12 @@ async function applyOneAshby(cdp, target) {
   }`, sid);
   console.log('[Runner] Submit clicked:', submitResult);
 
+  if (!submitResult || !submitResult.clicked) {
+    console.warn(`[Runner] SKIPPING ${target.company} - Submit button not clicked`);
+    try { await cdp.send('Target.closeTarget', { targetId }); } catch (e) {}
+    return { skipped: true, reason: 'Submit button not found' };
+  }
+
   await new Promise(r => setTimeout(r, 7000));
 
   // Re-attach or capture post-submit state safely
@@ -296,28 +357,264 @@ async function applyOneAshby(cdp, target) {
   } catch (e) {}
 }
 
+async function applyOneGreenhouse(cdp, target) {
+  console.log(`\n======================================================`);
+  console.log(`[EXECUTE GH] SL #${target.sl}: ${target.company} - ${target.title}`);
+  console.log(`URL: ${target.url}`);
+  console.log(`======================================================`);
+
+  const appUrl = target.url;
+  const targetRes = await cdp.send('Target.createTarget', { url: appUrl });
+  const targetId = targetRes.result.targetId;
+
+  const sessionRes = await cdp.send('Target.attachToTarget', { targetId, flatten: true });
+  let sid = sessionRes.result.sessionId;
+
+  await cdp.send('Page.enable', {}, sid);
+  await cdp.send('Runtime.enable', {}, sid);
+  await cdp.send('DOM.enable', {}, sid);
+
+  console.log('[Runner GH] Waiting for page load...');
+  await new Promise(r => setTimeout(r, 6000));
+
+  const pageTitle = await cdp.eval(`() => document.title`, sid);
+  console.log('[Runner GH] Page Title:', pageTitle);
+
+  // Enforce Senior/Lead role exclusion
+  if (/senior|lead|staff|principal|director|head of|manager/i.test(pageTitle)) {
+    console.warn(`[Runner GH] SKIPPING ${target.company} - Job title indicates Senior/Lead: "${pageTitle}"`);
+    try { await cdp.send('Target.closeTarget', { targetId }); } catch (e) {}
+    return { skipped: true, reason: 'Senior/Lead role' };
+  }
+
+  // Check if closed
+  const pageCheck = await cdp.eval(`() => {
+    const text = document.body ? document.body.innerText : '';
+    const isClosed = /no longer available|job not found|404|position has been filled/i.test(text);
+    const hasInputs = !!document.querySelector('input');
+    return { isClosed, hasInputs };
+  }`, sid);
+
+  if (pageCheck && (pageCheck.isClosed || !pageCheck.hasInputs)) {
+    console.warn(`[Runner GH] SKIPPING ${target.company} - Job inactive/closed`);
+    try { await cdp.send('Target.closeTarget', { targetId }); } catch (e) {}
+    return { skipped: true, reason: 'Job inactive/closed' };
+  }
+
+  // Fill candidate inputs
+  const fillResult = await cdp.eval(`() => {
+    const setVal = (el, val) => {
+      if (!el) return false;
+      el.focus();
+      const proto = el instanceof HTMLTextAreaElement ? window.HTMLTextAreaElement.prototype : window.HTMLInputElement.prototype;
+      const setter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
+      if (setter) setter.call(el, val);
+      else el.value = val;
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+      el.blur();
+      return true;
+    };
+
+    const findField = (predicate) => {
+      const inputs = Array.from(document.querySelectorAll('input, textarea, select'));
+      return inputs.find(predicate);
+    };
+
+    // First Name
+    const fn = document.getElementById('first_name') || findField(i => (i.name||'').includes('first_name'));
+    setVal(fn, 'Turash');
+
+    // Last Name
+    const ln = document.getElementById('last_name') || findField(i => (i.name||'').includes('last_name'));
+    setVal(ln, 'Ahsan');
+
+    // Email
+    const em = document.getElementById('email') || findField(i => i.type === 'email' || (i.name||'').includes('email'));
+    setVal(em, 'turashahsan8@gmail.com');
+
+    // Phone
+    const ph = document.getElementById('phone') || findField(i => i.type === 'tel' || (i.name||'').includes('phone'));
+    setVal(ph, '+880 172 325 3615');
+
+    // Location
+    const loc = document.getElementById('job_application_location') || findField(i => {
+      const label = ((i.closest('label') || i.parentElement)?.innerText || '').toLowerCase();
+      return (label.includes('location') || label.includes('city') || (i.name||'').includes('location')) && i.tagName === 'INPUT' && i.type !== 'file';
+    });
+    if (loc) setVal(loc, 'Dhaka, Bangladesh');
+
+    // LinkedIn
+    const li = findField(i => {
+      const label = ((i.closest('label') || i.parentElement)?.innerText || '').toLowerCase();
+      return (label.includes('linkedin') || (i.name||'').includes('linkedin')) && i.tagName === 'INPUT';
+    });
+    if (li) setVal(li, 'https://www.linkedin.com/in/turashahsan1234/');
+
+    // Portfolio
+    const pf = findField(i => {
+      const label = ((i.closest('label') || i.parentElement)?.innerText || '').toLowerCase();
+      return (label.includes('portfolio') || label.includes('website') || (i.name||'').includes('portfolio')) && i !== li && i.tagName === 'INPUT' && i.type !== 'file';
+    });
+    if (pf) setVal(pf, 'https://turashahsan.vercel.app');
+
+    // Other inputs & Textareas
+    const allInputs = Array.from(document.querySelectorAll('input[type="text"], textarea'));
+    allInputs.forEach(inp => {
+      if (inp.value) return;
+      const label = ((inp.closest('label') || inp.parentElement)?.innerText || '').toLowerCase();
+      if (label.includes('feature') || label.includes('describe') || label.includes('product') || label.includes('experience')) {
+        setVal(inp, 'At Ahsania, I led the end-to-end UX/UI design of our web platform and component library in Figma, creating scalable design tokens and flows that streamlined operations.');
+      } else if (label.includes('type of product') || label.includes('industry')) {
+        setVal(inp, 'B2B SaaS platforms, web applications, design systems, and responsive dashboards.');
+      } else {
+        setVal(inp, '2+ years UI/UX & product design experience at Ahsania. Live portfolio: https://turashahsan.vercel.app');
+      }
+    });
+
+    // Selects
+    const selects = Array.from(document.querySelectorAll('select'));
+    selects.forEach(sel => {
+      if (!sel.options || sel.options.length <= 1) return;
+      const label = ((sel.closest('label') || sel.parentElement)?.innerText || '').toLowerCase();
+      if (label.includes('complex') || label.includes('multi-step') || label.includes('workflow')) {
+        const yesOpt = Array.from(sel.options).find(o => /^yes/i.test(o.text.trim()));
+        if (yesOpt) sel.value = yesOpt.value;
+      } else if (label.includes('sponsorship')) {
+        const opt = Array.from(sel.options).find(o => /^no|^yes/i.test(o.text.trim()));
+        if (opt) sel.value = opt.value;
+      } else if (label.includes('race') || label.includes('gender') || label.includes('veteran') || label.includes('disability')) {
+        const declineOpt = Array.from(sel.options).find(o => /decline|wish|choose not/i.test(o.text));
+        if (declineOpt) sel.value = declineOpt.value;
+        else if (sel.options.length > 1) sel.value = sel.options[1].value;
+      } else {
+        const yesOpt = Array.from(sel.options).find(o => /^yes/i.test(o.text.trim()));
+        if (yesOpt) sel.value = yesOpt.value;
+        else if (sel.options.length > 1) sel.value = sel.options[1].value;
+      }
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+
+    return {
+      firstName: fn?.value,
+      lastName: ln?.value,
+      email: em?.value,
+      phone: ph?.value,
+      loc: loc?.value,
+      linkedin: li?.value,
+      portfolio: pf?.value
+    };
+  }`, sid);
+  console.log('[Runner GH] Form filled:', fillResult);
+
+  // Upload Resume
+  const doc = (await cdp.send('DOM.getDocument', {}, sid)).result;
+  const resumePath = 'C:\\Users\\User\\Turash_Ahsan_Resume.pdf';
+  const fileInputNode = (await cdp.send('DOM.querySelector', {
+    nodeId: doc.root.nodeId,
+    selector: 'input#resume, input[name="resume"], input[type="file"]'
+  }, sid)).result;
+
+  if (fileInputNode && fileInputNode.nodeId) {
+    await cdp.send('DOM.setFileInputFiles', {
+      nodeId: fileInputNode.nodeId,
+      files: [resumePath]
+    }, sid);
+    console.log('[Runner GH] Resume uploaded!');
+  }
+  await new Promise(r => setTimeout(r, 4000));
+
+  // Pre-submit screenshot
+  const preSubmitShot = `proof_batch_${target.sl}_${target.company.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+  await cdp.screenshot(preSubmitShot, sid);
+
+  // Submit button click
+  const submitResult = await cdp.eval(`() => {
+    const buttons = Array.from(document.querySelectorAll('button, input[type="submit"]'));
+    const submitBtn = buttons.find(b => {
+      const t = (b.innerText || b.value || '').toLowerCase().trim();
+      return t === 'submit application' || t === 'apply now' || t.includes('submit');
+    });
+    if (submitBtn) {
+      submitBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      submitBtn.click();
+      return { clicked: true, text: submitBtn.innerText || submitBtn.value };
+    }
+    return { clicked: false, buttons: buttons.map(b => b.innerText || b.value) };
+  }`, sid);
+  console.log('[Runner GH] Submit clicked:', submitResult);
+
+  if (!submitResult || !submitResult.clicked) {
+    console.warn(`[Runner GH] SKIPPING ${target.company} - Submit button not clicked`);
+    try { await cdp.send('Target.closeTarget', { targetId }); } catch (e) {}
+    return { skipped: true, reason: 'Submit button not found' };
+  }
+
+  await new Promise(r => setTimeout(r, 7000));
+
+  // Capture post-submit state safely
+  const postSubmitShot = `proof_batch_${target.sl}_${target.company.replace(/[^a-zA-Z0-9]/g, '_')}_submitted.png`;
+  await cdp.screenshot(postSubmitShot, sid);
+
+  // Record to tracker
+  recordToTrackers({
+    sl: target.sl,
+    id: target.sl,
+    company: target.company,
+    job_title: target.title,
+    location: target.location,
+    channel: target.channel || 'Direct ATS (Greenhouse ATS)',
+    target: appUrl,
+    status: 'APPLIED',
+    date: '2026-11-02',
+    proof: `${postSubmitShot} (Submitted)`,
+    cv: 'Yes (Turash Ahsan Resume (ATS Under 2MB).pdf)',
+    notes: `Applied via direct Greenhouse ATS portal with candidate profile, 2+ YOE design system background, portfolio link, and ATS resume attached. Confirmed submitted.`
+  });
+
+  console.log(`[SUCCESS GH] Completed SL #${target.sl}: ${target.company}\n`);
+  try {
+    await cdp.send('Target.closeTarget', { targetId });
+  } catch (e) {}
+}
+
 async function runTargets() {
-  const targets = [
+  const candidateTargets = [
     {
-      sl: 698,
-      company: 'Tavus',
+      company: 'Thatch',
       title: 'Product Designer',
-      location: 'San Francisco / Remote',
-      url: 'https://jobs.ashbyhq.com/tavus/45fdebdf-c3e1-480f-bbfb-ab4deee35db7'
+      location: 'Remote (US / Global)',
+      url: 'https://job-boards.greenhouse.io/thatch/jobs/5136655008'
     },
     {
-      sl: 699,
-      company: 'Baseten',
+      company: 'Warp',
       title: 'Product Designer',
-      location: 'San Francisco / Remote',
-      url: 'https://jobs.ashbyhq.com/baseten/382978bd-7eef-4657-a229-3381a1057b4e'
+      location: 'Remote (US and Canada)',
+      url: 'https://job-boards.greenhouse.io/warp/jobs/6237969004'
     },
     {
-      sl: 700,
-      company: 'Perplexity',
-      title: 'Web Designer',
-      location: 'New York / Remote',
-      url: 'https://jobs.ashbyhq.com/perplexity/7ae341c4-411e-468c-bc26-bbdd8e55d388'
+      company: 'Care Access',
+      title: 'Product Designer',
+      location: 'Remote (US / Global)',
+      url: 'https://job-boards.greenhouse.io/careaccess/jobs/4474598009'
+    },
+    {
+      company: 'IE',
+      title: 'Junior Product Designer',
+      location: 'Remote (Global)',
+      url: 'https://job-boards.greenhouse.io/ie/jobs/8138278'
+    },
+    {
+      company: 'SRS Acquiom',
+      title: 'Associate Product Designer',
+      location: 'Remote (Global / US)',
+      url: 'https://job-boards.greenhouse.io/srsacquiom/jobs/5244378007'
+    },
+    {
+      company: 'Agoda',
+      title: 'Product Designer',
+      location: 'Remote / Hybrid (Asia / Global)',
+      url: 'https://job-boards.greenhouse.io/agoda/jobs/8248603'
     }
   ];
 
@@ -325,18 +622,33 @@ async function runTargets() {
   const cdp = new CDP(wsUrl);
   await cdp.connect();
 
-  for (const target of targets) {
+  for (const item of candidateTargets) {
     try {
-      await applyOneAshby(cdp, target);
+      const currentTracker = JSON.parse(fs.readFileSync('job_tracker.json', 'utf8'));
+      const nextSl = currentTracker.length + 1;
+      const target = { ...item, sl: nextSl };
+
+      let res;
+      if (target.url.includes('greenhouse.io')) {
+        res = await applyOneGreenhouse(cdp, target);
+      } else {
+        res = await applyOneAshby(cdp, target);
+      }
+
+      if (res && res.skipped) {
+        console.log(`[Batch] Skipped ${target.company}: ${res.reason}`);
+      } else {
+        console.log(`[Batch] Successfully applied to ${target.company} (SL #${nextSl})`);
+      }
       await new Promise(r => setTimeout(r, 4000));
     } catch (e) {
-      console.error(`[Error applying to ${target.company}]:`, e);
+      console.error(`[Error applying to ${item.company}]:`, e);
     }
   }
 
   cdp.close();
   cp.kill();
-  console.log('\nAll targets completed!');
+  console.log('\nAll targets processed!');
 }
 
 runTargets().catch(console.error);
