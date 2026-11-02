@@ -581,40 +581,22 @@ async function applyOneGreenhouse(cdp, target) {
 async function runTargets() {
   const candidateTargets = [
     {
-      company: 'Thatch',
+      company: 'Patreon',
       title: 'Product Designer',
-      location: 'Remote (US / Global)',
-      url: 'https://job-boards.greenhouse.io/thatch/jobs/5136655008'
+      location: 'Remote (United States / Global)',
+      url: 'https://jobs.ashbyhq.com/patreon/da2d339e-a2db-446c-a507-98da926c279c'
     },
     {
-      company: 'Warp',
+      company: 'Joko',
       title: 'Product Designer',
-      location: 'Remote (US and Canada)',
-      url: 'https://job-boards.greenhouse.io/warp/jobs/6237969004'
+      location: 'Remote (Europe / US / Global)',
+      url: 'https://jobs.ashbyhq.com/joko/f257f4d4-b700-4b44-915e-1e8e20f56aa8'
     },
     {
-      company: 'Care Access',
-      title: 'Product Designer',
-      location: 'Remote (US / Global)',
-      url: 'https://job-boards.greenhouse.io/careaccess/jobs/4474598009'
-    },
-    {
-      company: 'IE',
-      title: 'Junior Product Designer',
-      location: 'Remote (Global)',
-      url: 'https://job-boards.greenhouse.io/ie/jobs/8138278'
-    },
-    {
-      company: 'SRS Acquiom',
+      company: 'Praxent',
       title: 'Associate Product Designer',
-      location: 'Remote (Global / US)',
-      url: 'https://job-boards.greenhouse.io/srsacquiom/jobs/5244378007'
-    },
-    {
-      company: 'Agoda',
-      title: 'Product Designer',
-      location: 'Remote / Hybrid (Asia / Global)',
-      url: 'https://job-boards.greenhouse.io/agoda/jobs/8248603'
+      location: 'Remote (United States / Global)',
+      url: 'https://job-boards.greenhouse.io/praxent/jobs/7728015003'
     }
   ];
 

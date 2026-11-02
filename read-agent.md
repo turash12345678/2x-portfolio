@@ -437,22 +437,38 @@ Whenever you finish working, want to sync progress, or want the AI to update thi
       - `SL #713`: **SRS Acquiom** — *Associate Product Designer* (Greenhouse ATS) | `proof_batch_713_SRS_Acquiom_submitted.png`
       - `SL #714`: **Agoda** — *Product Designer* (Greenhouse ATS) | `proof_batch_714_Agoda_submitted.png`
     - **All Pre-submit & Post-submit Screenshots Verified:** Programmatically stored as proof on disk.
-    - **Pipeline Scaled to 714 Applications Milestone:** Synchronized across `job_tracker.json` (714 records) and `job_tracker.csv` (715 rows).
-    - **Grand Total Outreach Reached 764 Contacts:** 714 job applications + 50 studio cold emails.
-    - **Unified Master Execution Queue Rebuilt:** 78 deduplicated targets queued (`SL #715` to `SL #792`).
-    - **Subagents Dispatched for Continuous Discovery:** `portal_explorer`, `social_web_radar`, and `linkedin_hunter` scanning for fresh external ATS positions.
+
+24. **Social Web Discoveries Merged & Direct Submissions Executed — 717 Milestone (`SL #715` to `SL #717`) (2026-11-02):**
+    - **Social & Web Radar Discoveries Received:** `social_web_radar` polled RemoteOK, Dribbble, Wellfound, and direct ATS boards, delivering 7 fresh verified mid/junior openings (`discovered_web_jobs.json` now at 25 unapplied roles).
+    - **Direct Submissions Dispatched & Confirmed (`SL #715` to `SL #717`):**
+      - `SL #715`: **Patreon** — *Product Designer* (Ashby ATS: `https://jobs.ashbyhq.com/patreon/da2d339e-a2db-446c-a507-98da926c279c`) | `proof_batch_715_Patreon_submitted.png`
+      - `SL #716`: **Joko** — *Product Designer* (Ashby ATS: `https://jobs.ashbyhq.com/joko/f257f4d4-b700-4b44-915e-1e8e20f56aa8`) | `proof_batch_716_Joko_submitted.png`
+      - `SL #717`: **Praxent** — *Associate Product Designer* (Greenhouse ATS: `https://job-boards.greenhouse.io/praxent/jobs/7728015003`) | `proof_batch_717_Praxent_submitted.png`
+    - **Pipeline Scaled to 717 Applications Milestone:** Synchronized across `job_tracker.json` (717 records) and `job_tracker.csv` (718 rows).
+    - **Grand Total Outreach Reached 767 Contacts:** 717 job applications + 50 studio cold emails.
+    - **Unified Master Execution Queue Rebuilt:** 79 deduplicated targets queued (`SL #718` to `SL #796`).
 
 ### 📌 Current Status:
-- Job tracker verified at **714 applied applications** (SL #1 to SL #714).
+- Job tracker verified at **717 applied applications** (SL #1 to SL #717).
 - Direct Gmail Cold Email Outreach at **50/50 verified sent emails** with resume attached.
-- **Grand Total Outreach:** **764 job applications / studio contacts** dispatched.
-- **Unified Master Execution Queue:** 78 remaining verified deduplicated targets ready in `unified_master_queue.json` (`SL #715` to `SL #792`).
+- **Grand Total Outreach:** **767 job applications / studio contacts** dispatched.
+- **Unified Master Execution Queue:** 79 remaining verified deduplicated targets ready in `unified_master_queue.json` (`SL #718` to `SL #796`).
 - **Clean ATS Resume Active:** Available at `C:\Users\User\Turash_Ahsan_Resume.pdf` and project root.
 - Production build compiles with **0 errors** (`npm run build`).
 
 ### 🎯 Immediate Next Steps / Multi-PC Transition:
 1. **On Next PC:** Run `git pull origin main` to pull all project memory, documentation, trackers, and codebase updates.
-2. **Sequential Execution:** Continue Turbo execution for Target SL #715 onwards:
+2. **Sequential Execution:** Continue Turbo execution for Target SL #718 onwards:
+   - `SL #718`: **Spate** — *Product Designer* (Workable ATS: `https://jobs.workable.com/view/ubGrBTgDigJbW6QCnJf84J`)
+   - `SL #719`: **Moyasar** — *UI/UX Designer* (Workable ATS: `https://jobs.workable.com/view/jTmzYDBKBhf8mtrUemHK87/...`)
+   - `SL #720`: **hunterstack.io** — *UX/UI Designer* (InHire ATS: `https://hunterstackio.inhire.app/vagas/...`)
+   - `SL #721`: **ShippyPro** — *Junior Product Designer* (Join.com ATS: `https://join.com/companies/shippypro953/...`)
+   - `SL #722`: **24 Seven Talent** — *Graphic Designer* (LinkedIn Easy Apply)
+   - `SL #723`: **UrsaNav®** — *Multimedia Designer* (LinkedIn Easy Apply)
+   - `SL #724`: **Best Lawyers** — *Product Designer* (LinkedIn Easy Apply)
+   - `SL #725`: **BCforward** — *UX Content Specialist* (LinkedIn Easy Apply)
+   - `SL #726`: **Iterative Health** — *Graphic Designer - Contract* (LinkedIn Easy Apply)
+   - `SL #727`: **Synthires** — *Visual Designer (Remote | $50–$60/hr)* (LinkedIn Easy Apply)
    - `SL #715`: **Spate** — *Product Designer* (Workable ATS: `https://jobs.workable.com/view/ubGrBTgDigJbW6QCnJf84J`)
    - `SL #716`: **Moyasar** — *UI/UX Designer* (Workable ATS: `https://jobs.workable.com/view/jTmzYDBKBhf8mtrUemHK87/remote-ui%2Fux-designer-in-lebanon-at-moyasar-financial-company`)
    - `SL #717`: **hunterstack.io** — *UX/UI Designer* (InHire ATS: `https://hunterstackio.inhire.app/vagas/61900182-7309-43ac-8bc2-eaaf53592a71/uxui-designer?source=linkedin`)
